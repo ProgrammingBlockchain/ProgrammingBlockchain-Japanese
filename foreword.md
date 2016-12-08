@@ -16,15 +16,13 @@
 
 私が思うに、ビットコインブロックチェーンはこの小説に出てくる木の枝なのではないかと思う。それは興味のない人にとってみれば、ビットコインブロックチェーンはつまらなくて役に立たないビットの集まりに思えるだろう。しかしプログラマーや起業家にとってみたら、私たちの想像によってどんなかたちにも変えられる素晴らしい原石なのだ。私たちこそがビットコインブロックチェーンに意味と目的を吹き込むのである。
 
-I think The Blockchain is like the tree branch. For outsiders, it feels like a boring and useless collection of bits. For programmers and entrepreneurs, it is a marvelous raw material that can be shaped with our imagination. We give it meaning and purpose.
+木の枝から弓、槍やステッキを作ることのできる木を知る必要があるように、ビットコインブロックチェーンを形作ることのできるプログラミングを知る必要がある。興味のない人が思う役に立たないビットの集まりを、スキルと賢さでいかようにも形作ることができるということを気づいてもらえることを願う。
 
-Just as you need to know about wood to make a bow, spear or cane from a branch, you need to learn about programming to shape the Blockchain. My hope is that you will discover how much your skill and intelligence can shape that useless collection of bits.
+警告させてほしい。ビットコインを学ぶことは映画『マトリックス』で出てきた赤い錠剤を手にするようなものだ。今の仕事をやめ、ビットコインにフルタイムで没頭する準備をするかもしれない。
 
-Let me warn you: learning about Bitcoin is like taking the red pill from _The Matrix._ You may find yourself ready to quit your job to work on it full time.
+この本によってビットコインブロックチェーンの利用方法を基礎から応用まで学べる。API（ビットコインコアから提供されているRPCのAPIのようなもの）の利用方法が学べるのではなく、APIの作り方が学べるだろう。
 
-This book will take you from basic to advanced use of the Blockchain. It will not teach you how to use an API \(such as the RPC API provided with Bitcoin Core\), but it will teach you how to make such an API.
-
-> Satoshi Nakamoto once described Bitcoin as “boring grey in colour.”
+> ナカモトサトシはかつてビットコインを「色で言うと退屈なグレー」と表現した。
 
 While programming to an API can assist in getting an application up quickly, the developer is limited to innovations that can take place against the API. By fully understanding the Blockchain, the developer is empowered to unleash its full potential.
 
