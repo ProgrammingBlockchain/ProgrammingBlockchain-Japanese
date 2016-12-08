@@ -1,11 +1,12 @@
-## Why Blockchain Programming and not Bitcoin Programming? {#why-blockchain-programming-and-not-bitcoin-programming}
+## ビットコインプログラミングではなく、ブロックチェーンプログラミング {#why-blockchain-programming-and-not-bitcoin-programming}
 
-The Blockchain is to gold what Bitcoin is to jewelry.
+ブロックチェーンが金ならビットコインは宝石だ。
 
-We did not compare Bitcoin to a gold coin, but rather with a jewelry. That’s because gold’s first killer app was jewelry. Coins came later.
+私たちはビットコインを、金貨ではなくむしろ宝石に例えた。それは金の最初のキラーアプリが宝石だからだ。通貨はその後だった。
 
-Do not be fooled into thinking that Bitcoin is flawed while the Blockchain is valuable. If gold is valuable, would you throw away a gold necklace? The Blockchain is built on and thrives because of bitcoin. Any increase in value of the Blockchain will increase the amount of Bitcoin that is spent to use it, which will increase its demand.
+ブロックチェーンが価値あるものなのだから、ビットコインの価値が失われるのではないかと考えることに夢中になってはいけない。もし金に価値があるなら、金のネックレスを誰が投げ捨てるだろうか。ビットコインブロックチェーンはビットコインのおかげで成り立ち繁栄している。ビットコインブロックチェーンの価値が上がるのはいつも、ビットコインを使うために支払われる量を増やし、需要を増やすだろう。
 
-Whether or not your app will use the “Bitcoin as a currency” feature is your own decision.
+あなたが作るアプリケーションが「ビットコインを貨幣として」使うかどうかはあなた自身に委ねられているのだ。
 
-Blockchain is the raw material. Bitcoin is the fuel. Bitcoin as a currency is a feature that emerges every time someone thinks this fuel is also a good medium of exchange. You can do a lot more with the Blockchain than exchange value. You don’t even have to believe in the currency. We will show you how to use Bitcoin as a currency in this book, but that’s not all!
+ブロックチェーンは原石で、ビットコインは燃料だ。貨幣としてのビットコインは、誰かがこの燃料は交換の良い媒体でもあると考えたときにいつも出てくる特徴の1つだ。ビットコインブロックチェーンを使って、交換するための価値よりももっと多くのことを実装できる。貨幣としての価値を信じる必要さえない。私たちはこの本でビットコインを貨幣としてどのように使うかを伝えるが、それだけではないのだ！
+
