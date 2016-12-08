@@ -10,12 +10,9 @@
 
 しかし私の興奮、ビットコインの魅力と自分のリスクを取る性格があってか私はここで止まらなかった。Nicolasに連絡を取り、手短に述べると、一ヶ月前に気づいたら飛行機で東京に向かっていた。完全に自分をビットコイン業界に投資するためにだ。そして貯金がなくなり、仕事を見つけなければならなくなるまでずっと、Nicolasの教えのもとに学んだ。
 
-今までのところその結果としてこの本のセカンドエディションができあがり、とても部屋が散らかり、自分の荷物を広げる時間が
+今までのところその結果としてこの本のセカンドエディションができあがり、自分の荷物を広げる時間を見つけることができなかったから部屋がとても散らかった。さらに驚いたのは自分が潔癖症と気づいたことだ。
 
-But my excitement, Bitcoin addiction and risk-taking personality did not let me stop here. I contacted Nicolas, and long story short, a month ago I found myself on a plane, flying to Tokyo to fully devote myself to Bitcoin, learning under the guidance of Nicolas until my savings run out and I have to find a job.  
-So far it resulted in the second edition of this book, and a very messy room, since I was not able to find time to unpack my luggage. What is more astonishing by knowing I am a neat-freak.
+話を本に戻そう。初版と比較すると、Nicolasの最新の仕事を紹介することによって本を最新化し、一連の誤字を修正し（同じくらい誤字を残してはいるが）、沢山の人が理解できるように多くの箇所で詳細化して、本をGitHubとGitbookにアップロードした。だからこそ今、コミュニティが本の改善に関わることができるだろう。
 
-Oh, yes... the book. Compared to the first edition, I have updated it by introducing Nicolas' latest works, fixed a bunch of typos \(and left just as much\), extended it in many places in order to make it understandable by humans and last but not least I have ported all of it to GitHub / Gitbook, so now the community itself will be able to get involved to the book development.
-
-If I had to describe the book in one sentence it would be this one: **Let's not talk Bitcoin, let's do Bitcoin!**
+もしこの本を一文で表さなければならないとしたらこれだろう。「**ビットコインを語るのではなく、ビットコインをやろう！**」
 
