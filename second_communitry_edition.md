@@ -1,15 +1,21 @@
-# Second (Community) Edition {#second-community-edition}
+# セカンド（コミュニティ）エディション {#second-community-edition}
 
-([nopara73](https://github.com/nopara73)) I got sucked into Bitcoin in 2013. At the time everyone was talking about the countless great opportunities for developers, but I was not able to catch any of them.  
-Every time I tried to do any coding, I encountered countless walls, countless missing pieces and tremendous amount of work that is needed to be done before I could even start working on my idea.  
+\([nopara73](https://github.com/nopara73)\) 私は2013年にビットコインに夢中になった。そのときはあらゆる人が開発者にとってのその数え切れない素晴らしい機会について話していたが、私はまったく理解ができていなかった。
 
-A few years later I have pleasantly noticed someone has already done the work I talked about.  
-Someone has finally broken down the crypto voodoo into object oriented niceness. My excitement has further grown when I realized Nicolas Dorier's C# library is the biggest, most complete Bitcoin library out there and it is working on every platform. More, he even wrote a book around it! So now I have the chance to work with the most powerful, best documented Bitcoin library up to date in my favorite programming language.  
+コーディングを試みるといつも、数え切れない壁、抜けた情報やとんでもない量の負荷に遭遇した。自分のアイディアに取り掛かることができるようになることでさえ、それらが必要だった。
+
+数年後、嬉しいことに私が話していた仕事をすでにやり遂げている人がいることに気づいた。
+
+その人はついに暗号の魔法をオブジェクト指向にきれいに分類していたのだ。さらに私が興奮したのは、Nicolas DorierのC\#のライブラリが最も成長し、世にある最も完璧なビットコインライブラリで、あらゆるプラットフォームで動作することに気づいたことだ。そして、彼は本までも書いているではないか！だから今、私は最もパワフルで最もしっかりとドキュメント化された、自分のお気に入りのプログラミング言語で書かれたビットコインライブラリを使って働くチャンスを得ている。
+
+しかし私の興奮、ビットコインの魅力と自分のリスクを取る性格があってか私はここで止まらなかった。Nicolasに連絡を取り、手短に述べると、一ヶ月前に気づいたら飛行機で東京に向かっていた。完全に自分をビットコイン業界に投資するためにだ。そして貯金がなくなり、仕事を見つけなければならなくなるまでずっと、Nicolasの教えのもとに学んだ。
+
+今までのところその結果としてこの本のセカンドエディションができあがり、とても部屋が散らかり、自分の荷物を広げる時間が
 
 But my excitement, Bitcoin addiction and risk-taking personality did not let me stop here. I contacted Nicolas, and long story short, a month ago I found myself on a plane, flying to Tokyo to fully devote myself to Bitcoin, learning under the guidance of Nicolas until my savings run out and I have to find a job.  
-So far it resulted in the second edition of this book, and a very messy room, since I was not able to find time to unpack my luggage. What is more astonishing by knowing I am a neat-freak.  
+So far it resulted in the second edition of this book, and a very messy room, since I was not able to find time to unpack my luggage. What is more astonishing by knowing I am a neat-freak.
 
-Oh, yes... the book. Compared to the first edition, I have updated it by introducing Nicolas' latest works, fixed a bunch of typos (and left just as much), extended it in many places in order to make it understandable by humans and last but not least I have ported all of it to GitHub / Gitbook, so now the community itself will be able to get involved to the book development.
-
+Oh, yes... the book. Compared to the first edition, I have updated it by introducing Nicolas' latest works, fixed a bunch of typos \(and left just as much\), extended it in many places in order to make it understandable by humans and last but not least I have ported all of it to GitHub / Gitbook, so now the community itself will be able to get involved to the book development.
 
 If I had to describe the book in one sentence it would be this one: **Let's not talk Bitcoin, let's do Bitcoin!**
+
