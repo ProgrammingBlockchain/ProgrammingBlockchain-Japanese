@@ -24,5 +24,5 @@
 
 > ナカモトサトシはかつてビットコインを「色で言うと退屈なグレー」と表現した。
 
-While programming to an API can assist in getting an application up quickly, the developer is limited to innovations that can take place against the API. By fully understanding the Blockchain, the developer is empowered to unleash its full potential.
+APIに対してプログラミングすればアプリケーションを早くローンチすることの助けにはなるが、そのAPIを置き換えることのできるイノベーションを開発者が起こせなくなってしまう。ビットコインブロックチェーンを完全に理解すれば、開発者はそのポテンシャルを完全に開放できる。
 
