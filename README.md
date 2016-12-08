@@ -41,15 +41,15 @@
 
 英語ですが、[課題解決](https://github.com/ProgrammingBlockchain/ProgrammingBlockchain/issues)を支援いただくことも可能です。（大学生のためのアドバイスですが、就活には卒業証明書よりもGitHubでの活躍のほうが役に立ちます。）
 
-# How to feed us
+# 私たちへの寄付
 
-For every donation on this address, you will appear on [http://n.bitcoin.ninja/](http://n.bitcoin.ninja/).
+このアドレスへのすべての寄付が、[こちらのサイト](http://n.bitcoin.ninja/)で公開されます。
 
 ![1KF8kUVHK42XzgcmJF4Lxz4wcL5WDL97PB](assets/BookQr.png)
 
 [1KF8kUVHK42XzgcmJF4Lxz4wcL5WDL97PB](https://www.smartbit.com.au/address/1KF8kUVHK42XzgcmJF4Lxz4wcL5WDL97PB)
 
-## Links
+## リンク
 
 [The book on GitHub](https://github.com/ProgrammingBlockchain/ProgrammingBlockchain)  
 [The book on GitBook](https://www.gitbook.com/book/programmingblockchain/programmingblockchain) \(You can download pdf, epub, mobi versions here.\)  
