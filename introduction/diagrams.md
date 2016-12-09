@@ -1,11 +1,13 @@
-## Diagrams {#diagrams}
+## この本で使用する図解 {#diagrams}
 
-Most of the diagrams will have the same shape, they must be read by interpreting inward arrows like components to create the target:
+この本で使用するほとんどの図解では、同じ図を使用する。矢印については、2つの矢印に囲まれているオブジェクトは、その2つの要素から作られるという意味で使っている。
 
-For example, the following diagram should be read as  
-```Key + Password = EncryptedKey```  
-```EncryptedKey + Password = Key```  
+たとえば以下の図解で言えば、このように読む。
+
+`Key + Password = EncryptedKey  
+EncryptedKey + Password = Key`
 
 ![](../assets/encrypted_key.png)
 
-Code is nice, but sometimes a picture worths a thousand words. (Don’t worry, we’ll also write the code.)
+コードも理解するために良い方法なのだが、時としてたくさんの言葉を使うよりも図のほうが簡単に表せる。（心配しないでいただきたいのだが、もちろんコードも紹介する。）
+
