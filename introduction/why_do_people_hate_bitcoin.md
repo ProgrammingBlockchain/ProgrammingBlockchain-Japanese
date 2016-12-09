@@ -1,5 +1,6 @@
-## Why this book?{#why-do-people-hate-new-technologies-bitcoin}
+## なぜこの本なのか？ {#why-do-people-hate-new-technologies-bitcoin}
 
-Understanding Bitcoin is quite a challenge. You might be completely unfamiliar with it. You might be heavily invested, following the news for years, already became completely addicted, but still the whole thing feels like a big mess. Or you feel like you understand it, but you are lacking of practical knowledge. If you fell into any of the these categories, we believe this book is the best investment for your time.  
+ビットコインを理解することは大きなチャレンジだ。ひょっとするとビットコインにまったく馴染みがないかもしれない。もしかして数年間ビットコインの情報をフォローしていてとても時間を費やしているかもしれず、すでにとても魅了されているにも関わらず、いまだ全体的には大きな霧のように思えているかもしれない。もしくはビットコインを理解していると思っているかもしれないが、実践的な知識がいまだ欠けているかもしれない。もしあなたがこれらのどれかにあたるなら、この本があなたの時間を費やす最も良い投資になると確信している。
 
-If you let us guide you through the Blockchain world we will not only armor you with skills those are necessary to win any [/r/Bitcoin](http://www.reddit.com/r/Bitcoin/) arguments, but also enable you to wisely choose among the countless developer opportunities those come to your way daily. Furthermore you will also be able to make those ideas reality. And in general, what better way is there to understand something, but coding it?  
+私たちにビットコインブロックチェーンの世界を案内させてもらえるなら、どんな[redditのビットコイン](https://www.reddit.com/r/Bitcoin/)の議論でも勝つために必要なスキルで読者を武装するだけではなく、今後日々現れるだろう数え切れない開発者のためのチャンスの中から賢く選べる力が身につくだろう。さらに読者が思いついたアイディアを現実にすることもできるだろう。一般的に言って、実際にコーディングする以外に、何かを理解するためにより良い方法はあるのだろうか？
+
