@@ -1,21 +1,20 @@
-## Project Setup {#project-setup}
+## プロジェクトのセットアップ {#project-setup}
 
-Before we begin with the instruction, we should describe how we expect your projects to be set up.
+説明を始める前に、どのようにVisual StudioまたはXamarin等でプロジェクトをセットアップするかを示す。
 
-1.  Create a new Project in Visual Studio (.NET 4.5 or higher)
-2.  Right click on “References” in Solution Explorer and select “Manage NuGet Packages…”
-3.  Search for “**NBitcoin”** and install it. (Or NBitcoin.Mono on MAC and Linux.)
-![](../assets/nuget.png)  
+1. プロジェクトを作成する（.NET 4.5以上）
+2. ソリューションエクスプローラーの「パッケージ」で右クリックし、「パッケージの追加」をクリック
+3. Windowsでは「**NBitcoin**」、MacやLinuxでは「**NBitcoin.Mono**」を追加する。
+   ![](../assets/nuget.png)  
 
-> **Tip:** If you are on MAC or Linux and reference NBitcoin instead of NBitcoin.Mono you will be missing some classes.  
+> 参考 **:** MacやLinuxで「NBitcoin」をインストールしてしまうと、必要なクラスが揃わないので注意すること。
 
-NBitcoin is the .NET Bitcoin library, it is open-source, maintained by Nicolas Dorier, the main author of this book. 
-This library should always be included if you do anything Bitcoin related in C#.  
-NBitcoin supports cross-platform applications.  
+NBitcoinは、この本のメイン筆者であるNicolas Dorierがメンテナンスしている、.NETで作られたオープンソースライブラリである。C\#でビットコインのソフトウェアを開発するのであれば、このライブラリを使うべきだろう。NBitcoinはクロスプラットフォームアプリケーションをサポートする。
 
-### ## # How to debug into NBitcoin source code (optional)  
+### NBitcoinのソースコードをデバッグする方法（オプション）
 
-NBitcoin lets you debug into its code, to make your life easier. For this feature to work make sure you have source server support enabled in Visual Studio (Tools/Options).   
-![](../assets/visualstudio_enablesourceserversupport.png)  
+NBitcoinはより理解が進むようにそのコードをデバッグすることができる。この特徴を使えるようにするためには、設定で「source server support」をチェックする必要がある。  
+![](../assets/visualstudio_enablesourceserversupport.png)
 
-Now, if you step into NBitcoin code, the source code will be automatically fetched on github, and appear in visual studio debugger.  
+そうすると、もしNBitcoinのコードにステップインをすると、ソースコードがGitHubから自動的に取得され、visual studioのデバッガーに表示される。
+
