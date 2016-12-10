@@ -1,18 +1,19 @@
-## Pre-requisites {#pre-requisites}
+## 前提として求められるもの {#pre-requisites}
 
-### Skills {#skills}
+### スキル {#skills}
 
-*   You need to be comfortable with object oriented as well as functional programming.
-*   A basic grasp of C# is helpful, but we feel the code will be legible to Java and other C-based languages.
-*   No mathematic knowledge is required. We will not cover cryptography beyond the bare minimum that you need to know to make a secure service.
-*   You don’t need to have deep knowledge of Bitcoin.
+* 関数型言語だけではなく、オブジェクト指向に慣れる必要がある。
+* C\#の基礎を理解していると良いが、C\#はJavaや他のC型言語よりも読みやすいと思われる。
+* 数学の知識は必要ない。安全なサービスを作るために知る必要のある最低限以上の暗号科学はカバーしない。
+* ビットコインに対する深い知識は必要ない。
 
-### Tools {#tools}
+### ツール {#tools}
 
-*   [Visual Studio Community Edition](https://www.visualstudio.com/) on Windows or [Xamarin Studio](https://store.xamarin.com) on Mac and Linux. (Both free)
-*   [Bitcoin Core](https://bitcoin.org/en/bitcoin-core/) - Ideally you have it, but you can just proceed without it.
+* [Visual Studio Community Edition](https://www.visualstudio.com/) （Windows）無料。
+* [Xamarin Studio](https://store.xamarin.com) （Mac and Linux）無料。
+* [Bitcoin Core](https://bitcoin.org/en/bitcoin-core/) 理想的にはあればよいが、読解をすすめる上でなくても進められる。
 
-> **Tip:** If disk-space is an issue, consider running Bitcoin Core in pruning mode. It is practically the same as a full node (including security), except it throws away some of the old history.
+> 参考**:** もしハードディスクの容量が足りないのであれば、pruningモードでBitcoin Coreを動かすことを考えてほしい。古い履歴を廃棄すること以外は、フルノード（ビットコインコアをインストールしていて、すべての取引履歴＝ブロックを持っているノード）と同じ動きをする。
 
 
 
