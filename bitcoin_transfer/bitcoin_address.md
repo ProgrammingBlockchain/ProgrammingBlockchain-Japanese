@@ -38,7 +38,7 @@ Console.WriteLine(publicKey.GetAddress(Network.Main)); // 1PUYsjwfNmX64wS368ZR5F
 Console.WriteLine(publicKey.GetAddress(Network.TestNet)); // n3zWAo2eBnxLr3ueohXnuAa8mTVBhxmPhq
 ```
 
-**正確に言うと、ビットコインアドレスは均一のバイト数で構成されている（開発環境か本番環境かで異なる）。公開鍵のハッシュが結合され、Base58Checkにエンコードされる。**
+**正確に言うと、ビットコインアドレスは先頭1バイト（開発環境か本番環境かで異なる）と公開鍵ハッシュで構成されており、それらが結合され、Base58Checkにエンコードされる。**
 
 ![](../assets/PubKeyHashToBitcoinAddress.png)
 
@@ -49,7 +49,7 @@ var mainNetAddress = publicKeyHash.GetAddress(Network.Main);
 var testNetAddress = publicKeyHash.GetAddress(Network.TestNet);
 ```
 
-> 注釈：公開鍵のハッシュは公開鍵をSHA256でハッシュ化し、その結果に対してRIPEMD160でハッシュ化してビッグエンディアンで並べている。「RIPEMD160\(SHA256\(pubkey\)\)」のように表せるだろう。
+> 注釈：公開鍵ハッシュは公開鍵をSHA256でハッシュ化し、その結果に対してRIPEMD160でハッシュ化してビッグエンディアンで並べている。「RIPEMD160\(SHA256\(pubkey\)\)」のように表せるだろう。
 
 Base58Checkは誤字を防止するためのチェックサムがあったり、「0（ゼロ）」や「O（オー）」のようにどちらとも見える文字を使っていない点で均整が取れている。
 
