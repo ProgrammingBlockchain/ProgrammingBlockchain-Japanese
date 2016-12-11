@@ -22,13 +22,13 @@ Console.WriteLine(mainNetAddress.ScriptPubKey); // OP_DUP OP_HASH160 14836dbe7f3
 Console.WriteLine(testNetAddress.ScriptPubKey); // OP_DUP OP_HASH160 14836dbe7f38c5ac3d49e8d790af808a4ee9edcf OP_EQUALVERIFY OP_CHECKSIG
 ```
 
-注目してほしいのだが、試験環境の**ScriptPubKey**と本番環境の**ScriptPubKey**が同じになっている。
+注目してほしいのだが、開発環境の**ScriptPubKey**と本番環境の**ScriptPubKey**が同じになっている。
 
 もう1つ注目してほしいのだが、**ScriptPubKey**には公開鍵ハッシュが含まれている。
 
 この時点では詳細には触れないでおくが、ScriptPubKeyはビットコインアドレスと全く関係がないように見えるが、公開鍵ハッシュを表しているのだ。
 
-ビットコインアドレスはアドレスが使われる環境を指し示す1バイトと公開鍵で構成されているのであった。だから**ScriptPubKey**と環境を指し示す情報からビットコインアドレスに戻す（生成する）ことができる。
+ビットコインアドレスはアドレスが使われる環境を指し示す1バイトと公開鍵で構成されているのであった。だから**ScriptPubKey**と環境を指し示す情報からビットコインアドレスに戻すことができる。
 
 ```cs
 var paymentScript = publicKeyHash.ScriptPubKey;
