@@ -1,6 +1,6 @@
 ## トランザクション {#transaction}
 
-> \([Mastering Bitcoin](https://github.com/bitcoinbook/bitcoinbook/)\) トランザクションはビットコインシステムの中で最も重要な部分だ。ビットコインの中のあらゆるものが、トランザクションを作り、ネットワーク上を伝播し、確認し、最後にトランザクションのグローバルな台帳、つまりビットコインブロックチェーンに加えることを確認するように設計されている。トランザクションはビットコインシステムへの参加者たちの間の価値の移動を暗号に書き直すデータ構成となっている。1つ1つのトランザクションはビットコインブロックチェーン、つまりグローバルな複式記帳型の台帳における、公開された記帳となっている。
+> \([Mastering Bitcoin](https://github.com/bitcoinbook/bitcoinbook/)\) トランザクションはビットコインシステムの中で最も重要な部分だ。ビットコインの中のあらゆるものが、トランザクションを作り、ネットワーク上を伝播し、確認し、最後にトランザクションのグローバルな台帳、つまりビットコインブロックチェーンに加わることを確認するように設計されている。トランザクションはビットコインシステムへの参加者たちの間の価値の移動を暗号に書き直すデータ構成となっている。1つ1つのトランザクションはビットコインブロックチェーン、つまりグローバルな複式記帳型の台帳における、公開された記帳となっている。
 
 1つのトランザクションは受け取り手がいないかもしれないし、複数いることもあるかもしれない。そして送り手にも同じことが言えるのだ！ブロックチェーン上では、前章で示したとおり、送り手と受け取り手がいつもScriptPubKeyによって抽象化されている。
 
@@ -17,9 +17,9 @@
 > 注釈：承認されていないトランザクションを扱うためにTransaction IDを使ってはいけない。Transaction IDは承認される前は複製できてしまうからだ。これを「トランザクション展性」という。
 
 Blockchain.infoのようなブロックエクスプローラーでトランザクションを閲覧することができる。 [https://blockchain.info/tx/f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94](https://blockchain.info/tx/f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94)  
-しかし開発者としては、クエリを実行したりパースしたりすることがより簡単なサービスがおそらくほしいと思われる。
+しかし開発者としては、クエリを実行したりパースしたりすることがより簡単なサービスがほしいとおそらく思うだろう。
 
-C\#の開発者、そしてNBitcoinのユーザーとしてNicolas Dorierの[QBit Ninja](http://docs.qbitninja.apiary.io/#)が最適な選択肢と思われる。ビットコインブロックチェーンに対してクエリを発行でき、またウォレットを追跡するためのオープンソースのWebAPIである。  
+C\#の開発者、そしてNBitcoinのユーザーとしては、Nicolas Dorierの[QBit Ninja](http://docs.qbitninja.apiary.io/#)が最適な選択肢と思われる。ビットコインブロックチェーンに対してクエリを発行でき、またウォレットを追跡するためのオープンソースのWebAPIである。  
 QBit NinjaはMicrosoft Azure Storageを基盤としている[NBitcoin.Indexer](https://github.com/MetacoSA/NBitcoin.Indexer)に依拠している。C\#開発者にはこのAPIのラッパーを開発するのではなく、[NuGet client package](http://www.nuget.org/packages/QBitninja.Client)を使うことが期待されている。
 
 [http://api.qbit.ninja/transactions/f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94](http://api.qbit.ninja/transactions/f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94)にアクセスしてみると、トランザクションの内容を見ることができる。
@@ -30,6 +30,7 @@ QBit NinjaはMicrosoft Azure Storageを基盤としている[NBitcoin.Indexer](h
 
 ```cs
 Transaction tx = new Transaction("0100000...");
+Console.Writeline(tx);
 ```
 
 Quickly close the tab, before it scares you away, QBit Ninja queries the API and parses the information so go ahead and install **QBitNinja.Client** NuGet package.
@@ -47,13 +48,13 @@ var transactionId = uint256.Parse("f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e7
 GetTransactionResponse transactionResponse = client.GetTransaction(transactionId).Result;
 ```
 
-The type of **transactionResponse** is **GetTransactionResponse**. It lives under QBitNinja.Client.Models namespace. You can get **NBitcoin.Transaction** type from it:
+**transactionResponse**の型は、**GetTransactionResponse**である。QBitNinja.Client.Modelsのネームスペースに定義されている（よってファイルの先頭にusing QBitNinja.Client.Modelsを設定する必要がある）。同じ結果を**NBitcoin.Transaction**型でも取り出せる。
 
 ```cs
 NBitcoin.Transaction transaction = transactionResponse.Transaction;
 ```
 
-Let's see an example getting back the transaction id with both classes:
+両方のクラスを使ってTransaction IDを取り出す例を見てみよう。
 
 ```cs
 Console.WriteLine(transactionResponse.TransactionId); // f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94
