@@ -48,7 +48,14 @@ var transactionId = uint256.Parse("f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e7
 GetTransactionResponse transactionResponse = client.GetTransaction(transactionId).Result;
 ```
 
-**transactionResponse**の型は、**GetTransactionResponse**である。QBitNinja.Client.Modelsのネームスペースに定義されている（よってファイルの先頭にusing QBitNinja.Client.Modelsを設定する必要がある）。同じ結果を**NBitcoin.Transaction**型でも取り出せる。
+> 日本語版注：ファイルの先頭にQBitNinja.ClientとQBitNinja.Client.Modelsを使う宣言する必要がある。
+>
+> ```
+> using QBitNinja.Client;
+> using QBitNinja.Client.Models;
+> ```
+
+**transactionResponse**の型は、**GetTransactionResponse**である。QBitNinja.Client.Modelsのネームスペースに定義されている。同じ結果を**NBitcoin.Transaction**型でも取り出せる。
 
 ```cs
 NBitcoin.Transaction transaction = transactionResponse.Transaction;
@@ -61,7 +68,9 @@ Console.WriteLine(transactionResponse.TransactionId); // f13dc48fb035bbf0a6e989a
 Console.WriteLine(transaction.GetHash()); // f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94
 ```
 
-**GetTransactionResponse** has additional information about the transaction like the value and scriptPubKey of the inputs being spent in the transaction.
+**GetTransactionResponse**はトランザクションの中で使われるインプットの値やScriptPubKeyのようなトランザクションについての追加的な情報を含んでいる。
+
+追加的な情報の中で関連性があるのはインプットとアウトプットである。
 
 The relevant parts for now are the **inputs** and **outputs**. You can see that out 13.19683492 Bitcoin has been sent to a ScriptPubKey:
 
