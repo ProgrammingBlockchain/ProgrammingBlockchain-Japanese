@@ -13,6 +13,12 @@
 Key privateKey = new Key(); // generate a random private key
 ```
 
+> 日本語版注：ファイルの先頭にNBitcoinのライブラリを使う宣言をする必要がある。
+>
+> ```
+> using NBitcoin;
+> ```
+
 秘密鍵から**公開鍵**を作成する。これは一方向のみの生成となっていて、逆に公開鍵から秘密鍵は作れない。
 
 ![](../assets/PrivKeyPubKey.png)
@@ -21,6 +27,12 @@ Key privateKey = new Key(); // generate a random private key
 PubKey publicKey = privateKey.PubKey;
 Console.WriteLine(publicKey); // 0251036303164f6c458e9f7abecb4e55e5ce9ec2b2f1d06d633c9653a07976560c
 ```
+
+> 日本語版注：ファイルの先頭にSystemのライブラリを使う宣言をする必要がある。
+>
+> ```
+> using System;
+> ```
 
 ビットコインには2つの**ネットワーク**がある。
 
