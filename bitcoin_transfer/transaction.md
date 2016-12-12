@@ -33,7 +33,7 @@ Transaction tx = new Transaction("0100000...");
 Console.Writeline(tx);
 ```
 
-Quickly close the tab, before it scares you away, QBit Ninja queries the API and parses the information so go ahead and install **QBitNinja.Client** NuGet package.
+タブの情報の多さに怖がる前にさっとタブを閉じてほしい。QBit NinjaがAPIに対してクエリを発行して情報をパースしてくれるから、**QBitNinja.Client** NuGet packageをインストールしてみよう。
 
 ![](../assets/QBitNuGet.png)
 
@@ -70,9 +70,7 @@ Console.WriteLine(transaction.GetHash()); // f13dc48fb035bbf0a6e989a26b3ecb57b84
 
 **GetTransactionResponse**はトランザクションの中で使われるインプットの値やScriptPubKeyのようなトランザクションについての追加的な情報を含んでいる。
 
-追加的な情報の中で関連性があるのはインプットとアウトプットである。
-
-The relevant parts for now are the **inputs** and **outputs**. You can see that out 13.19683492 Bitcoin has been sent to a ScriptPubKey:
+追加的な情報の中で関連性があるのはインプットとアウトプットである。1つのScriptPubKeyに13.19683492BTCが送られていることがわかるだろう。
 
 ```cs
 List<ICoin> receivedCoins = transactionResponse.ReceivedCoins;
@@ -89,8 +87,14 @@ foreach (var coin in receivedCoins)
 }
 ```
 
-We have written out some information about the RECEIVED COINS using QBitNinja's GetTransactionResponse class.  
-**Exercise**: Write out the same information about the SPENT COINS using QBitNinja's GetTransactionResponse class!
+> 日本語版注：ファイルの先頭にSystem.Collections.Genericを使う宣言をする必要がある。
+>
+> ```
+> using System.Collections.Generic;
+> ```
+
+QBitNinjaのGetTransactionResponseクラスを使って、受け取ったBTCの情報を表示した。  
+**Exercise : **QBitNinjaのGetTransactionResponseクラスを使って、支払ったBTCの情報を表示してみよう！
 
 Let's see how we can get the same information about the RECEIVED COINS using NBitcoin's Transaction class.
 
