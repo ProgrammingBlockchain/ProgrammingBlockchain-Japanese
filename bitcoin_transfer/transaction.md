@@ -96,7 +96,7 @@ foreach (var coin in receivedCoins)
 QBitNinjaのGetTransactionResponseクラスを使って、受け取ったBTCの情報を表示した。  
 **Exercise : **QBitNinjaのGetTransactionResponseクラスを使って、支払ったBTCの情報を表示してみよう！
 
-Let's see how we can get the same information about the RECEIVED COINS using NBitcoin's Transaction class.
+NBitcoinのTransactionクラスを使って受け取ったBTCの情報の情報をどのように表示するか見てみよう。
 
 ```cs
 var outputs = transaction.Outputs;
