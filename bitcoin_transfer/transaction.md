@@ -113,7 +113,7 @@ foreach (TxOut output in outputs)
 }
 ```
 
-Now let's examine the **inputs**. If you look at them you will notice a previous output is referenced. Each input shows you which previous out has been spent in order to fund this transaction.
+インプットとなっているトランザクションを見てみよう。インプットとなっているトランザクションを見てみると、前段のアウトプットが参照されているのに気づくだろう。各インプットトランザクションが、いま着目しているトランザクションにBTCをあてるためにどのアウトプットを使っているかを示している。
 
 ```cs
 var inputs = transaction.Inputs;
@@ -126,10 +126,10 @@ foreach (TxIn input in inputs)
 }
 ```
 
-The terms **TxOut**, **Output** and **out** are synonymous.  
-Not to be confused with **OutPoint**, but more on this later.
+**TxOut**、**Output**と**out**は類義語である。  
+**OutPoint**と混同してはいけないが、この点については後ほど触れる。
 
-In summary, the TxOut represents an amount of bitcoin and a **ScriptPubKey**. \(Recipient\)
+要約すると、TxOutはBTCの総計と受け取りての**ScriptPubKey**を示す。
 
 ![](../assets/TxOut.png)  
 As illustration let's create a txout with 21 bitcoin from the first ScriptPubKey in our current transaction:
