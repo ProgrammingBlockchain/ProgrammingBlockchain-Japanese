@@ -55,7 +55,7 @@ GetTransactionResponse transactionResponse = client.GetTransaction(transactionId
 > using QBitNinja.Client.Models;
 > ```
 
-**transactionResponse**の型は、**GetTransactionResponse**である。QBitNinja.Client.Modelsのネームスペースに定義されている。同じ結果を**NBitcoin.Transaction**型でも取り出せる。
+**transactionResponse**の型は**GetTransactionResponse**で、QBitNinja.Client.Modelsのネームスペースに定義されている。同じ結果を**NBitcoin.Transaction**型でも取り出せる。
 
 ```cs
 NBitcoin.Transaction transaction = transactionResponse.Transaction;
@@ -70,7 +70,7 @@ Console.WriteLine(transaction.GetHash()); // f13dc48fb035bbf0a6e989a26b3ecb57b84
 
 **GetTransactionResponse**はトランザクションの中で使われるインプットの値やScriptPubKeyのようなトランザクションについての追加的な情報を含んでいる。
 
-追加的な情報の中で関連性があるのはインプットとアウトプットである。1つのScriptPubKeyに13.19683492BTCが送られていることがわかるだろう。
+本章で言及したいのはインプットとアウトプットである。1つのScriptPubKeyに13.19683492BTCが送られていることがわかるだろう。
 
 ```cs
 List<ICoin> receivedCoins = transactionResponse.ReceivedCoins;
@@ -96,7 +96,7 @@ foreach (var coin in receivedCoins)
 QBitNinjaのGetTransactionResponseクラスを使って、受け取ったBTCの情報を表示した。  
 **Exercise : **QBitNinjaのGetTransactionResponseクラスを使って、支払ったBTCの情報を表示してみよう！
 
-NBitcoinのTransactionクラスを使って受け取ったBTCの情報の情報をどのように表示するか見てみよう。
+さて、NBitcoinのTransactionクラスを使って受け取ったBTCの情報の情報をどのように表示するか見てみよう。
 
 ```cs
 var outputs = transaction.Outputs;
@@ -113,7 +113,7 @@ foreach (TxOut output in outputs)
 }
 ```
 
-インプットとなっているトランザクションを見てみよう。見てみると、前のトランザクションのアウトプットが参照されているのに気づくだろう。各インプットトランザクションが、いま着目しているトランザクションにBTCをあてるためにどのアウトプットを使っているかを示している。
+次にインプットとなっているトランザクションを見てみよう。見てみると、前のトランザクションのアウトプットが参照されているのに気づくだろう。各インプットトランザクションが、いま着目しているトランザクションにBTCをあてるためにどのアウトプットを使っているかを示している。
 
 ```cs
 var inputs = transaction.Inputs;
@@ -129,10 +129,10 @@ foreach (TxIn input in inputs)
 **TxOut**、**Output**と**out**は類義語である。  
 **OutPoint**と混同してはいけないが、この点については後ほど触れる。
 
-要約すると、TxOutはBTCの総計と受け取りての**ScriptPubKey**を示す。
+要約すると、TxOutはBTCの総計と受け取り手の**ScriptPubKey**を示す。
 
 ![](../assets/TxOut.png)  
-As illustration let's create a txout with 21 bitcoin from the first ScriptPubKey in our current transaction:
+上図のとおり、いま題材としているトランザクションにある最初のScriptPubKeyから21BTCを支払うトランザクションアウトプットを作ってみよう。
 
 ```cs
 Money twentyOneBtc = new Money(21, MoneyUnit.BTC);
@@ -140,7 +140,13 @@ var scriptPubKey = transaction.Outputs.First().ScriptPubKey;
 TxOut txOut = new TxOut(twentyOneBtc, scriptPubKey);
 ```
 
-Every **TxOut** is uniquely addressed at the blockchain level by the ID of the transaction which include it and its index inside it. We call such reference an **Outpoint**.
+> 日本語版注：ファイルの先頭にSystem.Linqを使う宣言をする必要がある。
+>
+> ```
+> using System.Linq;
+> ```
+
+すべてのトランザクションアウトプットはトランザクションIDによってビットコインブロックチェーンの中で一意に識別されており、そのトランザクションにはアウトプットやそのアウトプットがトランザクションの中で何番目かを示す示すインデックスが含まれている。その一意に識別できる情報のことを**OutPoint**と呼ぶ。
 
 ![](../assets/OutPoint.png)
 
