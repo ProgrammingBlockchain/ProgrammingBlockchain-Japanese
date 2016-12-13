@@ -146,11 +146,11 @@ TxOut txOut = new TxOut(twentyOneBtc, scriptPubKey);
 > using System.Linq;
 > ```
 
-すべてのトランザクションアウトプットはトランザクションIDによってビットコインブロックチェーンの中で一意に識別されており、そのトランザクションにはアウトプットやそのアウトプットがトランザクションの中で何番目かを示す示すインデックスが含まれている。その一意に識別できる情報のことを**OutPoint**と呼ぶ。
+すべてのトランザクションアウトプットは、そのアウトプット自体とそのアウトプットがトランザクションの中で何番目かを示すインデックスを含む、トランザクションIDによってビットコインブロックチェーンの中で一意に識別されている。その一意に識別できる情報のことを**OutPoint**と呼ぶ。
 
 ![](../assets/OutPoint.png)
 
-For example, the **Outpoint** of the **TxOut** with 13.19683492 BTC in our transaction is \(4788c5ef8ffd0463422bcafdfab240f5bf0be690482ceccde79c51cfce209edd, 0\).
+例えば、いま着目しているトランザクションのトランザクションアウトプットの中で、最初のOutpointは以下である。\(4788c5ef8ffd0463422bcafdfab240f5bf0be690482ceccde79c51cfce209edd, 0\).
 
 ```cs
 OutPoint firstOutPoint = spentCoins.First().Outpoint;
@@ -158,11 +158,11 @@ Console.WriteLine(firstOutPoint.Hash); // 4788c5ef8ffd0463422bcafdfab240f5bf0be6
 Console.WriteLine(firstOutPoint.N); // 0
 ```
 
-Now let’s take a closer look at the inputs \(aka **TxIn**\) of the transaction:
+さて、トランザクションのインプット（すなわち**TxIn**）に目を向けてみよう。
 
 ![](../assets/TxIn.png)
 
-The **TxIn** is composed of the **Outpoint** of the **TxOut** being spent and of the **ScriptSig** \( we can see the ScriptSig as the “Proof of Ownership”\) In our transaction there are actually 9 inputs.
+**TxIn**は支払いに使われた**TxOut**の**Outpoint**と**ScriptSig**（署名のことで所有権の証明とも言える）によって構成されている。今題材にしているトランザクションでは現に9つのインプットがある。
 
 ```cs
 Console.WriteLine(transaction.Inputs.Count); // 9
