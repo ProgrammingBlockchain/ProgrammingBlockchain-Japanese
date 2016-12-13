@@ -168,7 +168,7 @@ Console.WriteLine(firstOutPoint.N); // 0
 Console.WriteLine(transaction.Inputs.Count); // 9
 ```
 
-With the previous outpoint's transaction ID we can review the information associated with that transaction.
+前段のoutpointのトランザクションIDで、そのトランザクションに関連付けられた情報を参照できる。
 
 ```cs
 OutPoint firstPreviousOutPoint = transaction.Inputs.First().PrevOut;
@@ -176,12 +176,13 @@ var firstPreviousTransaction = client.GetTransaction(firstPreviousOutPoint.Hash)
 Console.WriteLine(firstPreviousTransaction.IsCoinBase); // False
 ```
 
-We could continue to trace the transaction IDs back in this manner until we reach a **coinbase transaction**, the transaction including the newly mined coin by a miner.  
-**Exercise:** Follow the first input of this transaction and its ancestors until you find a coinbase transaction!  
-Hint: After a few minutes and 30-40 transaction, I gave up tracing back.  
-Yes, you've guessed right, it is not the most efficient way to do this, but a good exercise.
+やろうと思えばこの方法を使って、**コインベーストランザクション**、つまりマイナーによって新しく発掘されたコインを含むトランザクションにたどり着くまで、トランザクションIDをさかのぼり続けることができる。  
+**Exercise**：題材にしているトランザクションの1番目のインプットをさかのぼり、コインベーストランザクションを見つけよう！  
+ヒント：数分後または3、40分後に僕はさかのぼるのを諦めた。
 
-In our example, the outputs were for a total of 13.19**70**3492 BTC.
+そう、君の推測は正しい。これを行うのは最も効率的な方法ではないが、良い練習にはなる。
+
+今の題材の例では、アウトプットの合計は13.19**70**3492 BTCであった。
 
 ```cs
 Money spentAmount = Money.Zero;
@@ -192,17 +193,17 @@ foreach (var spentCoin in spentCoins)
 Console.WriteLine(spentAmount.ToDecimal(MoneyUnit.BTC)); // 13.19703492
 ```
 
-In this transaction 13.19**68**3492 BTC were received.
+このトランザクションでは、13.19**68**3492 BTCが受け取られている。
 
 **Exercise:** Get the total received amount, as I have been done with the spent amount.
 
-That means 0.0002 BTC \(or 13.19**70**3492 - 13.19**68**3492\) is not accounted for! The difference between the inputs and outputs are called **Transaction Fees** or **Miner’s Fees**. This is the money that the miner collects for including a given transaction in a block.
+0.0002 BTC（言い換えれば13.19**70**3492 - 13.19**68**3492）が計上されていないということだ！インプットとアウトプットの差は**トランザクション手数料**あるいは**マイニング手数料**とか言われている。これはマイナーが、与えられたトランザクションをブロックに含めるためにかき集める手数料となっている。
 
 ```cs
 var fee = transaction.GetFee(spentCoins.ToArray());
 Console.WriteLine(fee);
 ```
 
-You should note that a **coinbase transaction** is the only transaction whose value of output are superior to the value of input. This effectively correspond to coin creation. So by definition there is no fee in a coinbase transaction. The coinbase transaction is the first transaction of every block.  
-The consensus rule enforce that the sum of output's value in the coinbase transaction does not exceed the sum of transaction fees in the block plus the mining reward.
+注意してほしいのだが、**コインベーストランザクション**のみが、そのアウトプットの価値がインプットの価値より高い。これは事実上コインの創造に相当する。よって定義上、コインベーストランザクションに手数料は存在しない。コインベーストランザクションはすべてのブロックの最初のトランザクションとなっている。  
+コンセンサスルールによって、コインベーストランザクションの中のアウトプットの価値の合計が、ブロック内のトランザクション手数料の合計とマイニング報酬の和を超えないこととなっている。
 
