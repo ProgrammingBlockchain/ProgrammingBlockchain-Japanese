@@ -36,40 +36,51 @@ The amount of randomness of the seed is defined by a measure we call **Entropy**
 
 Let’s say you generate a seed from your clock time
 
-例えば、あなたが自分のクロック時間をもとにシード値を生成したとしよう。  
-And let’s imagine that your clock has 1ms of resolution. \(Reality is more ~15ms.\)
+例えば、あなたが自分のクロック時間をもとにシード値を生成したとしよう。
 
+And let’s imagine that your clock has 1ms of resolution. \(Reality is more ~15ms.\)
 そして、１ミリ秒の精度を持ったとしよう。（現実には１５ミリ秒以上。）
 
 If your attacker knows that you generated the key last week, then your seed has  
 1000 \* 60 \* 60 \* 24 \* 7 = 604800000 possibilities.
 
 もし攻撃者が、あなたが先週、鍵を生成したと知ってるとすると、シード値は、
-
 1000 \* 60 \* 60 \* 24 \* 7 = 604800000 通りの可能性がある。
 
 For such attacker, the entropy is LOG\(604800000;2\) = 29.17 bits.
 
-そのような攻撃者にとって、エントロピーは、log<sub>2</sub>(604800000) =29.17 ビットである。
+そのような攻撃者にとって、エントロピーは、log<sub>2</sub>(604800000) = 29.17 ビットである。
 
 And enumerating such number on my home computer took less than 2 seconds. We call such enumeration “brute forcing”.
 
+そのような回数を順番に処理するには、私の自宅のコンピュータでやっても２秒以下しかかからない。このような処理のことを”総当たり式”と呼ぶ。
 
 However let’s say, you use the clock time + the process id for generating the seed.  
 Let’s imagine that there are 1024 different process ids.
 
+でも、例えば、シード値を生成するのに、あなたは、クロック時間とプロセスIDを使ったとする。そして、1024個の別々のプロセスIDが存在すると想像してみよう。
+
 So now, the attacker needs to enumerate 604800000 \* 1024 possibilities, which take around 2000 seconds.  
 Now, let’s add the time when I turned on my computer, assuming the attacker knows I turned it on today, it adds 86400000 possibilities.
+
+そうすると、攻撃者は、604800000 \* 1024 回を順番に当たっていく必要があり、それには2000秒かかる。さて、ここに私がいつコンピューターを起動した時間を足してみよう。攻撃者は私が今日起動したと知っているとすると、86400000 の可能性を追加する。
 
 Now the attacker needs to enumerate 604800000 \* 1024 \* 86400000 = 5,35088E+19 possibilities.  
 However, keep in mind that if the attacker infiltrate my computer, he can get this last piece of info, and bring down the number of possibilities, reducing entropy.
 
+これで、攻撃者は、604800000 \* 1024 \* 86400000 = 5,35088E+19　通りの可能性に当たる必要がある。しかし、覚えておいてほしいのは、もし攻撃者が私のコンピューターに侵入可能であれば、この最後の情報を取得できるので、可能性の数を減らし、エントロピーを下げることができる。
+
 Entropy is measured by **LOG\(possibilities;2\)** and so LOG\(5,35088E+19; 2\) = 65 bits.
+
+エントロピーは、log<sub>2</sub>(possibilities)で計算できるので、log<sub>2</sub>(5,35088E+19)= 65 ビットとなる。
 
 Is it enough? Probably. Assuming your attacker does not know more information about the realm of possibilities.
 
+これは十分だろうか。多分。攻撃者が可能性を左右する情報について、さらに知っていないと仮定するなら。
+
 But since the hash of a public key is 20 bytes = 160 bits, it is smaller than the total universe of the addresses. You might do better.
 
+しかし、公開鍵のハッシュ値は、20バイト = 160ビット なので、
 > **Note:** Adding entropy is linearly harder, cracking entropy is exponentially harder
 
 An interesting way of generating entropy quickly is by asking human intervention. \(Moving the mouse.\)
