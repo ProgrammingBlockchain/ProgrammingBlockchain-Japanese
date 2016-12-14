@@ -16,16 +16,30 @@ iOS上では、私はまだ実装したことはないが、**IRandom** の実�
 
 For a computer, being random is hard. But the biggest issue is that it is impossible to know if a series of number is really random.
 
+コンピュータにとって、ランダムであることは、困難だ。しかし、一番大きな問題は、ある一連の数値が本当にランダムかどうかを知ることが不可能であることである。
+
 If malware modifies your PRNG \(and so, can predict the numbers you will generate\), you won’t see it until it is too late.
+
+もし、マルウエアがあなたのPRNGを改ざんした場合（なので、あなたが生成する数値を予測できる）、手遅れになるまでそれを知ることはない。
 
 It means that a cross platform and naïve implementation of PRNG \(like using the computer’s clock combined with CPU speed\) is dangerous. But you won’t see it until it is too late.
 
+これは、クロスプラットフォームの、もしくは、ネイティブ実装（コンピュータのクロックとCPU）のPRNGは危険であることを意味する。しかし、手遅れになるまで、それを知る由はない。
+
 For performance reasons, most PRNG works the same way: a random number, called **Seed**, is chosen, then a predictable formula generates the next numbers each time you ask for it.
+
+性能性の理由から ほとんどのPRNGは同じように機能する。**シード**とよばれるランダムな数値が選ばれ、あなたが依頼する度に結果予測可能な式により次々と数値が生成される。
 
 The amount of randomness of the seed is defined by a measure we call **Entropy**, but the amount of **Entropy** also depends on the observer.
 
-Let’s say you generate a seed from your clock time.  
+シートのランダムさの量は、エントロピーと我々が予備計測値で定義される、エントロピー量は、観測者に依存する。
+
+Let’s say you generate a seed from your clock time
+
+問えば、、あなたが自分のクロック時間をもとにシード値を生成したとしよう。  
 And let’s imagine that your clock has 1ms of resolution. \(Reality is more ~15ms.\)
+
+そして、
 
 If your attacker knows that you generated the key last week, then your seed has  
 1000 \* 60 \* 60 \* 24 \* 7 = 604800000 possibilities.
