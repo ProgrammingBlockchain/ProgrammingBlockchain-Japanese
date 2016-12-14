@@ -4,7 +4,7 @@
 
 When you call **new Key\(\)**, under the hood, you are using a PRNG \(Pseudo-Random-Number-Generator\) to generate your private key. On windows, it uses the **RNGCryptoServiceProvider**, a .NET wrapper around the Windows Crypto API.
 
-**new Key\(\)**を呼び出すとき、内部ではPRNG\(疑似乱数生成機\)を使って秘密鍵を精製していることになる。ウインドウズ上では、それはWindows Crypto APの.Netラッパーである**RNGCryptoServiceProvider** を使用する。
+**new Key\(\)**を呼び出すとき、内部ではPRNG\(疑似乱数生成機\)を使って秘密鍵を生成している。ウインドウズ上では、それはWindows Crypto APIの.Netラッパーである**RNGCryptoServiceProvider** を使用する。
 
 On Android, I use the **SecureRandom**, and in fact, you can use your own implementation with **RandomUtils.Random**.
 
@@ -16,7 +16,7 @@ iOS上では、私はまだ実装したことはないが、**IRandom** の実�
 
 For a computer, being random is hard. But the biggest issue is that it is impossible to know if a series of number is really random.
 
-コンピュータにとって、ランダムであることは、困難だ。しかし、一番大きな問題は、ある一連の数値が本当にランダムかどうかを知ることが不可能であることである。
+コンピュータにとって、ランダムであることは、困難だ。しかし、一番大きな問題は、ある一連の数値が本当にランダムかどうかを知ることが不可能だということである。
 
 If malware modifies your PRNG \(and so, can predict the numbers you will generate\), you won’t see it until it is too late.
 
@@ -24,11 +24,11 @@ If malware modifies your PRNG \(and so, can predict the numbers you will generat
 
 It means that a cross platform and naïve implementation of PRNG \(like using the computer’s clock combined with CPU speed\) is dangerous. But you won’t see it until it is too late.
 
-これは、クロスプラットフォームの、もしくは、ネイティブ実装（コンピュータのクロックとCPU）のPRNGは危険であることを意味する。しかし、手遅れになるまで、それを知る由はない。
+これは、クロスプラットフォーム、もしくは、ネイティブ実装のPRNG（コンピュータのクロックとCPUを使用する）は危険であることを意味する。しかし、手遅れになるまで、それを知る由はない。
 
 For performance reasons, most PRNG works the same way: a random number, called **Seed**, is chosen, then a predictable formula generates the next numbers each time you ask for it.
 
-性能性の理由から ほとんどのPRNGは同じように機能する。**シード**とよばれるランダムな数値が選ばれ、あなたが依頼する度に結果予測可能な式により次々と数値が生成される。
+パフォーマンス上の理由から ほとんどのPRNGは同じように機能する。**シード**とよばれるランダムな数値が選ばれ、あなたが依頼する度に結果予測可能な式によって次々と数値が生成される。
 
 The amount of randomness of the seed is defined by a measure we call **Entropy**, but the amount of **Entropy** also depends on the observer.
 
@@ -36,15 +36,21 @@ The amount of randomness of the seed is defined by a measure we call **Entropy**
 
 Let’s say you generate a seed from your clock time
 
-問えば、、あなたが自分のクロック時間をもとにシード値を生成したとしよう。  
+例えば、あなたが自分のクロック時間をもとにシード値を生成したとしよう。  
 And let’s imagine that your clock has 1ms of resolution. \(Reality is more ~15ms.\)
 
-そして、
+そして、１ミリ秒の精度を持ったとしよう。（実際には１５ミリ秒以上。）
 
 If your attacker knows that you generated the key last week, then your seed has  
 1000 \* 60 \* 60 \* 24 \* 7 = 604800000 possibilities.
 
+もし攻撃者が、あなたが先週、鍵を生成したと知ってるとすると、シード値は、
+
+1000 \* 60 \* 60 \* 24 \* 7 = 604800000 通りの可能性がある。
+
 For such attacker, the entropy is LOG\(604800000;2\) = 29.17 bits.
+
+そのような攻撃者にとって、エントロピーは、
 
 And enumerating such number on my home computer took less than 2 seconds. We call such enumeration “brute forcing”.
 
