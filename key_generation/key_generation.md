@@ -39,7 +39,7 @@ Let’s say you generate a seed from your clock time
 例えば、あなたが自分のクロック時間をもとにシード値を生成したとしよう。  
 And let’s imagine that your clock has 1ms of resolution. \(Reality is more ~15ms.\)
 
-そして、１ミリ秒の精度を持ったとしよう。（実際には１５ミリ秒以上。）
+そして、１ミリ秒の精度を持ったとしよう。（現実には１５ミリ秒以上。）
 
 If your attacker knows that you generated the key last week, then your seed has  
 1000 \* 60 \* 60 \* 24 \* 7 = 604800000 possibilities.
@@ -50,7 +50,12 @@ If your attacker knows that you generated the key last week, then your seed has
 
 For such attacker, the entropy is LOG\(604800000;2\) = 29.17 bits.
 
-そのような攻撃者にとって、エントロピーは、
+そのような攻撃者にとって、エントロピーは、log<sub>2</sub>(604800000) =29.17 bits
+
+$$
+aa
+$$
+
 
 And enumerating such number on my home computer took less than 2 seconds. We call such enumeration “brute forcing”.
 
