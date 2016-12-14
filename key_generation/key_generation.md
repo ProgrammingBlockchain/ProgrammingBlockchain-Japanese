@@ -50,14 +50,10 @@ If your attacker knows that you generated the key last week, then your seed has
 
 For such attacker, the entropy is LOG\(604800000;2\) = 29.17 bits.
 
-そのような攻撃者にとって、エントロピーは、log<sub>2</sub>(604800000) =29.17 bits
-
-$$
-aa
-$$
-
+そのような攻撃者にとって、エントロピーは、log<sub>2</sub>(604800000) =29.17 ビットである。
 
 And enumerating such number on my home computer took less than 2 seconds. We call such enumeration “brute forcing”.
+
 
 However let’s say, you use the clock time + the process id for generating the seed.  
 Let’s imagine that there are 1024 different process ids.
