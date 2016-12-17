@@ -1,11 +1,14 @@
 ## “The Blockchain is more than just Bitcoin” {#the-blockchain-is-more-than-just-bitcoin}
 
-The interesting thing is that this same sentence is used by two different groups of people.  
-It is used by Bitcoin-As-A-Currency believers as argument for their bullish prediction of Bitcoin’s value.  
-It is also used by those who do not believe in the success of the currency, as an attempt to explain why Bitcoin has so much interest.  
+「ビットコインブロックチェーンはビットコインだけではない。」
 
-But there is one thing we all agree on: an immutable database that cannot be censored, tampered with, or erased that is duplicated all around the world will have tremendous impact on other industries.  
+おもしろいことに、2つの異なるグループによってこのセンテンスが使われることがある。  
+ビットコインを貨幣として信じている人たちが、ビットコインの価値が上がる強気な予想のための主張として使われる。  
+また貨幣としてはビットコインが成功するとは信じていない人たちによっては、なぜビットコインがこんなにも興味深いのかを説明する試みとして言われる。
 
-Notaries who record facts that can be used in court could store their documents permanently in The Blockchain. Audits can become automatic and provable when assets and ownership are stored and transferred on The Blockchain. All Money Transmitters can prove their solvency publicly. Automatic trading scripts can trade between themselves without human intervention or authorization of a central authority.  
+しかし1つ私たち皆が合意できることがある。検閲、改ざんや削除ができず、世界中に複製される普遍のデータベースが、他の産業にとてつもないインパクトを与えるだろうということだ。
 
-In the rest of this book we will explore the fundamentals required to enable all of these technologies and more. It all starts with spending a bitcoin.
+裁判所で使うことができる事実を記録する公証人だったら、ビットコインブロックチェーンに永久にそのドキュメントを記録できる。監査人だったら、資産や所有権がビットコインブロックチェーンに蓄積され、転送されたら、自動化されつつ立証可能となるだろう。送金する人は皆、公に自分の支払い能力を証明することができる。人の仲介や中央管理者の許可なく、自動的に交換するスクリプトでトレードができる。
+
+この本の続きで、これらの技術のすべてまたはより多くのことを可能とするために必要とする、基本を解説する。ビットコインを支払うことは始まりに過ぎない。
+
