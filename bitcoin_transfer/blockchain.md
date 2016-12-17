@@ -1,18 +1,21 @@
-## Blockchain {#blockchain}
+## ブロックチェーン {#blockchain}
 
-You might have noticed that while we proved ownership of the spent TxOut, and that we have not proven the TxOut actually exists. This is where the main function of the Blockchain shines:
+使われたトランザクションアウトプットの所有権を証明した一方で、そのトランザクションアウトプットがたしかに存在しているかどうかは証明していないことに、ひょっとすると気づいているかもしれない。これはビットコインブロックチェーンの主な機能で注目を浴びているポイントだ。
 
-The Blockchain is the database of all transactions that have happened since the the first Bitcoin transaction, known as the Genesis block. The Blockchain is duplicated all around the world. If you use Bitcoin Core, you have the whole Blockchain on your computer. Once a transaction appears on the Blockchain, it is very easy to prove its existence.
+ビットコインブロックチェーンは、ジェネシスブロックとして知られている最初のビットコインのトランザクションが発生して以降の、すべてのトランザクションのデータベースとなっている。ビットコインブロックチェーンは世界中に複製されている。もしビットコインコアを使っているなら、あなたのコンピューターにもビットコインブロックチェーンのすべての集合があるのだ。一度1トランザクションがビットコインブロックチェーン上で登場すると、その存在を証明するのはとても簡単なのだ。
 
-**Miners** are entities whose only goal is to insert a transaction in The Blockchain. However miners do not modify the blockchain everytime they receive one transaction. Instead each of them try to add a whole batch of transaction at the same time known as a **block**. Other nodes on the network confirm the new block obeys the rules set forth in the Bitcoin protocol. If two miners add a block at the same time, we have a **fork**, ultimately only the branch of the fork with the most **work** will be continued. If a miner tries to include an invalid transaction in his block, the other nodes will not recognize it and the miner loses the investment spent on creating the block.
+**マイナー**は、ビットコインブロックチェーンにトランザクションを記録することだけをゴールとしている。しかしマイナーは1トランザクションを受け取るたびにビットコインブロックチェーンを操作しているわけではない。そうではなく、マイナーはそれぞれ、**ブロック**として知られている、同時に発生したトランザクションのひと束をブロックチェーンに加えようと試みている。ネットワーク上にある他のノードは、その新しいブロックがビットコインプロトコルに示されているルールに従っているかを確認する。もし2人のマイナーが同時にブロックに加えたら、**フォー**クが生まれ、しかし結局は最もマイニング**労力（work）**が費やされたフォークだけが生き残る。もしマイナーがブロックに無効なトランザクションを含めようとしたら、他のノードがそれを認識せず、そのマイナーはブロックを作るために使われる投資金を失うことになる。
 
-Once a miner manages to submit a valid block all transactions inside are considered **Confirmed**. When this happens all miners must discard their current work and begin with new transactions. When a block is confirmed it is written into the Blockchain, and the likelihood of it being undone decreases dramatically with every subsequent block.
+一度マイナーが有効なブロックを加えられたら、そのブロックに含まれているすべてのトランザクションは**Confirmed**となったと認識される。このときすべてのマイナーはその時点で取り組んでいるマイニングを破棄して新しくトランザクションをブロックに含める作業を始めなければならない。ブロックが確定されたら、ビットコインブロックチェーンにそれが書き込まれ、その後続くすべてのブロックによって、そのブロックがなかったことになる可能性は劇的に下がる。
 
-For the first time in history we have a database which can’t easily be rewritten, eliminates the need for trust, resists censorship, and is widely distributed. Comparing the Blockchain to a ledger is only relevant if we consider Bitcoin as a currency.
+歴史の中で初めて、私たちは簡単に書き換えられない、信用の必要性を排除し、中央管理者に反抗し、広く分配されるデータベースを手にした。ビットコインブロックチェーンを台帳にたとえるのは、ブットコインを台帳として考えるときにそのたとえができるだけだ。
 
-The Blockchain is a database, and you give meaning to its data. As you will soon discover, a bitcoin transaction can bear more information than just bitcoin transfers. A bitcoin transaction is a row in a database that can never be erased.
+ビットコインブロックチェーンはデータベースで、だれでもそのデータに意味を与えることがデキる。すぐに気づくだろうが、ビットコインのトランザクションはビットコインのただ移動だけではなく、より多くの情報を持つことができる。ビットコインのトランザクションは消去することができないデータベースの1レコードなのだ。
 
-As a user, you can verify that a specific transaction exists in the Blockchain in two different ways:
+ユーザーとして、2つの方法でビットコインブロックチェーンに特定のトランザクションが存在することを確認することができる。
 
-*   Check the entire Blockchain, which at the time of this writing is several gigabytes in size.
-*   Ask for a partial merkel tree, which are a few kilobytes. We will talk about merkel trees more as it relates to Simple Payment Verification.
+* すべてのブロックチェーンを確認する。すべてのブロックチェーンは、本書を書いている時点で数十ギガサイズとなっている。
+* 数キロバイトの部分的なマークルツリーに問い合わせる。マークルツリーについては後で、Simple Payment Verificationとからめて解説する。
+
+
+
