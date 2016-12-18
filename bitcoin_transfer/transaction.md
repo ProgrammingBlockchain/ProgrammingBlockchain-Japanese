@@ -178,7 +178,7 @@ var firstPreviousTransaction = client.GetTransaction(firstPreviousOutPoint.Hash)
 Console.WriteLine(firstPreviousTransaction.IsCoinBase); // False
 ```
 
-> 日本語版注：NBitcoinでOutPointを参照している。
+> 日本語版注：firstPreviousOutPointは、NBitcoinでOutPointを参照している。2行目ではOutPointから得られたトランザクションハッシュから、QBitNinjaを使ってインプットとなったトランザクションを取得している。
 
 やろうと思えばこの方法を使って、**コインベーストランザクション**、つまりマイナーによって新しく発掘されたコインを含むトランザクションにたどり着くまで、トランザクションIDをさかのぼり続けることができる。  
 **Exercise**：題材にしているトランザクションの1番目のインプットをさかのぼり、コインベーストランザクションを見つけよう！  
