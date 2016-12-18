@@ -6,9 +6,9 @@ As you proceed through this lesson you will add code line by line as it is prese
 
 前のレッスンでやったように、使いたい**トランザクションアウトプット**を含む**トランザクション**を見てみよう。
 
-Create a new **Console Project** \(&gt;.net45\) and install **QBitNinja.Client** NuGet.
+新しい**コンソールプロジェクト**（.NET4.5以上）を作り、**QBitNinja.Client**のNuGetパッケージをインストールしてほしい。
 
-Have you already generated and noted a private key to yourself? Have you already get the corresponding bitcoin address and sent some funds there? If not, don't worry, I quickly reiterate how you can do it:
+もう秘密鍵を作成し、表示させられるだろうか？もう対応するビットコインアドレスを取得し、そこにビットコインを送金できるだろうか？もしできなくても心配しないでほしい。どうやってそれができるかすぐに何度も繰り返そう。
 
 ```cs
 var network = Network.Main;
@@ -21,9 +21,9 @@ Console.WriteLine(bitcoinPrivateKey);
 Console.WriteLine(address);
 ```
 
-Note the **bitcoinPrivateKey**, the **address**, send some coins there and note the transaction id \(you can find it \(probably\) in your wallet software or with a blockexplorer, like [blockchain.info](http://blockchain.info/)\).
+**bitcoinPrivateKey**と**address**の値をメモし、そこに複数コインを送ってそのトランザクションIDをメモしよう。（トランザクションIDは[blockchain.info](https://blockchain.info/)のようなウォレットやブロックエクスプローラーで見つけられる）
 
-Import your private key:
+秘密鍵をインポートする。
 
 ```cs
 var bitcoinPrivateKey = new 
@@ -35,7 +35,7 @@ Console.WriteLine(bitcoinPrivateKey); // cSZjE4aJNPpBtU6xvJ6J4iBzDgTmzTjbq8w2kqn
 Console.WriteLine(address); // mzK6Jy5mer3ABBxfHdcxXEChsn3mkv8qJv
 ```
 
-And finally get the transaction info:
+そして最後にトランザクションの情報を取得する。
 
 ```cs
 var client = new QBitNinjaClient(network);
@@ -46,11 +46,11 @@ Console.WriteLine(transactionResponse.TransactionId); // e44587cf08b4f03b0e8b4ae
 Console.WriteLine(transactionResponse.Block.Confirmations);
 ```
 
-Now we have every information for creating our transactions. The main questions are: **from where, to where and how much?**
+さあ、トランザクションを生成する情報はすべて揃った。必要な質問はこれだ。「**どこから、どこへ、いくら？**」
 
-### From where?
+### どこから？
 
-In our case, we want to spend the second outpoint. Here's how we have figured this out:
+このケースでは、2番目のアウトポイントを使いたいが、どのようにそれを把握したかを示す。
 
 ```cs
 var receivedCoins = transactionResponse.ReceivedCoins;
@@ -67,7 +67,7 @@ if(outPointToSpend == null)
 Console.WriteLine("We want to spend {0}. outpoint:", outPointToSpend.N + 1);
 ```
 
-For the payment you will need to reference this outpoint in the transaction. You create a transaction as follows:
+支払いのためにはトランザクションの中でこのoutpointを参照する必要がある。以下のようにトランザクションを生成する。
 
 ```cs
 var transaction = new Transaction();
@@ -77,31 +77,31 @@ transaction.Inputs.Add(new TxIn()
 });
 ```
 
-### To where?
+### どこへ？
 
-Do you remember the main questions? **From where, to where and how much?**  
-Constructing **TxIn** and adding to the transaction was the answer the "from where" question.  
-Constructing **TxOut** and adding to the transaction is the answer for the remaining ones.
+必要な質問は覚えているだろうか？「**どこから、どこへ、いくら？**」だ。  
+**トランザクションインプット**を組み立ててトランザクションに加えることが、「どこから」という質問への答えだった。  
+**トランザクションアウトプット**を組み立ててトランザクションに加えることが、残っている質問の1つへの答えである。
 
-The donation address of this book is: [1KF8kUVHK42XzgcmJF4Lxz4wcL5WDL97PB](https://blockchain.info/address/1KF8kUVHK42XzgcmJF4Lxz4wcL5WDL97PB)  
-This money goes into my "Coffee and Sushi Wallet" that will keep me fed and compliant while writing the rest of the book.  
-If you succeed to complete this challange you will be able to find your contribution among **Hall of the Makers** on [http://n.bitcoin.ninja/](http://n.bitcoin.ninja/) \(ordered by generosity\).
+この本への寄付アドレス：[1KF8kUVHK42XzgcmJF4Lxz4wcL5WDL97PB](https://blockchain.info/address/1KF8kUVHK42XzgcmJF4Lxz4wcL5WDL97PB)  
+寄付されたお金は本の残りを書いている間、僕が食事し、人の言いなりになるのに使う「Coffee and Sushi Wallet」という僕のウォレットに入る。  
+もしこのチャレンジを完遂させることに成功すると、[http://n.bitcoin.ninja/](http://n.bitcoin.ninja/)の**Hall of the Makers**の中に自分の寄付を見つけることができるだろう（寛大さの順に表示される）。
 
 ```cs
 var hallOfTheMakersAddress = new BitcoinPubKeyAddress("1KF8kUVHK42XzgcmJF4Lxz4wcL5WDL97PB");
 ```
 
-If you are working on the testnet, send the testnet coins to any testnet address.
+もし開発環境上でコードを動かしているなら、どの開発環境のアドレスにでも良いのでコインを送ってみよう。
 
 ```cs
 var hallOfTheMakersAddress = BitcoinAddress.Create("mzp4No5cmCXjZUpf112B1XWsvWBfws5bbB");
 ```
 
-### How much?
+### いくら？
 
-If you want to send **0.5 BTC** from a **transaction input** with **1 BTC** you actually have to spend all!  
-As the diagram shows below, your **transaction output** specifies  **0.5** BTC to Hall of The Makers and **0.4999** back to you.  
-What happens to the remaining **0.0001 BTC**? This is the miner fee in order to incentivize them to add this transaction into their next block.
+もし**1BTC**を伴う**トランザクションインプット**から**0.5BTC**を使いたいとしても、確実にすべてを使い切らないといけないのだ！  
+図解が以下に示すとおり、**トランザクションアウトプット**が**0.5**BTCをHall of The Makersに、そしてあなたに**0.4999**BTCを戻すように仕分けている。  
+残りの**0.0001BTC**はどうなったのだろう？これはマイナーの手数料となっていて、彼らがこのトランザクションを次のブロックに含めるためのインセンティブとなっているのであった。
 
 ![](../assets/SpendTx.png)
 
