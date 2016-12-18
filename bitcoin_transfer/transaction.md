@@ -126,7 +126,7 @@ foreach (TxIn input in inputs)
 }
 ```
 
-**TxOut**、**Output**と**out**は類義語である。  
+**TxOut**、**Output**と**out**は同義語である。  
 **OutPoint**と混同してはいけないが、この点については後ほど触れる。
 
 要約すると、TxOutはBTCの総計と受け取り手の**ScriptPubKey**を示す。
