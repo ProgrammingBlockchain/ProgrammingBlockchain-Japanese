@@ -94,7 +94,7 @@ foreach (var coin in receivedCoins)
 > ```
 
 QBitNinjaのGetTransactionResponseクラスを使って、受け取ったBTCの情報を表示した。  
-**Exercise : **QBitNinjaのGetTransactionResponseクラスを使って、支払ったBTCの情報を表示してみよう！
+**Exercise : **QBitNinjaのGetTransactionResponseクラスを使って、使われたBTCの情報を表示してみよう！
 
 さて、NBitcoinのTransactionクラスを使って受け取ったBTCの情報の情報をどのように表示するか見てみよう。
 
@@ -158,6 +158,8 @@ Console.WriteLine(firstOutPoint.Hash); // 4788c5ef8ffd0463422bcafdfab240f5bf0be6
 Console.WriteLine(firstOutPoint.N); // 0
 ```
 
+> 日本語版注：QBitNinjaClientでOutPointを参照している。なお、spentCoinsはQBitNinjaのGetTransactionResponseクラスを使って、使われたBTCの情報を表示するときに設定する変数である。
+
 さて、トランザクションのインプット（すなわち**TxIn**）に目を向けてみよう。
 
 ![](../assets/TxIn.png)
@@ -175,6 +177,8 @@ OutPoint firstPreviousOutPoint = transaction.Inputs.First().PrevOut;
 var firstPreviousTransaction = client.GetTransaction(firstPreviousOutPoint.Hash).Result.Transaction;
 Console.WriteLine(firstPreviousTransaction.IsCoinBase); // False
 ```
+
+> 日本語版注：NBitcoinでOutPointを参照している。
 
 やろうと思えばこの方法を使って、**コインベーストランザクション**、つまりマイナーによって新しく発掘されたコインを含むトランザクションにたどり着くまで、トランザクションIDをさかのぼり続けることができる。  
 **Exercise**：題材にしているトランザクションの1番目のインプットをさかのぼり、コインベーストランザクションを見つけよう！  
