@@ -2,7 +2,7 @@
 
 さあ今や**ビットコインアドレス**、**ScriptPubKey**、**秘密鍵**や**マイナー**とはなにかがわかったのだから、自分の手で自分が作り出す初の**トランザクション**を作れるだろう。
 
-As you proceed through this lesson you will add code line by line as it is presented to build a method that will leave feedback for the book in a Twitter style message.
+このレッスンを進めるにつれて1行ごとにコードを追加していくにつれて、Twitterスタイルなメッセージ形式でこの本へのフィードバックを残すメソッドを作るようになっている。
 
 前のレッスンでやったように、使いたい**トランザクションアウトプット**を含む**トランザクション**を見てみよう。
 
@@ -122,8 +122,10 @@ transaction.Outputs.Add(hallOfTheMakersTxOut);
 transaction.Outputs.Add(changeBackTxOut);
 ```
 
-We can do some finetuning here.  
-You can check the address on a blockexplorer I am working with on this whole chapter example \(I am working on the testnet\):   [http://tbtc.blockr.io/address/info/mzK6Jy5mer3ABBxfHdcxXEChsn3mkv8qJv](http://tbtc.blockr.io/address/info/mzK6Jy5mer3ABBxfHdcxXEChsn3mkv8qJv)
+ここで微調整をしてみよう。  
+この章全体で使用している例で僕が使っているビットコインアドレスをブロックエクスプローラーでチェックできる。（開発環境を使っている。）
+
+[http://tbtc.blockr.io/address/info/mzK6Jy5mer3ABBxfHdcxXEChsn3mkv8qJv](http://tbtc.blockr.io/address/info/mzK6Jy5mer3ABBxfHdcxXEChsn3mkv8qJv)
 
 ```cs
 // How much you want to TO
@@ -139,7 +141,7 @@ var txInAmount = receivedCoins[(int) outPointToSpend.N].TxOut.Amount;
 Money changeBackAmount = txInAmount - hallOfTheMakersAmount - minerFee;
 ```
 
-Let's add our calculated values to our TxOuts:
+計算した値をトランザクションアウトプットに追加する。
 
 ```cs
 TxOut hallOfTheMakersTxOut = new TxOut()
@@ -155,17 +157,17 @@ TxOut changeBackTxOut = new TxOut()
 };
 ```
 
-And add them to our transaction:
+そしてそれらをトランザクションに追加する。
 
 ```cs
 transaction.Outputs.Add(hallOfTheMakersTxOut);
 transaction.Outputs.Add(changeBackTxOut);
 ```
 
-### Message on The Blockchain
+### ビットコインブロックチェーン上のメッセージ
 
-Now add your feedback! This must be less than 40 bytes, or it will crash the application.  
-This feedback, along with your transaction will appear \(after transaction is confirmed\) in the [Hall of The Makers](http://n.bitcoin.ninja/).
+さあ、フィードバックを追加しよう！フィードバックは40バイト以下でなければならない。そうでないとアプリケーションがクラッシュする。  
+このフィードバックはトランザクションと一緒に、（トランザクションが承認された後に）[Hall of The Makers](http://n.bitcoin.ninja/)の中に現れる。
 
 ```cs
 var message = "nopara73 loves NBitcoin!";
@@ -177,8 +179,8 @@ transaction.Outputs.Add(new TxOut()
 });
 ```
 
-To sum up take a look at my whole transaction before signing:  
-I have 3 **TxOut**, 2 with **value**, 1 without **value** \(with the message\). You can notice the differences between the **scriptPubKey**s of the "normal" **TxOut**s and the **scriptPubKey** of the **TxOut** with the message:
+まとめるために、署名する前にトランザクション全体を見てほしい。  
+3つの**トランザクションアウトプット**があり、2つは**コイン付き**で、1つは**コインなし**（メッセージあり）となっている。”普通の”**トランザクションアウトプット**とメッセージ付きの**トランザクションアウトプット**の**ScriptPubKey**ではちがいがあることに気づくだろう。
 
 ```json
 {
@@ -214,8 +216,8 @@ I have 3 **TxOut**, 2 with **value**, 1 without **value** \(with the message\). 
 }
 ```
 
-Take a closer look at **TxIn**. We have **prev\_out** and **scriptSig** there.  
-**Exercise:** try to figure out what will be and how to get the **scriptSig** in our code before you read further!
+**トランザクションインプット**により着目してほしい。そこに**prev\_out**と**scriptSig**がある。  
+**Exercise**：読み進む前に、このコードの中で**scriptSig**が何になるかとどのように取得できるかをつきとめてみよう！
 
 Let's check out the **hash** of **prev\_out** in a blockexplorer: [http://tbtc.blockr.io/tx/info/e44587cf08b4f03b0e8b4ae7562217796ec47b8c91666681d71329b764add2e3](http://tbtc.blockr.io/tx/info/e44587cf08b4f03b0e8b4ae7562217796ec47b8c91666681d71329b764add2e3)  
 In **prev\_out** **n** is 1. Since we are indexing from 0, this means I want to spend the second output of the transaction.  
