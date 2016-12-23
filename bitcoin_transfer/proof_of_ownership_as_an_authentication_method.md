@@ -1,5 +1,6 @@
 ## Proof of ownership as an authentication method {#proof-of-ownership-as-an-authentication-method}
-> [[2016.05.02](https://www.youtube.com/watch?v=dZNtbAFnr-0)] My name is Craig Wright and I am about to demonstrate a signing of a message with the public key that is associated with the first transaction ever done in Bitcoin.  
+
+> \[[2016.05.02](https://www.youtube.com/watch?v=dZNtbAFnr-0)\] 私の名前はクレイグ・ライトだ。これからビットコインで最初に作成されたトランザクションに関連付けられた公開鍵を使ってメッセージに署名することをデモンストレーションしよう。
 
 ```cs
 var bitcoinPrivateKey = new BitcoinSecret("XXXXXXXXXXXXXXXXXXXXXXXXXX");
@@ -7,14 +8,16 @@ var bitcoinPrivateKey = new BitcoinSecret("XXXXXXXXXXXXXXXXXXXXXXXXXX");
 var message = "I am Craig Wright";
 string signature = bitcoinPrivateKey.PrivateKey.SignMessage(message);
 Console.WriteLine(signature); // IN5v9+3HGW1q71OqQ1boSZTm0/DCiMpI8E4JB1nD67TCbIVMRk/e3KrTT9GvOuu3NGN0w8R2lWOV2cxnBp+Of8c=
-```  
+```
 
-Was that so hard?  
+これはそんなに難しいことだろうか？
 
-You may remember Craig Wright, who really wanted us to believe he is Satoshi Nakamoto.  
-He had successfully convinced a handful of influential Bitcoin people and journalists with some social engineering.  
-Fortunately digital signatures do not work that way.  
-Let's quickly find on the [Internet](https://en.bitcoin.it/wiki/Genesis_block) the first ever bitcoin address, associated with the genesis block: [1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa](https://blockchain.info/address/1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa) and verify his claim:  
+クレイグ・ライトという人物を覚えているかもしれない。彼は自分がサトシ・ナカモトであると私たちに切に信じでほしいと思っていた人物だ。  
+彼はいくつかの簡単なエンジニアリングを使って、一握りの影響力のあるビットコイン業界の人物やジャーナリストを納得させることに成功した。  
+が、幸運なことにデジタル署名はそんなにうまくいかなかった。  
+ジェネシスブロックにある、最初のビットコイントランザクションのアドレスを[インターネット](https://en.bitcoin.it/wiki/Genesis_block)でさくっと見てみよう。
+
+[1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa](https://blockchain.info/address/1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa) とある。さあ彼の主張を確かめてみよう。
 
 ```cs
 var message = "I am Craig Wright";
@@ -24,23 +27,25 @@ var address = new BitcoinPubKeyAddress("1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa");
 bool isCraigWrightSatoshi = address.VerifyMessage(message, signature);
 
 Console.WriteLine("Is Craig Wright Satoshi? " + isCraigWrightSatoshi);
-```  
+```
 
-SPOILER ALERT! The bool will be false.   
+ネタバレ！結果はfalseになるだろう。
 
-Here is how you prove you are the owner of an address without moving coins:  
+ここにコインを移動させずにどうやって特定のアドレスを自分のものだと証明できるかを示す。
 
 **Address:**  
 [1KF8kUVHK42XzgcmJF4Lxz4wcL5WDL97PB](https://blockchain.info/address/1KF8kUVHK42XzgcmJF4Lxz4wcL5WDL97PB)  
 **Message:**  
 Nicolas Dorier Book Funding Address  
 **Signature:**  
-H1jiXPzun3rXi0N9v9R5fAWrfEae9WPmlL5DJBj1eTStSvpKdRR8Io6/uT9tGH/3OnzG6ym5yytuWoA9ahkC3dQ=  
+H1jiXPzun3rXi0N9v9R5fAWrfEae9WPmlL5DJBj1eTStSvpKdRR8Io6/uT9tGH/3OnzG6ym5yytuWoA9ahkC3dQ=
 
-This constitutes proof that Nicolas Dorier owns the private key of the book.  
-**Exercise:** Verify that Nicolas sensei is not lying!  
+これはNicolas Dorierがこの本の秘密鍵を所有していることの証明で構成されている。  
+**Exercise：**Nicolas先生がうそをついていないことを確かめてみよう！
 
-### Sidenote
-Do you know how PGP works? Pretty similar, right?  
-Maybe this can be the foundation of a more user friendly PGP alternative.  
-Please build it on top of NBitcoin:-)
+### 追記
+
+PGPがどのように動いているか知っているだろうか？ビットコインブロックチェーンととてもよく似ていないだろうか？  
+たぶんビットコインブロックチェーンはよりユーザーフレンドリーなPGPの代わりとしての基盤となり得るだろう。  
+どうかNBitcoinでそれを作って欲しい。:-\)
+
