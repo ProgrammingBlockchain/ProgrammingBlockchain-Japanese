@@ -219,38 +219,40 @@ transaction.Outputs.Add(new TxOut()
 **トランザクションインプット**により着目してほしい。そこに**prev\_out**と**scriptSig**がある。  
 **Exercise**：読み進む前に、このコードの中で**scriptSig**が何になるかとどのように取得できるかをつきとめてみよう！
 
-Let's check out the **hash** of **prev\_out** in a blockexplorer: [http://tbtc.blockr.io/tx/info/e44587cf08b4f03b0e8b4ae7562217796ec47b8c91666681d71329b764add2e3](http://tbtc.blockr.io/tx/info/e44587cf08b4f03b0e8b4ae7562217796ec47b8c91666681d71329b764add2e3)  
-In **prev\_out** **n** is 1. Since we are indexing from 0, this means I want to spend the second output of the transaction.  
-In the blockexplorer we can see the corresponding address is `mzK6Jy5mer3ABBxfHdcxXEChsn3mkv8qJv` and I can get the scriptSig from the address like this:
+ブロックエクスプローラーで、**prev\_out**の**ハッシュ**をチェックしてみよう。
+
+[http://tbtc.blockr.io/tx/info/e44587cf08b4f03b0e8b4ae7562217796ec47b8c91666681d71329b764add2e3](http://tbtc.blockr.io/tx/info/e44587cf08b4f03b0e8b4ae7562217796ec47b8c91666681d71329b764add2e3)  
+ここで**prev\_out**の数は1つだ。インデックスは0から始まるから、トランザクションの2番目のアウトプットを使いたいということになる。  
+ブロックエクスプローラーの中で相当するアドレスが`mzK6Jy5mer3ABBxfHdcxXEChsn3mkv8qJv` であるとわかり、このようにアドレスからscriptSigが得られる。
 
 ```cs
 var address = BitcoinAddress.Create("mzK6Jy5mer3ABBxfHdcxXEChsn3mkv8qJv");
 transaction.Inputs[0].ScriptSig = address.ScriptPubKey;
 ```
 
-### Sign your transaction
+### トランザクションに署名する
 
-Now that we have created the transaction, we must sign it. In other words, you will have to prove that you own the TxOut that you referenced in the input.
+さあトランザクションを作成したので、署名しなければならない。言い換えれば、私たちはトランザクションインプットの中で参照したトランザクションアウトプットが自分のものであると証明しなければならないのだ。
 
-Signing can be [complicated](https://en.bitcoin.it/w/images/en/7/70/Bitcoin_OpCheckSig_InDetail.png), but we’ll make it simple.
+署名は[複雑](https://en.bitcoin.it/w/images/en/7/70/Bitcoin_OpCheckSig_InDetail.png)だと思われるかもしれないが、単純化できる。
 
-First let's revisit the **scriptSig** of **in**, how we can get it from code. Remember, we copypasted the address above from a blockexplorer, now let's get it from our QBitNinja transactionResponse:
+最初に**scriptSig**に**入れた値**から、どのようにそれを得たかをコードから振り返ってみよう。思い出してほしい、ブロックエクスプローラーから上記のアドレスをコピー＆ペーストしただろうが、今度はQBitNinjaのtransactionResponseから取得してみよう。
 
 ```cs
 transaction.Inputs[0].ScriptSig =  bitcoinPrivateKey.ScriptPubKey;
 ```
 
-Then you need to give your private key for signing:
+そして秘密鍵を署名のために与える必要がある。
 
 ```cs
 transaction.Sign(bitcoinPrivateKey, false);
 ```
 
-### Propagate your transactions
+### トランザクションを伝播させる
 
-Congratulations, you have signed your first transaction! Your transaction is ready to roll! All that is left is to propagate it to the network so the miners can see it.
+これで君の最初のトランザクションに署名したのだ。おめでとう！トランザクションはもうその役目を果たす準備ができている。残るはマイナーがそのトランザクションを把握できるようにネットワークに伝播させるだけだ。
 
-#### With QBitNinja:
+#### QBitNinjaを使って：
 
 ```cs
 BroadcastResponse broadcastResponse = client.Broadcast(transaction).Result;
@@ -267,7 +269,7 @@ else
 }
 ```
 
-#### With your own Bitcoin Core:
+#### インストールされているBitcoin Coreを使って：
 
 ```cs
 using (var node = Node.ConnectToLocal(network)) //Connect to the node
@@ -281,11 +283,11 @@ using (var node = Node.ConnectToLocal(network)) //Connect to the node
 }
 ```
 
-The **using** code block will take care of closing the connection to the node. That's it!
+**ここで使っている**コードブロックはノードへのコネクションを閉じるところまで手当てしている。これがすべてだ！
 
-You can also connect directly to the Bitcoin network, however I advise you to connect to your own trusted node \(faster and easier\)
+ビットコインネットワークに直接接続することもできるがしかし、信用されているノードに接続することをおすすめする（そのほうがより早くより簡単だ）。
 
-## Need more practice?
+## より多くの演習が必要なら：
 
 Youtube: [How to make your first transaction with NBitcoin](https://www.youtube.com/watch?v=X4ZwRWIF49w)  
 CodeProject: [Create a Bitcoin transaction by hand.](http://www.codeproject.com/Articles/1151054/Create-a-Bitcoin-transaction-by-hand)  
