@@ -26,27 +26,27 @@ OP_DUP OP_HASH160 0067c8970e65107ffbb436a49edd8cb8eb6b567f OP_EQUALVERIFY OP_CHE
 0 0067c8970e65107ffbb436a49edd8cb8eb6b567f
 ```
 
-アップグレードしていないノードにとっては、これはスタックに対しての2つのプッシュとしてしか見えない。This means that any `scriptSig` can spend them. So even without the signatures, old nodes will consider such transactions valid. New nodes interprete the first push as the **witness version** and the second push as the **witness program**.
+アップグレードしていないノードにとっては、これはスタックに対しての2つのプッシュとしてしか見えない。これはどういうことかというと、どんな`scriptSig` でもそれらのビットコインを使えてしまうということだ。だから署名がなくてさえも古いノードはどのトランザクションを有効とみなしてしまう。新しいノードは最初のプッシュを**witness version**と解釈し、2番目のプッシュを**witness program**とみなす。
 
-But new nodes will require the signature to get the transaction verified.
+しかし新しいノードはトランザクションを有効とするために署名を必要とする。
 
-**In NBitcoin, spending a P2WPKH output is not different from spending a normal P2PKH.  
-To get the **`ScriptPubKey`** to use from a public key, use **`PubKey.WitHash`** instead of **`PubKey.Hash`**.**
+**NBitcoinでは、P2WPKHのアウトプットを使用することは普通のP2PKHを使用する方法と異なる。  
+公開鍵を得るための**`ScriptPubKey`** を取得するために、**`PubKey.Hash`**ではなく**`PubKey.WitHash`**を使う。**
 
 ```cs
 var key = new Key();
 Console.WriteLine(key.PubKey.WitHash.ScriptPubKey);
 ```
 
-Which will output your something like
+そうするとこのような出力がされるだろう。
 
 ```
 0 0067c8970e65107ffbb436a49edd8cb8eb6b567f
 ```
 
-Signing the spending of such coin will be explained in the “Using the `TransactionBuilder` part”, and does not differ, in any way, from the code for signing a P2PKH output.
+このようなビットコインを使用するための署名は「Using the `TransactionBuilder` part」で説明するが、P2PKHのアウトプットに署名するコードと何も変わらない。
 
-The `witness`, similar to the `scriptSig` of P2PKH, and the `scriptSig` empty:
+`witness`はP2PKHの`scriptSig` に似ていて、`scriptSig`は空になる。
 
 ```json
 "in": [
@@ -61,5 +61,5 @@ The `witness`, similar to the `scriptSig` of P2PKH, and the `scriptSig` empty:
 }
 ```
 
-Once again, the semantic of P2WPKH is the same as the semantic of P2PKH, except that the signature is not placed at the same location as before.
+もう一度言うが、P2WPKHはP2PKHの文法と同じだ。ただ、署名がP2PKHの場合とは異なるところに記録される。
 
