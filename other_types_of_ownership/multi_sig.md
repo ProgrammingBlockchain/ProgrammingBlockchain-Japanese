@@ -21,21 +21,23 @@ Console.WriteLine(scriptPubKey);
 2 0282213c7172e9dff8a852b436a957c1f55aa1a947f2571585870bfb12c0c15d61 036e9f73ca6929dec6926d8e319506cc4370914cd13d300e83fd9c3dfca3970efb 0324b9185ec3db2f209b620657ce0e9a792472d89911e0ac3fc1e5b5fc2ca7683d 3 OP_CHECKMULTISIG
 ```
 
-As you can see, the `scriptPubkey` have the following form: `<sigsRequired> <pubkeys…> <pubKeysCount> OP_CHECKMULTISIG`
+見てのとおり、`scriptPubkey`が次のような形式となっている：
 
-The process for signing it is a little more complicated than just calling `Transaction.Sign`, which does not work for multi sig.
+`<sigsRequired> <pubkeys…> <pubKeysCount> OP_CHECKMULTISIG`
 
-Even if we will talk more deeply about the subject, let’s use the `TransactionBuilder` for signing the transaction.
+署名のプロセスは`Transaction.Sign`と呼ばれるものと比べて少し複雑になっていて、それではマルチシグでは署名できない。
 
-Imagine the multi-sig `scriptPubKey` received a coin in a transaction called `received`:
+そのテーマについてはあとでより詳しく話すとして、マルチシグのトランザクションへの署名には`TransactionBuilder`を使うことにしよう。
+
+マルチシグの`scriptPubKey`が`received`と呼ばれているトランザクション中のビットコインを受け取ったところを想像してほしい。
 
 ```cs
 var received = new Transaction();
 received.Outputs.Add(new TxOut(Money.Coins(1.0m), scriptPubKey));
 ```
 
-Bob and Alice agree to pay Nico 1.0 BTC for his services.  
-So they get the `Coin` they received from the transaction:
+ボブとアリスはニコに彼のサービスへの対価として1.0BTCを支払うことに同意した。  
+だから彼らはトランザクションから、すでに受け取った`Coin`を取得する。
 
 ```cs
 Coin coin = received.Outputs.AsCoins().First();
@@ -43,7 +45,7 @@ Coin coin = received.Outputs.AsCoins().First();
 
 ![](../assets/coin.png)
 
-Then, with the `TransactionBuilder`, create an **unsigned transaction**.
+それから`TransactionBuilder`を使って**まだ署名されていないトランザクション**を生成する。
 
 ```cs
 BitcoinAddress nico = new Key().PubKey.GetAddress(Network.Main);
@@ -55,7 +57,7 @@ Transaction unsigned =
       .BuildTransaction(sign: false);
 ```
 
-The transaction is not yet signed. Here is how Alice signs it:
+そのトランザクションはまだ署名されていない。ここでどのようにアリスが署名するかを示す。
 
 ```cs
 Transaction aliceSigned =
@@ -67,7 +69,7 @@ Transaction aliceSigned =
 
 ![](../assets/aliceSigned.png)
 
-And then Bob:
+それからボブの署名は以下のとおり。
 
 ```cs
 Transaction bobSigned =
@@ -79,7 +81,7 @@ Transaction bobSigned =
 
 ![](../assets/bobSigned.png)
 
-Now, Bob and Alice can combine their signature into one transaction.
+そして、ボブとアリスは1つのトランザクションに彼らの署名を結合する。
 
 ```cs
 Transaction fullySigned =
@@ -115,13 +117,13 @@ Console.WriteLine(fullySigned);
 }
 ```
 
-The transaction is now ready to be sent on the network.
+こうしてトランザクションはネットワークに送信できる準備ができた。
 
-Even if the Bitcoin network supports multi sig as explained here, one question worth asking is: How can you ask to a user who has no clue about bitcoin to pay on satoshi/alice/bob multi sig, since such `scriptPubKey` can’t be represented by easy to use Bitcoin Address like we have seen before?
+ビットコインネットワークがここに説明したとおりマルチシグをサポートしているとしても、1つ質問するに値することがある。「`scriptPubKey`が、以前の章で見てきたようなビットコインアドレスを使うのに簡単な方法で表現することができないのに、ビットコインに対して手がかりを持ち合わせていない人に対して、どのようにサトシ、アリスまたはボブのマルチシグをもとに支払うようお願いできるのだろうか？」
 
-Don’t you think it would be cool if we could to represent such `scriptPubKey` as easily and compactly as a Bitcoin Address?
+`scriptPubKey`をビットコインアドレスと同じくらい簡単に、そしてコンパクトに表現できるとしたら、素晴らしいことだと思わないだろうか？
 
-Well, this is possible and it is called a **Bitcoin Script Address** also called Pay to Script Hash. \(P2SH\)
+そう。これは可能で、**Bitcoin Script Address**、またの名をPay to Script Hash\(P2SH\)と呼ばれている。
 
-Nowadays, **native Pay To Multi Sig** as you have seen here, and **native P2PK**, are never used directly as such, they are wrapped into **Pay To Script Hash** payment.
+最近では、ここで見た**Pay To Multi Sigそのもの**や**P2PKそのもの**は、説明したとおりに直接使われることは決してなく、**Pay To Script Hash**による支払いにラップされている。
 
