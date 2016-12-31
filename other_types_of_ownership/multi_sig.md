@@ -1,9 +1,9 @@
 ## マルチシグ {#multi-sig}
 
-It is possible to have shared ownership over coins.  
-For that you will create a `ScriptPubKey` that represents a **m-of-n multi sig**, this means in order to spend the coins, **m** private keys will need to sign on the **n** different public key provided.
+ビットコインに対して所有権を共有することができる。  
+そのためには`ScriptPubKey` を表す**m-of-n multi sig**を作るのだが、これが意味するのは、ビットコインを使うためには与えられた**n**個の異なる公開鍵に対して、**m**個の秘密鍵で署名する必要があるということだ。
 
-Let’s create a multi sig with Bob, Alice, and Satoshi, where two of them are needed to spend a coin.
+ビットコインを使うためにはボブ、アリスそしてサトシのうち2人が署名する必要があるマルチシグを作ってみよう。
 
 ```cs
 Key bob = new Key();
