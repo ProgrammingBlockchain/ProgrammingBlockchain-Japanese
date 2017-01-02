@@ -42,9 +42,9 @@ Console.WriteLine(paymentScript);
 OP_HASH160 57b4162e00341af0ffc5d5fab468d738b3234190 OP_EQUAL
 ```
 
-Do you see the difference? This p2sh `scriptPubKey` represents the hash of my multi-sig script: `redeemScript.Hash.ScriptPubKey`
+ちがいがわかるだろうか？このP2SHの`scriptPubKey`はマルチシグのスクリプトのハッシュを表している。これは`redeemScript.Hash.ScriptPubKey`という。
 
-Since it is a hash, you can easily convert it as a base58 string `BitcoinScriptAddress`.
+ハッシュなので、簡単にbase58エンコードの`BitcoinScriptAddress`に変換できる。
 
 ```cs
 Key bob = new Key();
@@ -59,17 +59,17 @@ Script redeemScript =
 Console.WriteLine(redeemScript.Hash.GetAddress(Network.Main)); // 3E6RvwLNfkH6PyX3bqoVGKzrx2AqSJFhjo
 ```
 
-Such address is understood by any client wallet. Even if such wallet does not understand what “multi sig” is.
+このようなアドレスはどのクライアントのウォレットも認識する。そのウォレットが「マルチシグ」とはなにかを理解していないとしてもだ。
 
-In P2SH payment, we refer as the **Redeem Script**, the `scriptPubKey` that got hashed.
+P2SHを使う支払いでは、ハッシュを得た`scriptPubKey`のことを**Redeem Script**と呼んでいる。
 
 ![](../assets/RedeemScript.png)
 
-Since the payer only knows about the **Hash of the RedeemScript**, he does not know the **Redeem Script**, and so, in our case, don’t even have to know that he is sending money to a multi sig of Bob/Satoshi/Alice.
+支払う人は**Redeem Scriptのハッシュ**についてだけ知っていれば良いから、**Redeem Script**を知ることはない。だから今のケースでは支払い者はボブ、サトシまたはアリスのマルチシグに対してビットコインを送金したことさえ知らないのだ。
 
-Signing such transaction is similar to what we have done before. The only difference is that you have to provide the **Redeem Script** when you build the Coin for the **TransactionBuilder**
+このようなトランザクションに署名することは前の章（Bitcoin transferの章）で実践したものと似ている。1つだけちがいがあるのは、トランザクションを**TransactionBuilder**で生成するときは**Redeem Script**を生成しなければならないということだ。
 
-Imagine that the multi sig P2SH receive a coin in a transaction called `received`.
+マルチシグのP2SHが、`received`と名付けられたトランザクションの中にあるコインを受け取ったシーンをイメージしてみよう。
 
 ```cs
 Script redeemScript =
@@ -84,9 +84,9 @@ Transaction received = new Transaction();
 received.Outputs.Add(new TxOut(Money.Coins(1.0m), redeemScript.Hash));
 ```
 
-> Warning: The payment is sent to `redeemScript.Hash` and not to `redeemScript`!
+> 注意：その支払いは`redeemScript`ではなく`redeemScript.Hash`に送っているから注意！
 
-Then, once alice/bob/satoshi want to spend what they received, instead of creating a `Coin` they create a `ScriptCoin`.
+そして一度アリス、ボブまたはサトシが受け取ったビットコインを使いたいときは、`Coin`クラスのインスタンスを生成するのではなく、`ScriptCoin`クラスのインスタンスを生成する。
 
 ```cs
 //Give the redeemScript to the coin for Transaction construction
@@ -97,5 +97,5 @@ ScriptCoin coin = received.Outputs.AsCoins().First()
 
 ![](../assets/ScriptCoin.png)
 
-The rest of the code concerning transaction generation and signing is exactly the same as in the previous part with native multi sig.
+トランザクション生成と署名に関する残りのコードは、マルチシグそのものを使ったトランザクションを説明した前章のコードとまったく同じである。
 
