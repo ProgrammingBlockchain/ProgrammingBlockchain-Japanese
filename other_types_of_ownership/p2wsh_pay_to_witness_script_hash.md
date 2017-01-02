@@ -1,23 +1,23 @@
-## P2WSH (Pay to Witness Script Hash) {#p2wsh-pay-to-witness-script-hash}
+## P2WSH \(Pay to Witness Script Hash\) {#p2wsh-pay-to-witness-script-hash}
 
-As with P2PKH/P2WPKH, the only difference between P2SH and P2WSH is about the location of what was previously in the ```scriptSig```, and the ```scriptPubKey``` being modified.
+P2PKHとP2WPKHとの関係と同じで、P2SHとP2WSHとのちがいは`scriptSig`にP2SHにおける支払いで記録されていたものの場所と、生成される`scriptPubKey`だけだ。
 
-The ```scriptPubKey``` is changed from something like:
+`scriptPubKey`は以下のように変わる。まずP2SHの形式は以下のとおり。
 
-```OP_HASH160 10f400e996c34410d02ae76639cbf64f4bdf2def OP_EQUAL```
+`OP_HASH160 10f400e996c34410d02ae76639cbf64f4bdf2def OP_EQUAL`
 
-To:
+それからP2WSHでは以下のように変わる。
 
-```0 e4d3d21bab744d90cd857f56833252000ac0fade318136b713994b9319562467```
+`0 e4d3d21bab744d90cd857f56833252000ac0fade318136b713994b9319562467`
 
-That you can print with the following code:  
+以下のコードでこのscriptPubKeyを導出できる。
 
 ```cs
 var key = new Key();
 Console.WriteLine(key.PubKey.ScriptPubKey.WitHash.ScriptPubKey);
-```  
+```
 
-With what was previously in the ```scriptSig``` (signature + redeem script), moved to the ```witness```:
+そしてP2SHで`scriptSig`（署名とredeem Scriptの合成）にあったものは、`witness`に移動する。
 
 ```json
 "in": [
@@ -30,7 +30,7 @@ With what was previously in the ```scriptSig``` (signature + redeem script), mov
       "witness": "304402203a4d9f42c190682826ead3f88d9d87e8c47db57f5c272637441bafe11d5ad8a302206ac21b2bfe831216059ac4c91ec3e4458c78190613802975f5da5d11b55a69c601 210243b3760ce117a85540d88fa9d3d605338d4689bed1217e1fa84c78c22999fe08ac"
     }
   ]
-
 ```
 
-As the P2SH payment explained previously, P2WSH use ```ScriptCoin``` in exactly the same way to be signed.
+P2SHの支払いで説明したとおり、P2WSHでもまったく同様に署名するときは`ScriptCoin`クラスを使う。
+
