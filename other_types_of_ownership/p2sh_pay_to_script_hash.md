@@ -24,7 +24,7 @@ Console.WriteLine(scriptPubKey);
 
 複雑だと思わないだろうか？
 
-その代わりにその`scriptPybKey`が**P2SH**への支払いだとどのように見えるかを見てみよう。
+その代わりにその`scriptPubKey`が**P2SH**への支払いだとどのように見えるかを見てみよう。
 
 ```cs
 Key bob = new Key();
