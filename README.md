@@ -2,9 +2,9 @@
 
 [コードサンプルはこちら。](https://github.com/ProgrammingBlockchain/ProgrammingBlockchainCodeExamples/)
 
-## [Click here to read the book](https://programmingblockchain.gitbooks.io/programmingblockchain/content/)
+## この本を読むにはこちら
 
-## 他の言語エディション
+## 他の言語版
 
 英語
 
@@ -51,8 +51,8 @@
 
 ## リンク
 
-[The book on GitHub](https://github.com/ProgrammingBlockchain/ProgrammingBlockchain)  
-[The book on GitBook](https://www.gitbook.com/book/programmingblockchain/programmingblockchain) \(You can download pdf, epub, mobi versions here.\)  
+[GitHubでこの本を見る](https://github.com/ProgrammingBlockchain/ProgrammingBlockchain-Japanese)  
+GitBookでこの本を見る（PDF、epub、mobiでダウンロードもできます）  
 [コードサンプル](https://github.com/ProgrammingBlockchain/ProgrammingBlockchainCodeExamples/)  
-[Hall of the Makers](http://n.bitcoin.ninja/) \(Here are the true makers those succeeded to complete the challenges of this book.\)
+[作成者の一覧](http://n.bitcoin.ninja/)（ここではこの本を読み進め、また貢献することに成功した人たちが一覧化されています）
 
