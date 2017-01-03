@@ -44,15 +44,15 @@ OP_HASH160 b19da5ca6e7243d4ec8eab07b713ff8768a44145 OP_EQUAL
   ],
 ```
 
-The **scriptSig** is only the push of the P2SH redeem script of the previous ScriptPubKey \(in other words **key.PubKey.WitHash.ScriptPubKey**\). The witness is exactly the same as a normal **P2WPKH** payment.
+**scriptSig**は先ほど出てきたScriptPubKey（言い換えると、**key.PubKey.WitHash.ScriptPubKey**）のP2SH化されたredeem scriptのプッシュでしかない。witnessは完全に通常の**P2WPKH**による支払いと同じになっている。
 
-In NBitcoin, signing a **P2SH\(P2WPKH\)** is exactly similar as signing a normal P2SH with ScriptCoin.
+NBitcoinでは、**P2SH\(P2WPKH\)**に署名することは完全に、ScriptCoinを用いた通常のP2SHと似ている。
 
-By following the same principle, let’s see how a **P2SH\(P2WSH\)** looks like. You need to understand that in this case we are dealing with two different redeem scripts: The **P2SH redeem script** that need to be put in the **scriptSig** of the spending transaction, AND the **P2WSH redeem script** that need to be put in the witness.
+同じ原則に則って、**P2SH\(P2WSH\)**がどのように見えるかを見てみよう。この場合、2つの異なるredeem scriptを扱わなければならない。トランザクションインプットの**scriptSig**に入れる必要のある**P2SHのredeem script**と、witnessに入れる必要のある**P2WSHのredeem script**だ。
 
-Let’s print the **scriptPubKey** by following the first rule:
+最初のルールにもとづいて、**scriptPubKey**を表示してみよう。
 
-1. Replacing the **ScriptPubKey** by its P2SH equivalent.
+1. **ScriptPubKey**をP2SHと同等の情報で置き換える。
 
    ```cs
    var key = new Key();
@@ -63,12 +63,13 @@ Let’s print the **scriptPubKey** by following the first rule:
    OP_HASH160 d06c0058175952afecc56d26ed16558b1ed40e42 OP_EQUAL
    ```
 
-   > **Warning:** It makes sense, don't try whiny ragequitting!
+   > **注意**：理解できるから、ここでキレて回線切断しないで！
 
-2. The former **ScriptPubKey** will be placed as the only push in the **scriptSig** in the spending transaction,
-3. All other data will be pushed in the witness of the spending transaction,
+2. 置き換え前の**ScriptPubKey**はトランザクションインプットの**scriptSig**にたった1つのプッシュとして記録される。
 
-For 3. the **‘other data’**, in the context of a P2WSH payment means the parameters of the **P2WSH redeem script** followed by a push of the **P2WSH redeem script**.
+3. すべての他のデータはトランザクションインプットのwitnessにプッシュされる。
+
+項番3の「**他のデータ**」というのは、P2WSHにおける支払いの文脈では、**P2WSHのredeem script**のプッシュに続く、**P2WSHのredeem script**のパラメータを意味する。
 
 ```json
 "in": [
@@ -83,16 +84,16 @@ For 3. the **‘other data’**, in the context of a P2WSH payment means the par
   ],
 ```
 
-In summary, the P2SH Redeem Script is hashed to get the P2WSH scriptPubKey as normal P2WSH payment. Then, as a normal P2SH payment the P2WSH scriptPubKey is replaced by hashed and used to create the actual P2SH.
+要約すると、P2SHのRedeem Scriptは、通常のP2WSHによる支払いとしてP2WSHのscriptPubKeyを得るためにハッシュされる。そして通常のP2SHの支払いとして、P2WSHのscriptPubKeyはハッシュされて置き換わり、まさにP2SHを作るために使われる。
 
-If P2SH/P2WSH/P2SH\(P2WSH\)/P2SH\(P2WPKH\) sounds complicated to you. Fear not.  
-NBitcoin, for **all of those payments type** only requires you to create a **ScriptCoin** by supplying the Redeem \(P2WSH redeem or P2SH redeem\) and the ScriptPubKey, exactly as explained in the **P2SH** part.
+もし、P2SH/P2WSH/P2SH\(P2WSH\)/P2SH\(P2WPKH\)が複雑に思えていても、怖がることはない。  
+NBitcoinでは、**すべての支払い形式において**、**ScriptCoin**を作ることだけしか求めない。それは**P2SH**の章で説明したとおりで、P2WSHかP2SHのRedeem ScriptとScriptPubKeyを与えてやれば作ることができる。
 
-As far as NBitcoin is concerned, you just need to feed the right transaction output you want to spend, with the right underlying redeem script, and the **TransactionBuilder** will figure out how to sign correctly as explained in the previous **Multi Sig** part and the next “**Using the TransactionBuilder**” part.
+NBitcoinに関して言えば、使いたいと思っているトランザクションアウトプットを使い、正しいredeem scriptがあれば、前章の「**Multi Sig」**の章で説明されたように、そして次の「**Using the TransactionBuilder**」の章でも説明するが、**TransactionBuilder**が正しい署名の仕方を理解してくれる。
 
 ![](../assets/ScriptCoin.png)
 
-**Compatible for P2SH/P2WSH/P2SH\(P2WSH\)/P2SH\(P2WPKH\)**
+**P2SH/P2WSH/P2SH\(P2WSH\)/P2SH\(P2WPKH\)それぞれに互換性があるのだ。**
 
-You can browse additional examples of P2W\* payments on [http://n.bitcoin.ninja/checkscript](http://n.bitcoin.ninja/checkscript)
+P2WPKHまたはP2WSHの支払いの例をさらに見たい場合は、[http://n.bitcoin.ninja/checkscript](http://n.bitcoin.ninja/checkscript)で見られる。
 
