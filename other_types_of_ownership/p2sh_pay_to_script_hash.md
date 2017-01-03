@@ -42,7 +42,7 @@ Console.WriteLine(paymentScript);
 OP_HASH160 57b4162e00341af0ffc5d5fab468d738b3234190 OP_EQUAL
 ```
 
-ちがいがわかるだろうか？このP2SHの`scriptPubKey`はマルチシグのスクリプトのハッシュを表している。これは`redeemScript.Hash.ScriptPubKey`という。
+ちがいがわかるだろうか？このP2SHの`scriptPubKey`はマルチシグのスクリプトのハッシュを表している。これは`redeemScript.Hash.ScriptPubKey`と同値だ。
 
 ハッシュなので、簡単にbase58エンコードの`BitcoinScriptAddress`に変換できる。
 
@@ -84,7 +84,7 @@ Transaction received = new Transaction();
 received.Outputs.Add(new TxOut(Money.Coins(1.0m), redeemScript.Hash));
 ```
 
-> 注意：その支払いは`redeemScript`ではなく`redeemScript.Hash`に送っているから注意！
+> 注意：この支払いは`redeemScript`ではなく`redeemScript.Hash`に送っているから注意！
 
 そして一度アリス、ボブまたはサトシが受け取ったビットコインを使いたいときは、`Coin`クラスのインスタンスを生成するのではなく、`ScriptCoin`クラスのインスタンスを生成する。
 
