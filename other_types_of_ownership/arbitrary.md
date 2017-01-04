@@ -24,9 +24,9 @@ Script redeemScript = new Script(
     "OP_ENDIF");
 ```
 
-This **RedeemScript** means that there is 2 way of spending such **ScriptCoin**: either you know the data that give **birthHash** \(my birthdate\), either you own the bitcoin address.
+この**RedeemScipt**は、**ScriptCoin**を使う2つの方法を示している。2つの方法とは、1つが**birthHash**（僕の誕生日）を導出してくれるデータを知っていることで、もう1つがそのビットコインアドレスを持っていることだ。
 
-Let’s say I sent money to such **redeemScript**:
+たとえば、この**redeemScript**にビットコインを送ったとしよう。
 
 ```cs
 var tx = new Transaction();
@@ -34,7 +34,7 @@ tx.Outputs.Add(new TxOut(Money.Parse("0.0001"), redeemScript.Hash));
 ScriptCoin scriptCoin = tx.Outputs.AsCoins().First().ToScriptCoin(redeemScript);
 ```
 
-So let’s create a transaction that want to spend such output:
+そのアウトプットを使うトランザクションを作ってみよう。
 
 ```cs
 //Create spending transaction
@@ -42,7 +42,7 @@ Transaction spending = new Transaction();
 spending.AddInput(new TxIn(new OutPoint(tx, 0)));
 ```
 
-The first option is to know my birth date and to prove it in the **scriptSig**:
+最初の選択肢は僕の誕生日を知っていて、**scriptSig**の中でそれを証明することだ。
 
 ```cs
 ////Option 1 : Spender knows my birthdate
@@ -53,10 +53,10 @@ Script scriptSig = new Script(pushBirthdate, selectIf, redeemBytes);
 spending.Inputs[0].ScriptSig = scriptSig;
 ```
 
-You can see that in the **scriptSig** I push **OP\_1** so I enter in the **OP\_IF** of my **RedeemScript**.  
-Since there is no backed-in template, for creating such **scriptSig**, you can see how to build a P2SH **scriptSig** by hand.
+**scriptSig**の中で、**OP\_1**を入れたから、**RedeemScript**に**OP\_IF**を挿入していることがわかるだろう。  
+このような**scriptSig**を生成するテンプレートはないが、手動でP2SHの**scriptSig**を作る方法がわかるだろう。
 
-Then you can check that the **scriptSig** prove the ownership of the **scriptPubKey**:
+そして**scriptSig**が**scriptPubKey**の所有権を証明することを確認できるだろう。
 
 ```cs
 //Verify the script pass
@@ -68,7 +68,7 @@ var result = spending
 Console.WriteLine(result); // True
 ```
 
-The second way of spending the coin is by proving ownership of **1KF8kUVHK42XzgcmJF4Lxz4wcL5WDL97PB**.
+このビットコインを使用する2番目の方法は、**1KF8kUVHK42XzgcmJF4Lxz4wcL5WDL97PB**（秘密鍵）を持っていることを証明することだ。
 
 ```
 ////Option 2 : Spender knows my private key
@@ -82,7 +82,7 @@ scriptSig = p2pkhProof + selectIf + redeemBytes;
 spending.Inputs[0].ScriptSig = scriptSig;
 ```
 
-And ownership is also proven:
+そして持っていることを確認する。
 
 ```cs
 //Verify the script pass
