@@ -1,38 +1,40 @@
 ## Using the TransactionBuilder {#using-the-transactionbuilder}
 
-You have seen how the **TransactionBuilder** works when you have signed your first **P2SH** and **multi-sig** transaction.  
+初めての**P2SH**や**マルチシグ**のトランザクションに署名するときに**TranasctionBuilder**をどのように動かすか見てきた。
 
-We will see how you can harness its full power, for signing more complicated transactions.    
+次はより複雑なトランザクションに対して署名するために、そのフルパワーをどのように活かすかを見てみよう。
 
-With the **TransactionBuilder** you can:  
-*   Spend any  
-  *   **P2PK**, **P2PKH**,  
-  *   **multi-sig**,  
-  *   **P2WPK**, **P2WSH**.  
-*   Spend any **P2SH** on the previous redeem script.  
-*   Spend **Stealth Coin** (DarkWallet).  
-*   Issue and transfer **Colored Coins** (open asset, following chapter).  
-*   Combine **partially signed transactions**.  
-*   Estimate the final **size** of an **unsigned transaction** and its **fees**.  
-*   Verify if a **transaction** is **fully signed**.  
+**TranactionBuilder**を用いると以下ができるようになる。
 
-The goal of the **TransactionBuilder** is to take **Coins** and **Keys** as input, and return back a **signed** or **partially signed transaction**.  
+* 以下の支払いができる
+  * **P2PK**、**P2PKH**
+  * **マルチシグ**
+  * **P2WPK**、**P2WSH**
+* 前章のようなredeem scriptにもとづいて**P2SH**を支払いに使える
+* **ステルスコイン**を使える（ダークウォレット）
+* **カラードコイン**を発行し、移動できる（次の章で説明するオープンアセットのこと） 
+* **部分的に署名されたトランザクション**を結合できる 
+* **署名されていないトランザクション**の最終的な**サイズ**とそれにかかる**手数料**を計算できる
+* **トランザクション**が**十分に署名されたか**を確認できる 
 
-![](../assets/SignedTransaction.png)  
+**TransactionBuilder**のゴールはインプットとしての**コイン**と**鍵**を取得し、**十分に**または**部分的に署名されたトランザクション**として戻すことである。
 
-The **TransactionBuilder** will figure out what **Coin** to use and what to sign by itself.  
+![](../assets/SignedTransaction.png)
 
-![](../assets/TransactionBuilder.png)  
+**TransactionBuilder**だけで、なんの**コイン**を使い、なにを署名すべきかを把握してくれる。
 
-The usage of the builder is done in four steps:  
-*   You gather the **Coins** that spent,
-*   You gather the **Keys** that you own,
-*   You enumerate how much **Money** you want to send to what **scriptPubKey**,
-*   You build and sign the **transaction**,
-*   **Optional**: you give the **transaction** to somebody else, then he will sign or continue to build it.
+![](../assets/TransactionBuilder.png)
 
-Now let’s gather some **Coins**, for that let us create a fake **transaction** with some funds on it.  
-Let’s say that the **transaction** has a **P2PKH**, **P2PK**, and **multi-sig** coin of Bob and Alice.
+TransactionBuilderを使うためには4つのステップがある。
+
+* 使う**コイン**を集める
+* 持っている**鍵**を集める
+* どの**scriptPubKey**に対していくら**コインを**支払いたいかを数える
+* **トランザクション**を生成して署名する
+* **オプション**：誰かに**トランザクション**を送り、署名してもらうか生成を続けてもらう
+
+さあ**コイン**を集めてみよう。そのコインを充足させるために見せかけの**トランザクション**を作ろう。  
+ではここでは、その**トランザクション**には**P2PKH**のコイン、**P2PK**のコインと、ボブとアリスの**マルチシグ**のコインがあることにしよう。
 
 ```cs
 // Create a fake transaction
@@ -50,22 +52,22 @@ init.Outputs.Add(new TxOut(Money.Coins(1m), alice.PubKey.Hash)); // P2PKH
 init.Outputs.Add(new TxOut(Money.Coins(1m), bobAlice));
 ```
 
-Now let’s say they want to use the ```coins``` of this transaction to pay Satoshi.  
+さらにここではサトシに支払うためにこのトランザクションの`coins`を使いたいということにしよう。
 
 ```cs
 var satoshi = new Key();
-```  
+```
 
-First they have to get their **Coins**.  
+まずは**コイン**を集めなければならない。
 
 ```cs
 Coin[] coins = init.Outputs.AsCoins().ToArray();
 Coin bobCoin = coins[0];
 Coin aliceCoin = coins[1];
 Coin bobAliceCoin = coins[2];
-```  
+```
 
-Now let’s say ```bob``` wants to sends 0.2 BTC, ```alice``` 0.3 BTC, and they agree to use ```bobAlice``` to send 0.5 BTC.  
+では`bob`は0.2BTC、`alice`は0.3BTCを送りたく、2人が0.5BTCを送るために`bobAlice`を使うことに合意したとしよう。
 
 ```cs
 var builder = new TransactionBuilder();
@@ -86,17 +88,17 @@ Transaction tx = builder
         .SetChange(bobAlice)
         .SendFees(Money.Coins(0.0001m))
         .BuildTransaction(sign: true);
-```  
+```
 
-Then you can verify it is fully signed and ready to send to the network.  
+Then you can verify it is fully signed and ready to send to the network.
 
 ```cs
 Console.WriteLine(builder.Verify(tx)); // True
-```  
+```
 
-The nice thing about this model is that it works the same way for **P2SH, P2WSH, P2SH(P2WSH)**, and **P2SH(P2PKH)** except you need to create **ScriptCoin**.  
+The nice thing about this model is that it works the same way for **P2SH, P2WSH, P2SH\(P2WSH\)**, and **P2SH\(P2PKH\)** except you need to create **ScriptCoin**.
 
-![](../assets/ScriptCoinFromCoin.png)  
+![](../assets/ScriptCoinFromCoin.png)
 
 ```cs
 init = new Transaction();
@@ -104,9 +106,9 @@ init.Outputs.Add(new TxOut(Money.Coins(1.0m), bobAlice.Hash));
 
 coins = init.Outputs.AsCoins().ToArray();
 ScriptCoin bobAliceScriptCoin = coins[0].ToScriptCoin(bobAlice);
-```  
+```
 
-Then the signature:  
+Then the signature:
 
 ```cs
 builder = new TransactionBuilder();
@@ -118,13 +120,13 @@ tx = builder
         .SendFees(Money.Coins(0.0001m))
         .BuildTransaction(true);
 Console.WriteLine(builder.Verify(tx)); // True
-```  
+```
 
 For **Stealth Coin**, this is basically the same thing. Except that, if you remember our introduction on Dark Wallet, I said that you need a **ScanKey** to see the **StealthCoin**.
 
-![](../assets/StealthCoin.png)  
+![](../assets/StealthCoin.png)
 
-Let’s create darkAliceBob stealth address as in previous chapter:  
+Let’s create darkAliceBob stealth address as in previous chapter:
 
 ```cs
 Key scanKey = new Key();
@@ -137,26 +139,26 @@ BitcoinStealthAddress darkAliceBob =
             bitfield: null,
             network: Network.Main
         );
-```  
+```
 
-Let’s say someone sent this transaction:  
+Let’s say someone sent this transaction:
 
 ```cs
 //Someone sent to darkAliceBob
 init = new Transaction();
 darkAliceBob
     .SendTo(init, Money.Coins(1.0m));
-```  
+```
 
-The scanner will detect the StealthCoin:  
+The scanner will detect the StealthCoin:
 
 ```cs
 //Get the stealth coin with the scanKey
 StealthCoin stealthCoin
     = StealthCoin.Find(init, darkAliceBob, scanKey);
-```  
+```
 
-And forward it to bob and alice, who will sign:  
+And forward it to bob and alice, who will sign:
 
 ```cs
 //Spend it
@@ -168,6 +170,9 @@ tx = builder
         .SendFees(Money.Coins(0.0001m))
         .BuildTransaction(true);
 Console.WriteLine(builder.Verify(tx)); // True
-```  
+```
 
 > **Note:** You need the scanKey for spending a StealthCoin
+
+
+
