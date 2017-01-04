@@ -46,7 +46,7 @@ OP_HASH160 b19da5ca6e7243d4ec8eab07b713ff8768a44145 OP_EQUAL
 
 **scriptSig**は先ほど出てきたScriptPubKey（言い換えると、**key.PubKey.WitHash.ScriptPubKey**）のP2SH化されたredeem scriptのプッシュでしかない。witnessは完全に通常の**P2WPKH**による支払いと同じになっている。
 
-NBitcoinでは、**P2SH\(P2WPKH\)**に署名することは完全に、ScriptCoinを用いた通常のP2SHと似ている。
+NBitcoinでは、**P2SH\(P2WPKH\)**に署名することは、ScriptCoinを用いた通常のP2SHとほぼ同じようなものだ。
 
 同じ原則に則って、**P2SH\(P2WSH\)**がどのように見えるかを見てみよう。この場合、2つの異なるredeem scriptを扱わなければならない。トランザクションインプットの**scriptSig**に入れる必要のある**P2SHのredeem script**と、witnessに入れる必要のある**P2WSHのredeem script**だ。
 
