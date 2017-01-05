@@ -1,4 +1,4 @@
-## ビットコインアドレス {#bitcoin-address}
+## Bitcoin address {#bitcoin-address}
 
 **ビットコインアドレス**が、支払いを受けるために相手に教えるものであることは知ってのとおり。  
 ![](../assets/BitcoinAddress.png)  
@@ -40,7 +40,7 @@ Console.WriteLine(publicKey); // 0251036303164f6c458e9f7abecb4e55e5ce9ec2b2f1d06
 * **MainNet** はユーザー含めてあらゆる人が使うネットワークである。
 
 > 注釈：TestNetのコインは**faucets**を使うことですぐに手に入る。「get testnet bitcoins」で検索してほしい。
-
+>
 > 日本語版注：日本語版ではTestNetを開発環境、MainNetを本番環境と訳す。
 
 公開鍵からビットコインアドレスは簡単に作れる。そのアドレスが使われるネットワークを指定する必要がある。
