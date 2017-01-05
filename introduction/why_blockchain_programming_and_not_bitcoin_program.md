@@ -1,4 +1,4 @@
-## ビットコインプログラミングではなく、ブロックチェーンプログラミング {#why-blockchain-programming-and-not-bitcoin-programming}
+## Why Blockchain Programming and not Bitcoin Programming? {#why-blockchain-programming-and-not-bitcoin-programming}
 
 ブロックチェーンが金ならビットコインは宝石だ。
 
