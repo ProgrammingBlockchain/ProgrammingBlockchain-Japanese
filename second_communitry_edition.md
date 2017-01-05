@@ -1,4 +1,4 @@
-# セカンド（コミュニティ）エディション {#second-community-edition}
+# Second \(Community\) Edition {#second-community-edition}
 
 \([nopara73](https://github.com/nopara73)\) 私は2013年にビットコインに夢中になった。そのときはあらゆる人が開発者にとってのその数え切れない素晴らしい機会について話していたが、私はまったく理解ができていなかった。
 
