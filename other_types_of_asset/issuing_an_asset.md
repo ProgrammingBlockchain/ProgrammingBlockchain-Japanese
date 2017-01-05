@@ -1,24 +1,24 @@
 ## Issuing an Asset {#issuing-an-asset}
 
-### Objective {#objective}
+### 目的 {#objective}
 
-For the purpose of this exercise, I will emit **BlockchainProgramming coins**.  
+このエクササイズの目的のために、**BlockchainProgrammingコイン**を発行しよう。
 
-You get **one of these BlockchainProgramming coins** for every **0.004 bitcoin** you send me.  
-**One more**  if you add some kind words.  
-Furthermore this is a great opportunity to make it to the [Hall of The Makers](http://n.bitcoin.ninja/). 
+僕に**0.004ビットコイン**を送るごとに**BlockchainProgrammingコイン**を1つ手に入れられる。  
+もしなにか言葉を添えてもらえると**さらにもう1つ**手に入れられる。  
+さらにこれは[Hall of The Makers](http://n.bitcoin.ninja/)に名を連ねる絶好の機会だ。
 
-Let’s see how I would code such feature.
+どのようにこの特徴をコーディングするか見てみよう。
 
-### Issuance Coin {#issuance-coin}
+### コインの発行 {#issuance-coin}
 
-In Open Asset, the Asset ID is derived from the issuer's **ScriptPubKey**.  
-If you want to issue a Colored Coin, you need to prove ownership of such **ScriptPubKey**. And the only way to do that on the Blockchain is by spending a coin belonging to such **ScriptPubKey**.
+オープンアセットでは、アセットIDが発行者の**scriptPubKey**から引き出される。  
+もしカラードコインを発行したければ、その**scriptPubKey**の所有権を証明する必要がある。そしてビットコインブロックチェーンでそれをする唯一の方法はその**scriptPubKey**に帰属しているコインを支払いに使うことだ。
 
-The coin that you will choose to spend for issuing colored coins is called “**Issuance Coin**” in **NBitcoin**.  
-I want to emit an Asset from the book bitcoin address: [1KF8kUVHK42XzgcmJF4Lxz4wcL5WDL97PB](https://www.smartbit.com.au/address/1KF8kUVHK42XzgcmJF4Lxz4wcL5WDL97PB).
+カラードコインを発行するために使うことを選んだコインは**NBitcoin**では「**Issuance Coin**」と呼ぶ。  
+この本のビットコインアドレス：[1KF8kUVHK42XzgcmJF4Lxz4wcL5WDL97PB](https://www.smartbit.com.au/address/1KF8kUVHK42XzgcmJF4Lxz4wcL5WDL97PB)からアセットを発行したいと思う。
 
-Take a look at my balance, I decided to use the following coin for issuing assets.  
+僕の残高を見てほしい。アセットを発行するために次のコインを使うことに決めたとしよう。
 
 ```json
 {
@@ -27,10 +27,10 @@ Take a look at my balance, I decided to use the following coin for issuing asset
           "value": 2000000,
           "scriptPubKey": "76a914c81e8e7b7ffca043b088a992795b15887c96159288ac",
           "redeemScript": null
-} 
-```  
+}
+```
 
-Here is how to create my issuance coin:  
+こうして僕のissuance coinを作る。
 
 ```cs
 var coin = new Coin(
@@ -40,15 +40,15 @@ var coin = new Coin(
     scriptPubKey: new Script(Encoders.Hex.DecodeData("76a914c81e8e7b7ffca043b088a992795b15887c96159288ac")));
 
 var issuance = new IssuanceCoin(coin);
-```  
+```
 
-Now I need to build transaction and sign the transaction with the help of the **TransactionBuilder**.  
+ここで**TransactionBuilder**の助けを借りて、トランザクションを生成して署名する必要がある。
 
 ```cs
 var nico = BitcoinAddress.Create("15sYbVpRh6dyWycZMwPdxJWD4xbfxReeHe");
 var bookKey = new BitcoinSecret("???????");
 TransactionBuilder builder = new TransactionBuilder();
-            
+
 var tx = builder
     .AddKeys(bookKey)
     .AddCoins(issuance)
@@ -58,7 +58,7 @@ var tx = builder
     .BuildTransaction(true);
 
 Console.WriteLine(tx);
-```  
+```
 
 ```json
 {
@@ -78,26 +78,27 @@ Console.WriteLine(tx);
     }
   ]
 }
-```  
+```
 
-You can see it includes an OP_RETURN output. In fact, this is the location where information about colored coins are stuffed.
+トランザクションアウトプットにOP\_RETURNアウトプットを含んでいることがわかるだろう。事実、これがカラードコインについての情報が詰め込まれる場所なのだ。
 
-Here is the format of the data in the OP_RETURN.  
+ここにOP\_RETURNの中のデータフォーマットを示す。
 
-![](../assets/ColorMaker.png)  
+![](../assets/ColorMaker.png)
 
-In our case, Quantities have only 10, which is the number of Asset I issued to ```nico```. Metadata is arbitrary data. We will see that we can put an url that points to an “Asset Definition”.  
-An **Asset Definition** is a document that describes what the Asset is. It is optional, we are not using it in our case. (We’ll come back later on it in the Ricardian Contract part.)  
+今のケースではカラードコインの数は10だけで、それが`nico`に対して僕が発行したアセットの数だ。Metadataは任意のデータだ。あとの説明で「Asset Definition」を示すURLを示すところだとわかる。  
+**Asset Definition**はそのアセットが何なのかを描写するドキュメントだ。定義するかどうかは任意なのでここでは使っていない（Ricardian Contractの章でこれに触れる）。
 
-For more information check out the [Open Asset Specification](https://github.com/OpenAssets/open-assets-protocol/blob/master/specification.mediawiki).
+さらに詳しい説明は [Open Asset Specification](https://github.com/OpenAssets/open-assets-protocol/blob/master/specification.mediawiki)をチェックしてほしい。
 
-After transaction verifications it is ready to be sent to the network.  
+トランザクションの正当性を確認したら、ネットワークに送る準備ができている。
 
 ```cs
-Console.WriteLine(builder.Verify(tx)); 
-```  
+Console.WriteLine(builder.Verify(tx));
+```
 
-### With QBitNinja
+### QBitNinjaを使ってブロードキャスト
+
 ```cs
 var client = new QBitNinjaClient(Network.Main);
 BroadcastResponse broadcastResponse = client.Broadcast(tx).Result;
@@ -111,11 +112,11 @@ else
 {
     Console.WriteLine("Success!");
 }
-```  
+```
 
-### Or with local Bitcoin core
+### ローカルのビットコインコアを使ってブロードキャスト
 
-```cs  
+```cs
 using (var node = Node.ConnectToLocal(Network.Main)) //Connect to the node
 {
     node.VersionHandshake(); //Say hello
@@ -127,16 +128,16 @@ using (var node = Node.ConnectToLocal(Network.Main)) //Connect to the node
 }
 ```
 
-My Bitcoin Wallet have both, the book address and the “Nico” address.  
+僕のビットコインウォレットは、本のアドレスとNicoのアドレスと両方持っている。
 
-![](../assets/NicoWallet.png)  
+![](../assets/NicoWallet.png)
 
-As you can see, Bitcoin Core only shows the 0.0001 BTC of fees I paid, and ignore the 600 Satoshi coin because of spam prevention feature.
+見てのとおり、ビットコインコアは僕が払った0.0001BTCの手数料しか表示してくれず、600satoshiのコインは無視している。これはスパムを抑止する機能があるからだ。
 
-This classical bitcoin wallet knows nothing about Colored Coins.  
-Worse: If a classical bitcoin wallet spend a colored coin, it will destroy the underlying asset and transfer only the bitcoin value of the **TxOut**. (600 satoshi)
+この古典的なビットコインウォレットではカラードコインをまったく認識しない。  
+さらに悪いことに、古典的なビットコインウォレットでカラードコインを使うと、そこに関連づいているアセットを破壊し、**トランザクションアウトプット**にあるビットコインの価値、つまり600satoshiしか移動しない。
 
-For preventing a user from sending Colored Coin to a wallet that do not support it, Open Asset have its own address format, that only colored coin wallets understand.  
+カラードコインをサポートしていないウォレットにユーザーが送ってしまうことを防止するために、オープンアセットでは独自のアドレスフォーマットがあって、それはカラードコインウォレットしか認識しないようになっている。
 
 ```cs
 nico = BitcoinAddress.Create("15sYbVpRh6dyWycZMwPdxJWD4xbfxReeHe");
@@ -145,16 +146,19 @@ Console.WriteLine(nico.ToColoredAddress());
 
 ```
 akFqRqfdmAaXfPDmvQZVpcAQnQZmqrx4gcZ
-```  
+```
 
-Now, you can take a look on an Open Asset compatible wallet like Coinprism, and see my asset correctly detected:  
+いま、Coinprismのようなオープンアセットと互換性のあるウォレットで見てみると、僕のアセットが正しく表示される。
 
-![](../assets/Coinprism.png)  
+![](../assets/Coinprism.png)
 
-As I have told you before, the Asset ID is derived from the issuer’s **ScriptPubKey**, here is how to get it in code:  
+言ったとおり、アセットIDが発行者の**ScriptPubKey**から引き出されている。ここにコードでアセットIDを得る方法を示す。
 
 ```cs
 var book = BitcoinAddress.Create("1KF8kUVHK42XzgcmJF4Lxz4wcL5WDL97PB");
 var assetId = new AssetId(book).GetWif(Network.Main);
 Console.WriteLine(assetId); // AVAVfLSb1KZf9tJzrUVpktjxKUXGxUTD4e
-```  
+```
+
+
+
