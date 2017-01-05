@@ -67,7 +67,7 @@ Coin aliceCoin = coins[1];
 Coin bobAliceCoin = coins[2];
 ```
 
-では`bob`は0.2BTC、`alice`は0.3BTCを送りたく、2人が0.5BTCを送るために`bobAlice`を使うことに合意したとしよう。
+では`bob`は0.2BTC、`alice`は0.3BTCを送り、さらに2人が0.5BTCを送るために`bobAlice`を使うことに合意したとしよう。
 
 ```cs
 var builder = new TransactionBuilder();
@@ -90,13 +90,13 @@ Transaction tx = builder
         .BuildTransaction(sign: true);
 ```
 
-Then you can verify it is fully signed and ready to send to the network.
+そしてトランザクションが十分に署名され、ネットワークに送る準備ができているかを確かめることができる。
 
 ```cs
 Console.WriteLine(builder.Verify(tx)); // True
 ```
 
-The nice thing about this model is that it works the same way for **P2SH, P2WSH, P2SH\(P2WSH\)**, and **P2SH\(P2PKH\)** except you need to create **ScriptCoin**.
+このモデルで素晴らしいのは、**ScriptCoin**を作る必要があることを除いて、**P2SH、P2WSH、P2SH\(P2WSH\)とP2SH\(P2PKH\)**に対して同じ方法で動かすことができるのだ。
 
 ![](../assets/ScriptCoinFromCoin.png)
 
@@ -108,7 +108,7 @@ coins = init.Outputs.AsCoins().ToArray();
 ScriptCoin bobAliceScriptCoin = coins[0].ToScriptCoin(bobAlice);
 ```
 
-Then the signature:
+署名はこのようにする。
 
 ```cs
 builder = new TransactionBuilder();
@@ -122,11 +122,11 @@ tx = builder
 Console.WriteLine(builder.Verify(tx)); // True
 ```
 
-For **Stealth Coin**, this is basically the same thing. Except that, if you remember our introduction on Dark Wallet, I said that you need a **ScanKey** to see the **StealthCoin**.
+**ステルスコイン**でも、基本的には同じだ。ただ、ダークウォレットについての紹介をもし覚えていたら、**ステルスコイン**を見るためには**ScanKey**が必要となると言ったが、それが異なる点となる。
 
 ![](../assets/StealthCoin.png)
 
-Let’s create darkAliceBob stealth address as in previous chapter:
+以前の章と同じように、アリスとボブのマルチシグのステルスアドレスを作ってみよう。
 
 ```cs
 Key scanKey = new Key();
@@ -141,7 +141,7 @@ BitcoinStealthAddress darkAliceBob =
         );
 ```
 
-Let’s say someone sent this transaction:
+誰かがこのトランザクションにコインを送ったとしよう。
 
 ```cs
 //Someone sent to darkAliceBob
@@ -150,7 +150,7 @@ darkAliceBob
     .SendTo(init, Money.Coins(1.0m));
 ```
 
-The scanner will detect the StealthCoin:
+scanKeyを持っている人がこのステルスコインを発見できる。
 
 ```cs
 //Get the stealth coin with the scanKey
@@ -158,7 +158,7 @@ StealthCoin stealthCoin
     = StealthCoin.Find(init, darkAliceBob, scanKey);
 ```
 
-And forward it to bob and alice, who will sign:
+それはボブとアリスに送られており、彼らが署名する。
 
 ```cs
 //Spend it
@@ -172,7 +172,7 @@ tx = builder
 Console.WriteLine(builder.Verify(tx)); // True
 ```
 
-> **Note:** You need the scanKey for spending a StealthCoin
+> **注釈**：ステルスコインを使うためにはscanKeyが必要だ。
 
 
 
