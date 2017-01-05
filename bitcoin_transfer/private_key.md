@@ -1,4 +1,4 @@
-## 秘密鍵 {#private-key}
+## Private key {#private-key}
 
 秘密鍵はよく、ビットコインアドレスと同じBase58Check形式の、ビットコインシークレットで表現される。これはウォレットにインポートするフォーマット（**Wallet Import Format, WIF**）としても知られている。
 
@@ -34,7 +34,7 @@ BitcoinPubKeyAddress bitcoinPubicKey = publicKey.GetAddress(Network.Main); // 1P
 //PubKey samePublicKey = bitcoinPubicKey.ItIsNotPossible;
 ```
 
-### Exercise : 
+### Exercise :
 
 1. 本番環境向けの秘密鍵を生成し、それをメモする。
 2. 秘密鍵からビットコインアドレスを生成する。
