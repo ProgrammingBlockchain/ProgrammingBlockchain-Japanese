@@ -1,4 +1,4 @@
-## プロジェクトのセットアップ {#project-setup}
+## Project Setup {#project-setup}
 
 説明を始める前に、どのようにVisual StudioまたはXamarin等でプロジェクトをセットアップするかを示す。
 
