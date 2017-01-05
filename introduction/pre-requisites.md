@@ -1,4 +1,4 @@
-## 前提として求められるもの {#pre-requisites}
+## Pre-requisties {#pre-requisites}
 
 ### スキル {#skills}
 
