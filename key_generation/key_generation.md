@@ -1,53 +1,49 @@
-# Key generation and encryption {#key-generation-encryption}  
+# 鍵生成と暗号化 {#key-generation-encryption}  
 
-## Is it random enough? {#is-it-random-enough}
+## それは十分にランダムだろうか？ {#is-it-random-enough}
 
-When you call **new Key()**, under the hood, you are using a PRNG (Pseudo-Random-Number-Generator) to generate your private key. On windows, it uses the **RNGCryptoServiceProvider**, a .NET wrapper around the Windows Crypto API.
+**new Key()**を呼び出すとき、内部ではPRNG(疑似乱数生成機)を使って秘密鍵を生成している。ウインドウズ上では、それはWindows Crypto APIの.Netラッパーである**RNGCryptoServiceProvider** を使用する。
 
-On Android, I use the **SecureRandom**, and in fact, you can use your own implementation with **RandomUtils.Random**.
+アンドロイドでは、私は**SecureRandom**を使用する。実際のところ**RandomUtils.Random**を使って自分独自の実装を使うことができる。
 
-On IOS, I have not implemented it and you need to create your **IRandom** implementation.
+iOS上では0、私はまだ実装したことはないが、**IRandom** の実装クラスを作る必要がある。
 
-For a computer, being random is hard. But the biggest issue is that it is impossible to know if a series of number is really random.
+コンピュータにとって、ランダムであることは、困難だ。しかし、一番大きな問題は、ある一連の数値が本当にランダムかどうかを知ることが不可能だということである。
 
-If malware modifies your PRNG (and so, can predict the numbers you will generate), you won’t see it until it is too late.
+もし、マルウエアがあなたのPRNGを改ざんした場合（なので、あなたが生成する数値を予測できる）、手遅れになるまでそれを知ることはない。
 
-It means that a cross platform and naïve implementation of PRNG (like using the computer’s clock combined with CPU speed) is dangerous. But you won’t see it until it is too late.
+これは、クロスプラットフォーム、もしくは、ネイティブ実装のPRNG（コンピュータのクロックとCPUを使用する）は危険であることを意味する。しかし、手遅れになるまで、それを知る由はない。
 
-For performance reasons, most PRNG works the same way: a random number, called **Seed**, is chosen, then a predictable formula generates the next numbers each time you ask for it.
+パフォーマンス上の理由から ほとんどのPRNGは同じように機能する。**シード**とよばれるランダムな数値が選ばれ、あなたが依頼する度に結果予測可能な式によって次々と数値が生成される。
 
-The amount of randomness of the seed is defined by a measure we call **Entropy**, but the amount of **Entropy** also depends on the observer.
+シートのランダムさの量は、エントロピーと我々が予備計測値で定義される、エントロピー量は、観測者に依存する。
 
-Let’s say you generate a seed from your clock time.  
-And let’s imagine that your clock has 1ms of resolution. (Reality is more ~15ms.)
+例えば、あなたが自分のクロック時間をもとにシード値を生成したとしよう。
+そして、１ミリ秒の精度を持ったとしよう。（現実には１５ミリ秒以上。）
 
-If your attacker knows that you generated the key last week, then your seed has  
+もし攻撃者が、あなたが先週、鍵を生成したと知ってるとすると、シード値は、
 1000 \* 60 \* 60 \* 24 \* 7 = 604800000 possibilities.
 
-For such attacker, the entropy is LOG(604800000;2) = 29.17 bits.
+そのような攻撃者にとって、エントロピーは、log<sub>2</sub>(604800000) = 29.17 ビットである。
 
-And enumerating such number on my home computer took less than 2 seconds. We call such enumeration “brute forcing”.
+そのような回数を順番に処理するには、私の自宅のコンピュータでやっても２秒以下しかかからない。このような処理のことを”総当たり式”と呼ぶ。
 
-However let’s say, you use the clock time + the process id for generating the seed.  
-Let’s imagine that there are 1024 different process ids.
+でも、例えば、シード値を生成するのに、あなたは、クロック時間とプロセスIDを使ったとする。そして、1024個の別々のプロセスIDが存在すると想像してみよう。
+そうすると、攻撃者は、604800000 \* 1024 回を順番に当たっていく必要があり、それには2000秒かかる。さて、ここに私がいつコンピューターを起動した時間を足してみよう。攻撃者は私が今日起動したと知っているとすると、86400000 の可能性を追加する。
 
-So now, the attacker needs to enumerate 604800000 \* 1024 possibilities, which take around 2000 seconds.  
-Now, let’s add the time when I turned on my computer, assuming the attacker knows I turned it on today, it adds 86400000 possibilities.  
+これで、攻撃者は、604800000 \* 1024 \* 86400000 = 5,35088E+19　通りの可能性に当たる必要がある。しかし、覚えておいてほしいのは、もし攻撃者が私のコンピューターに侵入可能であれば、この最後の情報を取得できるので、可能性の数を減らし、エントロピーを下げることができる。
 
-Now the attacker needs to enumerate 604800000 \* 1024 \* 86400000 = 5,35088E+19 possibilities.  
-However, keep in mind that if the attacker infiltrate my computer, he can get this last piece of info, and bring down the number of possibilities, reducing entropy.
+エントロピーは、log<sub>2</sub>(possibilities)で計算できるので、log<sub>2</sub>(5,35088E+19)= 65 ビットとなる。
 
-Entropy is measured by **LOG(possibilities;2)** and so LOG(5,35088E+19; 2) = 65 bits.
+これは十分だろうか。攻撃者が可能性を左右する情報について、さらに持っていないと仮定するならば、多分そうだろう。
 
-Is it enough? Probably. Assuming your attacker does not know more information about the realm of possibilities.
+しかし、公開鍵のハッシュ値は、20バイト = 160ビット ということは、すべてのアドレスの数よりまだ小さい。もう少し頑張れるかもしれない。
 
-But since the hash of a public key is 20 bytes = 160 bits, it is smaller than the total universe of the addresses. You might do better.
+> **注意:** エントロピーを増やすことは線形的に難しいが、エントロピーを解読するのは、指数関数的に難しくなる。
 
-> **Note:** Adding entropy is linearly harder, cracking entropy is exponentially harder
+エントロピーを生成する面白い方法は、人間を介在させるやり方だ。(マウスを動かす。)
 
-An interesting way of generating entropy quickly is by asking human intervention. (Moving the mouse.)
-
-If you don’t completely trust the platform PRNG (which is [not so paranoic](http://android-developers.blogspot.fr/2013/08/some-securerandom-thoughts.html)), you can add entropy to the PRNG output that NBitcoin is using.  
+もし、あなたがプラットフォームのPRNGを信頼できないなら、NBitcoinが使用するための、PRNGからの出力にたいしてエントロピーを足すことができる。
 
 ```cs
 RandomUtils.AddEntropy("hello");
@@ -55,8 +51,7 @@ RandomUtils.AddEntropy(new byte[] { 1, 2, 3 });
 var nsaProofKey = new Key();
 ```  
 
-What NBitcoin does when you call **AddEntropy(data)** is:  
-**additionalEntropy = SHA(SHA(data) ^ additionalEntropy)**
+あなたが**AddEntropy(data)**を呼び出すときNBitcoinが行うのは、**additionalEntropy = SHA(SHA(data) ^ additionalEntropy)**です。
 
 Then when you generate a new number:  
 **result = SHA(PRNG() ^ additionalEntropy)**
