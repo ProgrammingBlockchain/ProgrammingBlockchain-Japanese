@@ -141,16 +141,16 @@ Goldが最初、次にSilverとなっている。
 }
 ```
 
-This means that the first **TxOut** bears 10 gold.
+これは最初の**トランザクションアウト**には10goldあるということだ。
 
-Now imagine that **Satoshi** wants to send 4 gold to **Alice**.  
-First, he will fetch the **ColoredCoin** out of the transaction.
+さて今、**サトシ**が**アリス**に4goldを送りたいということにしてみよう。  
+最初にサトシはトランザクションから**カラードコイン**を取得する。
 
 ```cs
 var goldCoin = ColoredCoin.Find(sendGoldToSatoshi, color).FirstOrDefault();
 ```
 
-Then, build a transaction like that:
+そしてこのようにトランザクションを生成する。
 
 ```cs
 builder = new TransactionBuilder();
