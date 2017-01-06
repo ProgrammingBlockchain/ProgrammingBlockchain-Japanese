@@ -70,28 +70,28 @@ FetchColorsが**IColoredTransactionRepository**に依存していることを見
 これによって、将来的に発生する、トランザクションのカラードコインを取得するリクエストが素早く解決される。  
 **IColoredTransactionRepository**は読み取り専用だ（**CoinprismColoredTransactionRepository**と同じでPutする操作が無視される）。
 
-So, back to our example:  
-The trick when writing unit tests is to use an in memory **IColoredTransactionRepository**:
+さあ、例に戻ろう。  
+ユニットテストを書くときのトリックは、メモリ上の**IColoredTransactionRepository**を使うことだ。
 
 ```cs
 var repo = new NoSqlColoredTransactionRepository();
 ```
 
-Now, we can put our **init** transaction inside.
+さあ、**init**トランザクションを格納しよう。
 
 ```cs
 repo.Transactions.Put(init);
 ```
 
-Note that Put is an extension methods, so you will need to add
+注釈するが、Putは拡張メソッドなので、以下の参照を追加する必要がある。
 
 ```cs
 using NBitcoin.OpenAsset;
 ```
 
-at the top of the file to get access to it.
+ファイルの1番上に、参照を付け足して欲しい。
 
-And now, you can extract the color:
+そしたら、カラードコインを抽出できる。
 
 ```cs
 ColoredTransaction color = ColoredTransaction.FetchColors(init, repo);
@@ -107,9 +107,9 @@ Console.WriteLine(color);
 }
 ```
 
-As expected, the **init** transaction has no inputs, issuances, transfers or destructions of Colored Coins.
+想定どおり、**init**トランザクションはカラードコインのインプットも発行も移動も破壊も何も持っていない。
 
-So now, let’s use the two coins sent to Silver and Gold as Issuance Coins.
+ということで、SilverとGoldに送られたtコインを、発行用のコインとして使ってみよう。
 
 ```cs
 var issuanceCoins =
@@ -122,9 +122,9 @@ var issuanceCoins =
     .ToArray();
 ```
 
-Gold is the first coin, Silver the second one.
+Goldが最初、次にSilverとなっている。
 
-From that you can send Gold to Satoshi with the **TransactionBuilder**, as we have done in the previous exercise, and put the resulting transaction in the repository, and print the result.
+前の章でやったとおり、**TransactionBuilder**を使ってGoldをSatoshiに送り、リポジトリに結果として生成されるトランザクションを格納し、結果を表示できる。
 
 ```cs
 {
