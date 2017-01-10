@@ -1,62 +1,62 @@
 ## Ricardian contracts {#ricardian-contracts}
 
-This part is a copy of an article I wrote on [Coinprism’s blog](http://blog.coinprism.com/2014/12/10/colored-coins-and-ricardian-contracts/). At the time of this writing, NBitcoin do not have any code related to Ricardian Contracts.
+本章は[Coinprismのブログ](http://blog.coinprism.com/2014/12/10/colored-coins-and-ricardian-contracts/)で書いた記事のコピーとなっている。書いた時点ではNBitcoinはRicardian Contractsに関連するコードはまったくなかった。
 
-### What is a Ricardian Contract {#what-is-a-ricardian-contract}
+### Ricardian Contractとはなにか {#what-is-a-ricardian-contract}
 
-Generally, an asset is any object representing rights which can be redeemed to an issuer on specific conditions.
+一般的にアセットは特定の条件下で発行者に償還される権利を表現するものをいう。
 
-*   A company’s share gives right to dividends.
-*   A bond gives right to the principal at maturity, coupons bears interest for every period.
-*   A voting token gives right to vote decisions about an entity. (Company, election.)
-*   Some mix are possible : A share can also be a voting token for the company’s president election.
+* 会社の株式によって配当をもらう権利が与えられる
+* 公債によって満期になれば元本を取り返す権利と毎期に利子を得られる権利を与えられる
+* 投票権によって何らかの集合体を決定するために投票する権利を与えられる（会社や選挙）
+* これらのミックスもありえる：株式によって会社の社長を選ぶ投票券を与えられもするだろう。
 
-Such rights are typically enumerated inside a Contract, and signed by the issuer (and a trusted party if needed, like a notary).
+このような権利は典型的に契約の中に列挙され、発行者によって署名される。（必要であれば公証人のように信頼された第三者によっても署名される）
 
-A Ricardian contract is a Contract which is cryptographically signed by the issuer, and cannot be dissociated from the asset.
+Ricardian Contractは暗号によって発行者から署名され、アセットと切り離すことができない契約のことをいう。
 
-So the contract cannot be denied, tampered, and is provably signed by the issuer.  
-Such contract can be kept confidential between the issuer and the redeemer, or published.
+だからそういった契約は否定したり改ざんしたりすることはできない。明白に発行者によって署名されているからだ。  
+このような契約は発行者と執行者との間で信頼された状態が保てるし、もしくは公表することもできる。
 
-Open Asset can already support all of that without changing the core protocol, and here is how.
+オープンアセットはすでにコアプロトコルを変えることなく、それらすべてをサポートしている。本章でどのように実装されているかを述べる。
 
-### Ricardian Contract inside Open Asset {#ricardian-contract-inside-open-asset}
+### オープンアセット中のRicardian Contract {#ricardian-contract-inside-open-asset}
 
-[Here](http://iang.org/papers/ricardian_contract.html) is the formal definition of a ricardian contract:
+[このサイト](http://iang.org/papers/ricardian_contract.html)にRicardian Contractの公式の定義がある。
 
-1.  A contract offered by an issuer to holders,
-2.  for a valuable right held by holders, and managed by the issuer,
-3.  easily readable by people (like a contract on paper),
-4.  readable by programs (parsable like a database),
-5.  digitally signed,
-6.  carries the keys and server information, and
-7.  allied with a unique and secure identifier.
+1. 発行者によって契約がアセットの所持者に示され、
+2. アセットの所持者が有し、発行者によって執行される様々な権利に対応し、
+3. 簡単に人が読めて（契約書のように）
+4. プログラムによって処理でき（データベースのように解釈ができ）
+5. デジタル署名されていて
+6. 鍵とサーバーの情報を含み、
+7. ユニークで安全な識別子と結び付けられている。
 
-An AssetId is specified by OpenAsset in such way :
+アセットIDは以下のような方法でオープンアセットによって特定される。
 
-```AssetId = Hash160(ScriptPubKey)```
+`AssetId = Hash160(ScriptPubKey)`
 
-Let’s make such **ScriptPubKey** a P2SH as:
+**ScriptPubKey**をP2SHで作ってみよう。
 
-```ScriptPubKey = OP_HASH160 Hash(RedeemScript) OP_EQUAL```
+`ScriptPubKey = OP_HASH160 Hash(RedeemScript) OP_EQUAL`
 
-Where:
+RedeemScriptはこうだ。
 
-```RedeemScript = HASH160(RicardianContract) OP_DROP IssuerScript```
+`RedeemScript = HASH160(RicardianContract) OP_DROP IssuerScript`
 
-**IssuerScript** refer to a classical P2PKH for a simple issuer, multi sig if issuance need several consents. (Issuer + notary for example.)
+**IssureScript**とは1人の発行者に対しては古典的なP2PKHになるが、発行に対して何人かの合意が必要ならばマルチシグ（たとえば発行者と公証人）となる。
 
-It should be noted that from Bitcoin 0.10, IssuerScript is arbitrary and can be anything.
+Bitcoin 0.10から、IssureScriptは任意となり内容はなんでも良いということは注釈しておきたい。
 
-The **RicardianContract** can be arbitrary, and kept private. Whoever holds the contract can prove that it applies to this Asset thanks to the hash in the ScriptPubKey.
+**RicardianContract**は任意で、秘匿しておける。契約をもっている人なら誰でも、ScriptPubKeyのハッシュのおかげでその契約がこのアセットに適用されることを証明できる。
 
-But let’s make such RicardianContract discoverable and verifiable by wallet clients with the Asset Definition Protocol.
+しかし、RicardianContractを可視化し、Asset Definition Protocolをもつウォレットクライアントで確認できるようにしてみよう。
 
-Let’s assume we are issuing a Voting token for candidate A, B or C.
+A、BまたはCに対しての選挙権を発行していることにしてみよう。
 
-Let’s add to the Open Asset Marker, the following asset definition url: ```u=http://issuer.com/contract```
+オープンアセットのマーカーに、次のアセット定義のURL：`u=http://issuer.com/contract`を追加してみよう。
 
-In the http://issuer.com/contract page, let’s create the following [Asset Definition File](https://github.com/OpenAssets/open-assets-protocol/blob/8b945ba68a781358947325ac008cdd740c89adb3/asset-definition-protocol.mediawiki):  
+[http://issuer.com/contract](http://issuer.com/contract)で、次のような[アセットの定義ファイル](https://github.com/OpenAssets/open-assets-protocol/blob/8b945ba68a781358947325ac008cdd740c89adb3/asset-definition-protocol.mediawiki)を作ってみよう。
 
 ```json
 {
@@ -68,40 +68,41 @@ In the http://issuer.com/contract page, let’s create the following [Asset Defi
     "Candidates" : ["A","B","C"],
     "Validity" : "10 jan 2015"
 }
-```  
+```
 
-And now we can define the RicardianContract:
+これでRicardianContractを定義できる。
 
-```RicardianContract = AssetDefinitionFile```
+`RicardianContract = AssetDefinitionFile`
 
 This terminate our RicardianContract implemented in OA.
 
-### Check list {#check-list}
+### チェックリスト {#check-list}
 
-* **A contract offered by an issuer to holders.**  
-The contract is hosted by the issuer, unalterable, and signed every time the Issuer issues a new asset,
+* **発行者によって契約がアセットの所持者に示され、**  
+  契約が発行者によって主体的に執行され、変更されず、発行者が新しいアセットを発行する都度署名される。
 
-* **For a valuable right held by holders, and managed by the issuer.**  
-The right in this sample is a voting right for candidate A,B,C to redeem before 10 jan 2015.
+* **アセットの所持者が有し、発行者によって執行される様々な権利に対応し、**  
+  このサンプルの中での権利は2015年1月10日までに候補者A、BまたはCに投票する権利を与えられる。
 
-* **Easily readable by people (like a contract on paper.)**  
-The human readable contract is in the contract_url, but the JSON might be enough.
+* **簡単に人が読めて（契約書のように）**  
+  The human readable contract is in the contract\_url, but the JSON might be enough.
 
-* **Readable by programs, (parsable like a database.)**  
-The details of the vote are inside the **AssetDefinitionFile**, in JSON format, the authenticity of the contract is verified by software with the **IssuerScript**, and the hash in the **ScriptPubKey**.
+* **プログラムによって処理でき（データベースのように解釈ができ）**  
+  投票の詳細はJSONフォーマットの中の**AssetDefinitionFile**のうちにあり、契約の真正性は**IssureScript**と**ScriptPubKey**のハッシュを使ってソフトウェアによって確かめられる。
 
-* **Digitally signed.**  
-The **ScriptPubKey** is signed when the issuer issues the asset, thus, also the hash of the contract, and by extension, the contract itself.
+* **デジタル署名されていて**  
+  **ScriptPubKey**は、発行者がアセット、つまり契約のハッシュまたはさらに言えば契約自体を発行するときに署名される。
 
-* **Carries the keys and server. informationIssuerScript** is included in the contract
+* **鍵とサーバーの情報を含む。 informationIssureScript**は契約に含まれる。
 
-* **Allied with a unique and secure identifier.**  
-The **AssetId** is defined by **Hash(ScriptPubKey)** that can’t be changed and is unique.
+* **ユニークで安全な識別子と結び付けられている。**  
+  **アセットID**は、変更できず一意である**ScriptPubKeyのハッシュ**によって定義される。
 
-### What is it for? {#what-is-it-for}
+### 何のためのものか？ {#what-is-it-for}
 
-Without Ricardian Contract, it is easy for a malicious issuer to modify or repudiate an Asset Definition File.
+Ricardian Contractがないと、悪意のあるアセット発行者が、アセットの定義ファイルを変更したり否認したりすることが簡単になってしまう。
 
-Ricardian Contract enforces non-repudiation, make a contract unalterable, so it facilitate arbitration matter between redeemers and issuers.
+Ricardian Contractによって否認拒否を強制し、契約を変更できないようにして、アセットの償還を受ける者と発行者との間の裁定を容易にする。
 
-Also, since the Asset Definition File can’t be changed, it becomes possible to save it on redeemer’s own storage, preventing rupture of access to the contract by a malicious issuer.
+また、アセットの定義ファイルは変更できないから、悪意のある発行者による、契約の破壊行為を防止しながら、アセットを償還者の手元で保管できるようにもなる。
+
