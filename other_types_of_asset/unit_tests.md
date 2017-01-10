@@ -163,11 +163,11 @@ var sendToBobAndAlice =
         .BuildTransaction(true);
 ```
 
-Except you will get the exception **NotEnoughFundsException**.  
-The reason is that the transaction is composed of 600 satoshi in input \(the **goldCoin**\), and 1200 satoshi in output. \(One **TxOut** for sending assets to Alice, and one for sending back the change to Satoshi.\)
+**NotEnoughFundsException**が発生してしまうだろう。  
+それはなぜかというと、このトランザクションはトランザクションインプット（**goldコイン**）に600satoshiあって、トランザクションアウトプットに1200satoshiある。（1つ目の**トランザクションアウトプット**はアリスにアセットを送るもので、もう1つはサトシにお釣りを送るものだ）
 
-This means that you are out of 600 satoshi.  
-You can fix the problem by adding the last **Coin** of 1 BTC in the **init** transaction that belongs to **satoshi**.
+つまり600satoshi不足しているのだ。  
+サトシに送られている**init**トランザクションにある最後の1BTCに相当する**コイン**をトランザクションに加えることで解決できる。
 
 ```cs
 var satoshiBtc = init.Outputs.AsCoins().Last();
@@ -183,7 +183,7 @@ repo.Transactions.Put(sendToAlice);
 color = ColoredTransaction.FetchColors(sendToAlice, repo);
 ```
 
-Let’s see the transaction and its colored part:
+トランザクションとカラードコインの内容を見てみよう。
 
 ```cs
 Console.WriteLine(sendToAlice);
@@ -254,9 +254,9 @@ Colored :
 }
 ```
 
-We have finally made a unit test that emits and transfers some assets without any external dependencies.
+ついに外部的な依存なしでアセットを発行し移動する単体テストを実行できたわけだ。
 
-You can make your own **IColoredTransactionRepository** if you don’t want to depend on a third party service.
+もしサードパーティーのサービスに依存したくなければ、**IColoredTransactionRepository**を自前で作ることもできる。
 
-You can find more complex scenarios in [NBitcoin tests](https://github.com/NicolasDorier/NBitcoin/blob/master/NBitcoin.Tests/transaction_tests.cs), and also one of my article “[Build them all](http://www.codeproject.com/Articles/835098/NBitcoin-Build-Them-All)” in codeproject. \(Like multi sig issuance and colored coin swaps.\)
+より詳しい内容は[NBitcoin tests](https://github.com/MetacoSA/NBitcoin/blob/master/NBitcoin.Tests/transaction_tests.cs)で見ることができるし、コードプロジェクトの中にある私の記事の1つの「[Build Them all](https://www.codeproject.com/articles/835098/nbitcoin-build-them-all)」でも見ることができる。（マルチシグでのカラードコインの発行や交換）
 
