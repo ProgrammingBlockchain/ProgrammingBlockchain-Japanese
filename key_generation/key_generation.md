@@ -174,13 +174,26 @@ Even if your attacker knows that your source of entropy is 5 letters, he will ne
 --->
 もし仮に、攻撃者があなたのエントロピーの元が５文字だとしってたとしても、彼はScryptを実行して可能性を確認しないといけない。私のコンピューターでは、それは５秒かかった。  
 
+<!--
 The bottom line is: There is nothing paranoid into distrusting a PRNG, and you can mitigate an attack by both adding entropy and also using a KDF.  
+-->
+結局のところどういうことかというと、疑似乱数発生器を妨害されることに極端に心配しすぎる必要はない。エントロピーの増加とKDFの両方をすることで攻撃を弱めることができる。  
+<!--
 Keep in mind that an attacker can decrease entropy by gathering information about you or your system.  
 If you use the timestamp as entropy source, then he can decrease the entropy by knowing you generated the key last week, and that you only use your computer between 9am and 6pm.
+-->
+覚えておいてほしいのは、攻撃者は、あなた、もしくは、あなたのもつシステムの情報を集めることでエントロピーを減らすことができるということだ。もし、タイムスタンプをエントロピーを作る元にするなら、攻撃者が あなたが先週キーを生成し、しかも午後９時から午後６時までしかコンピューターを使用しないとを知ることによって、エントロピーを減らすことができる。  
 
+<!--
 In the previous part I talked quickly about a special KDF called **Scrypt.** As I said, the goal of a KDF is to make brute force costly.  
+-->
+前に、特別なKDFである**Scrypt**について説明した。そこで言った通り、KDFの目的は 総当たり攻撃をコストがかかるようにすることだ。  
 
-So it should be no surprise for you that a standard already exists for encrypting your private key with a password using a KDF. This is [BIP38](http://www.codeproject.com/Articles/775226/NBitcoin-Cryptography-Part).  
+<!--
+So it should be no surprise for you that a standard already exists for encrypting your private key with a password using a KDF. This is
+-->
+なので、秘密鍵をKDFを使ってパスワードで暗号化する標準の方法がすでにあつとしても、別に驚くことではないでしょう。  
+ [BIP38](http://www.codeproject.com/Articles/775226/NBitcoin-Cryptography-Part).  
 
 ![](../assets/EncryptedKey.png)  
 
@@ -195,86 +208,150 @@ Console.WriteLine(decryptedBitcoinPrivateKey); // L1tZPQt7HHj5V49YtYAMSbAmwN9zRj
 
 Console.ReadLine();
 ```  
-
+<!--
 Such encryption is used in two different cases:  
+-->
 
+このような暗号化は、２つのケースで使用される。:  
+
+<!--
 *   You don not trust your storage provider (they can get hacked)  
 *   You are storing the key on the behalf of somebody else (and you do not want to know his key)  
+-->
+*   鍵の保存先を信用していない。
+*   他の人のために鍵を保存しようとしている。（そして、あなたはその人の鍵を知りたくない。）  
 
+<!--
 If you own your storage, then encrypting at the database level might be enough.  
+-->
+もし、自分の保存先を持っているならデータベースによる暗号化で十分だ。  
 
-Be careful if your server takes care of decrypting the key, an attacker might attempt to DDOS your server by forcing it to decrypt lots of keys.  
+<!--
+Be careful if your server takes care of decrypting the key, an attacker might attempt to DDOS your server by forcing it to decrypt lots of keys.
+-->
+もし、あなたのサーバーが復号化の機能を持つ場合、気を付けなければいけない。攻撃者がもしかすると大量の鍵を復号化させるようなDDOS攻撃を仕掛けてくるかもしれないからだ。  
 
+<!--
 Delegate decryption to the ultimate user when you can.  
+-->
+可能であるならば、復号化は最終ユーザーに移譲すべきである。  
 
+<!--
 ## Like the good ol’ days {#like-the-good-ol-days}
+-->
+## 古き良き時代のように {#like-the-good-ol-days}
 
+<!--
 First, why generating several keys?  
 The main reason is privacy. Since you can see the balance of all addresses, it is better to use a new address for each transaction.  
-
+-->
+まず最初に、なぜ複数の鍵を生成しなければならないのだろうか。  
+一番の理由はプライバシーである。すべてのアドレスの残高は、だれでも見ることができるのだから、取引ごとに新しいアドレスを使うほうが良い。  
+<!--
 However, in practice, you can also generate keys for each contact which makes this a simple way to identify your payer without leaking too much privacy.  
-
+-->
+しかし、実際のところ、相手ごとにも鍵を生成することもできる。それにより、支払元を簡単に特定でき、プライバシーの露出も防げる。  
+<!--
 You can generate key, like you did from the beginning:
-
+-->
+これまでのコードでもやってきたように、こうやって鍵を生成できる：
 ```cs
 var privateKey = new Key()
 ```  
-
+<!--
 However, you have two problems with that:  
-
+-->
+しかし、これには、２つの問題がある:
+<!--
 *   All backups of your wallet that you have will become outdated when you generate a new key.  
 *   You cannot delegate the address creation process to an untrusted peer.  
-
+-->
+*   新しい鍵を生成することで、自分の持つウォレットのバックアップがすべて古いものになってしまう。
+*   アドレスの作成処理を信用できない相手に委譲することができなくなる。
+<!--
 If you are developing a web wallet and generate key on behalf of your users, and one user get hacked, she will immediately start suspecting you.  
+-->
+もし、ウェブウォレットを開発していて、ユーザーのために、キーを生成している場合、あるユーザーの鍵が破られたとすると、即座にその人は、あなたを疑い始めるだろう。
 
+<!--
 ## BIP38 (Part 2) {#bip38-part-2}
-
+-->
+## BIP38 (パート２) {#bip38-part-2}
+<!--
 We already saw BIP38 for encrypting a key, however this BIP is in reality two ideas in one document.  
-
+-->
+我々はBIP38をすでに見たが、このBIPは、２つのアイデアを１つにしたものだ。  
+<!--
 The second part of the BIP, shows how you can delegate Key and Address creation to an untrusted peer. It will fix one of our concerns.  
-
+-->
+２つめの部分では、どうやって鍵とアドレスの生成を信頼できない相手に委譲することができるかを書いている。ので、２つの懸念点のうちの１つを解決する。  
+<!--
 **The idea is to generate a PassphraseCode to the key generator. With this PassphraseCode, he will be able to generate encrypted keys on your behalf, without knowing your password, nor any private key. **
-
+-->
+**そのアイデアとは、鍵生成器のためにパスフレーズコードを作るというものだ。このパスフレーズコードで、その相手は、暗号化された鍵をあなたのために作ることができ、しかも、あなたのパスワードも秘密鍵も知ることはない。**
+<!--
 This **PassphraseCode** can be given to your key generator in WIF format.  
-
+-->
+この **パスフレーズコード** は WIFフォーマットにして鍵生成器に渡すことができる。
+<!--
 > **Tip**: In NBitcoin, all types prefixed by “Bitcoin” are Base58 (WIF) data.  
+-->
+> **ティップス**: NBitcoinでは、Bitcoinが頭についている型は全て Base58 （WIF）フォーマットのデータである。
 
+<!--
 So, as a user that wants to delegate key creation, first you will create the **PassphraseCode**.
-
+-->
+なので、鍵の生成を委譲したいユーザーとして、最初に、 **パスフレーズコード** を作ることになる。  
 ![](../assets/PassphraseCode.png)  
 
 ```cs
 var passphraseCode = new BitcoinPassphraseCode("my secret", Network.Main, null);
 ```
-
+<!--
 **You then give this passphraseCode to a third party key generator.**
+-->
+**そしてこのパスフレーズコードを外部の鍵生成してくる機関に渡す。**
 
+<!--
 The third party will then generate new encrypted keys for you.
-
+-->
+その期間は、暗号化された鍵をあなたのために作ってくれる。  
 ![](../assets/PassphraseCodeToEncryptedKeys.png)  
 
 ```cs
 EncryptedKeyResult encryptedKeyResult = passphraseCode.GenerateEncryptedSecret();
 ```  
-
+<!--
 This **EncryptedKeyResult** has lots of information:  
-
+-->
+この **暗号化された鍵**　は、たくさんの情報が入っている。  
 ![](../assets/EncryptedKeyResult.png)  
 
+<!--
 First: the **generated bitcoin address**,  
+-->
+まずは、生成されたビットコインアドレス  
 ```cs
 var generatedAddress = encryptedKeyResult.GeneratedAddress; // 14KZsAVLwafhttaykXxCZt95HqadPXuz73
 ```  
+<!--
 then the **EncryptedKey** itself, (as we have seen in the previous, **Key Encryption** lesson),  
+-->
+それから、暗号がされた鍵 自身、（前にやった **鍵の暗号化** の説明でみたように）
 ```cs
 var encryptedKey = encryptedKeyResult.EncryptedKey; // 6PnWtBokjVKMjuSQit1h1Ph6rLMSFz2n4u3bjPJH1JMcp1WHqVSfr5ebNS
 ```  
+<!--
 and last but not the least, the **ConfirmationCode**, so that the third party can prove that the generated key and address correspond  to your password.
+-->
+そして、最後だけれども、重要な **確認コード**。これにより、第三者機関は、生成された鍵とアドレスが あなたのパスワードに対応していることを証明することができる。
 ```cs
 var confirmationCode = encryptedKeyResult.ConfirmationCode; // cfrm38VUcrdt2zf1dCgf4e8gPNJJxnhJSdxYg6STRAEs7QuAuLJmT5W7uNqj88hzh9bBnU9GFkN
 ```  
-
+<!--
 As the owner, once you receive this information, you need to check that the key generator did not cheat by using **ConfirmationCode.Check**, then get your private key with your password:
+-->
+あなたは所有者として、この情報を手に入れたらすぐ、**ConfirmationCode.Check** を使って、鍵作成者が、インチキをしていないか確認する必要がある。そして、パスワードをつかって秘密鍵を取得する。
 
 ```cs
 Console.WriteLine(confirmationCode.Check("my secret", generatedAddress)); // True
@@ -282,28 +359,51 @@ var bitcoinPrivateKey = encryptedKey.GetSecret("my secret");
 Console.WriteLine(bitcoinPrivateKey.GetAddress() == generatedAddress); // True
 Console.WriteLine(bitcoinPrivateKey); // KzzHhrkr39a7upeqHzYNNeJuaf1SVDBpxdFDuMvFKbFhcBytDF1R
 ```  
-
+<!--
 So, we have just seen how the third party can generate encrypted key on your behalf, without knowing your password and private key.
+-->
+我々は、第三者がどうやってあなたのパスワードと秘密鍵を知ることなしに暗号化された鍵を作成することができるかを見てきた。  
 
 ![](../assets/ThirdPartyKeyGeneration.png)  
-
+<!--
 However, one problem remains:
-
+-->
+しかし、まだ１つ問題が残っている:  
+<!--
 *   All backups of your wallet that you have will become outdated when you generate a new key.
+-->
+*   新しい鍵を生成することで、自分の持つウォレットのバックアップがすべて古いものになってしまう。
 
+<!--
 BIP 32, or Hierarchical Deterministic Wallets (HD wallets) proposes another solution, and is more widely supported.
-
+-->
+BIP 32、もしくは 階層的決定性ウォレット(HDウォレット)は、別の解決方法を提案している。そして、それは広くサポートされた方法だ。
+<!--
 ## HD Wallet (BIP 32) {#hd-wallet-bip-32}
-
+-->
+## HDウオレット (BIP 32) {#hd-wallet-bip-32}
+<!--
 Let’s keep in mind the problems that we want to resolve:
-
+-->
+それでは、我々が解決したい問題を心にとめておこう:
+<!--
 *   Prevent outdated backups
 *   Delegating key / address generation to an untrusted peer
+-->
+*   バックアップが古くなって使えなくなるのを防ぎたい
+*   信頼してない相手に鍵やアドレスの生成を委譲したい
 
+<!--
 A “Deterministic” wallet would fix our backup problem. With such wallet, you would have to save only the seed. From this seed, you can generate the same series of private keys over and over.  
+-->
+決定性ウォレットは、バックアップの問題を解決するだろう。そのようなウォレットでは、シード値だけは保存しなければならない。そして、このシードから、一連の秘密鍵を何度も生成することができる。  
 
+<!--
 This is what the “Deterministic” stands for.  
 As you can see, from the master key, I can generate new keys:  
+-->
+これが、"決定性"の意味するところである。  
+以下のように、マスターキーから、新しい鍵をどんどん生成できる。
 
 ```cs
 ExtKey masterKey = new ExtKey();
@@ -324,9 +424,10 @@ Key 3 : xprv9tvBA4Kt8UTuPwJQyxuZoFj9hcEMCoz7DAWLkz9tRMwnBDiZghWePdD7etfi9RpWEWQj
 Key 4 : xprv9tvBA4Kt8UTuQoh1dQeJTXsmmTFwCqi4RXWdjBp114rJjNtPBHjxAckQp3yeEFw7Gf4gpnbwQTgDpGtQgcN59E71D2V97RRDtxeJ4rVkw4E
 Key 5 : xprv9tvBA4Kt8UTuTdiEhN8iVDr5rfAPSVsCKpDia4GtEsb87eHr8yRVveRhkeLEMvo3XWL3GjzZvncfWVKnKLWUMNqSgdxoNm7zDzzD63dxGsm
 ```  
-
+<!--
 You only need to save the **masterKey**, since you can generate the same suite of private keys over and over.  
-
+-->
+**masuwa**
 As you can see, these keys are **ExtKey** and not **Key** as you are used to. However, this should not stop you since you have the real private key inside:  
 
 ![](../assets/ExtKey.png)  
