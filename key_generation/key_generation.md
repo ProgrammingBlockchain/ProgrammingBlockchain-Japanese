@@ -9,91 +9,111 @@
 <!---
 When you call **new Key()**, under the hood, you are using a PRNG (Pseudo-Random-Number-Generator) to generate your private key. On windows, it uses the **RNGCryptoServiceProvider**, a .NET wrapper around the Windows Crypto API.
 --->
-**new Key()** を呼び出すとき、内部ではPRNG(疑似乱数生成機)を使って秘密鍵を生成している。ウインドウズ上では、Windows Crypto APIの.Netラッパーである **RNGCryptoServiceProvider** を使用する。
+**new Key()** を呼び出すとき、内部ではPRNG(疑似乱数生成機)を使って秘密鍵を生成している。ウインドウズ上では、Windows Crypto APIの.Netラッパーである **RNGCryptoServiceProvider** を使用する。  
+
 <!---
 On Android, I use the **SecureRandom**, and in fact, you can use your own implementation with **RandomUtils.Random**.
 --->
-アンドロイドでは、私は **SecureRandom** を使用する。実際のところ **RandomUtils.Random** を使って自分独自の実装を使うことができる。
+アンドロイドでは、私は **SecureRandom** を使用する。実際のところ **RandomUtils.Random** を使って自分独自の実装を使うことができる。  
+
 <!---
 On IOS, I have not implemented it and you need to create your **IRandom** implementation.
 --->
-iOS上では、私はまだ実装したことはないが、自分で**IRandom** の実装クラスを作る必要がある。
+iOS上では、私はまだ実装したことはないが、自分で**IRandom** の実装クラスを作る必要がある。  
+
 <!---
 For a computer, being random is hard. But the biggest issue is that it is impossible to know if a series of number is really random.
 --->
-コンピュータにとって、ランダムであることは、困難だ。しかし、一番大きな問題は、ある一連の数値が本当にランダムかどうかを知ることが不可能だということである。
+コンピュータにとって、ランダムであることは、困難だ。しかし、一番大きな問題は、ある一連の数値が本当にランダムかどうかを知ることが不可能だということである。  
+
 <!---
 If malware modifies your PRNG (and so, can predict the numbers you will generate), you won’t see it until it is too late.
 --->
-もし、マルウエアがあなたのPRNGを改ざんした場合（なので、あなたが生成する数値を予測できる）、手遅れになるまでそれを知ることはない。
+もし、マルウエアがあなたのPRNGを改ざんした場合（なので、あなたが生成する数値を予測できる）、手遅れになるまでそれを知ることはない。  
+
 <!---
 It means that a cross platform and naïve implementation of PRNG (like using the computer’s clock combined with CPU speed) is dangerous. But you won’t see it until it is too late.
 --->
-これは、クロスプラットフォーム、もしくは、ネイティブ実装のPRNG（コンピュータのクロックとCPUを使用する）は危険であることを意味する。しかし、手遅れになるまで、それを知る由はない。
+これは、クロスプラットフォーム、もしくは、ネイティブ実装のPRNG（コンピュータのクロックとCPUを使用する）は危険であることを意味する。しかし、手遅れになるまで、それを知る由はない。  
+
 <!---
 For performance reasons, most PRNG works the same way: a random number, called **Seed**, is chosen, then a predictable formula generates the next numbers each time you ask for it.
 --->
-パフォーマンス上の理由から ほとんどのPRNGは同じように機能する。**シード** とよばれるランダムな数値が選ばれ、あなたが依頼する度に結果予測可能な式によって次々と数値が生成される。
+パフォーマンス上の理由から ほとんどのPRNGは同じように機能する。**シード** とよばれるランダムな数値が選ばれ、あなたが依頼する度に結果予測可能な式によって次々と数値が生成される。  
+
 <!---
 The amount of randomness of the seed is defined by a measure we call **Entropy**, but the amount of **Entropy** also depends on the observer.
 --->
-シートのランダムさの量は、**エントロピー** と我々が予備計測値で定義される、エントロピー量は、観測者に依存する。
+シートのランダムさの量は、**エントロピー** と我々が予備計測値で定義される、エントロピー量は、観測者に依存する。  
+
 <!---
 Let’s say you generate a seed from your clock time.  
 And let’s imagine that your clock has 1ms of resolution. (Reality is more ~15ms.)
 --->
 例えば、あなたが自分のクロック時間をもとにシード値を生成したとしよう。
-そして、１ミリ秒の精度を持ったとしよう。（現実には１５ミリ秒以上。）
+そして、１ミリ秒の精度を持ったとしよう。（現実には１５ミリ秒以上。）  
+
 <!---
 If your attacker knows that you generated the key last week, then your seed has  
-1000 \* 60 \* 60 \* 24 \* 7 = 604800000 possibilities
+1000 \* 60 \* 60 \* 24 \* 7 = 604800000 possibilities.
 --->
 もし攻撃者が、あなたが先週、鍵を生成したと知ってるとすると、シード値は、
-1000 \* 60 \* 60 \* 24 \* 7 = 604800000 possibilities.
+1000 \* 60 \* 60 \* 24 \* 7 = 604800000 possibilities  
+
 <!---
 For such attacker, the entropy is LOG(604800000;2) = 29.17 bits.
 --->
-そのような攻撃者にとって、エントロピーは、log<sub>2</sub>(604800000) = 29.17 ビットである。
+そのような攻撃者にとって、エントロピーは、log<sub>2</sub>(604800000) = 29.17 ビットである。  
+
 <!---
 And enumerating such number on my home computer took less than 2 seconds. We call such enumeration “brute forcing”.
 --->
-そのような回数を順番に処理するには、私の自宅のコンピュータでやっても２秒以下しかかからない。このような処理のことを”総当たり式”と呼ぶ。
+そのような回数を順番に処理するには、私の自宅のコンピュータでやっても２秒以下しかかからない。このような処理のことを”総当たり式”と呼ぶ。  
+
 <!---
 However let’s say, you use the clock time + the process id for generating the seed.  
 Let’s imagine that there are 1024 different process ids.
 --->
-でも、例えば、シード値を生成するのに、あなたは、クロック時間とプロセスIDを使ったとする。そして、1024個の別々のプロセスIDが存在すると想像してみよう。
+でも、例えば、シード値を生成するのに、あなたは、クロック時間とプロセスIDを使ったとする。そして、1024個の別々のプロセスIDが存在すると想像してみよう。  
+
 <!---
 So now, the attacker needs to enumerate 604800000 \* 1024 possibilities, which take around 2000 seconds.  
 Now, let’s add the time when I turned on my computer, assuming the attacker knows I turned it on today, it adds 86400000 possibilities.  
 --->
-そうすると、攻撃者は、604800000 \* 1024 回を順番に当たっていく必要があり、それには2000秒かかる。さて、ここに私がいつコンピューターを起動した時間を足してみよう。攻撃者は私が今日起動したと知っているとすると、86400000 の可能性を追加する。
+そうすると、攻撃者は、604800000 \* 1024 回を順番に当たっていく必要があり、それには2000秒かかる。さて、ここに私がいつコンピューターを起動した時間を足してみよう。攻撃者は私が今日起動したと知っているとすると、86400000 の可能性を追加する。  
+
 <!---
 Now the attacker needs to enumerate 604800000 \* 1024 \* 86400000 = 5,35088E+19 possibilities.  
 However, keep in mind that if the attacker infiltrate my computer, he can get this last piece of info, and bring down the number of possibilities, reducing entropy.
 --->
 これで、攻撃者は、604800000 \* 1024 \* 86400000 = 5,35088E+19　通りの可能性に当たる必要がある。
-しかし、覚えておいてほしいのは、もし攻撃者が私のコンピューターに侵入可能であれば、この最後の情報を取得できるので、可能性の数を減らし、エントロピーを下げることができる。
+しかし、覚えておいてほしいのは、もし攻撃者が私のコンピューターに侵入可能であれば、この最後の情報を取得できるので、可能性の数を減らし、エントロピーを下げることができる。  
+
 <!---
 Entropy is measured by **LOG(possibilities;2)** and so LOG(5,35088E+19; 2) = 65 bits.
 --->
-エントロピーは、log<sub>2</sub>(possibilities)で計算できるので、log<sub>2</sub>(5,35088E+19)= 65 ビットとなる。
+エントロピーは、log<sub>2</sub>(possibilities)で計算できるので、log<sub>2</sub>(5,35088E+19)= 65 ビットとなる。  
+
 <!---
 Is it enough? Probably. Assuming your attacker does not know more information about the realm of possibilities.
 --->
-これは十分だろうか。攻撃者が可能性を左右する情報について、さらに持っていないと仮定するならば、多分そうだろう。
+これは十分だろうか。攻撃者が可能性を左右する情報について、さらに持っていないと仮定するならば、多分そうだろう。  
+
 <!---
 But since the hash of a public key is 20 bytes = 160 bits, it is smaller than the total universe of the addresses. You might do better.
 --->
-しかし、公開鍵のハッシュ値は、20バイト = 160ビット ということは、すべてのアドレスの数よりまだ小さい。もう少し頑張れるかもしれない。
+しかし、公開鍵のハッシュ値は、20バイト = 160ビット ということは、すべてのアドレスの数よりまだ小さい。もう少し頑張れるかもしれない。  
+
 <!---
 > **Note:** Adding entropy is linearly harder, cracking entropy is exponentially harder
 --->
-> **注意:** エントロピーを増やすことは線形的に難しいが、エントロピーを解読するのは、指数関数的に難しくなる。
+> **注意:** エントロピーを増やすことは線形的に難しいが、エントロピーを解読するのは、指数関数的に難しくなる。  
+
 <!---
 An interesting way of generating entropy quickly is by asking human intervention. (Moving the mouse.)
 --->
-エントロピーを生成する面白い方法は、人間を介在させるやり方だ。(マウスを動かす。)
+エントロピーを生成する面白い方法は、人間を介在させるやり方だ。(マウスを動かす。)  
+
 <!---
 If you don’t completely trust the platform PRNG (which is [not so paranoic](http://android-developers.blogspot.fr/2013/08/some-securerandom-thoughts.html)), you can add entropy to the PRNG output that NBitcoin is using.  
 --->
@@ -107,32 +127,52 @@ var nsaProofKey = new Key();
 <!---
 What NBitcoin does when you call **AddEntropy(data)** is:
 --->
-あなたが**AddEntropy(data)**を呼び出すときNBitcoinが行うのは、**additionalEntropy = SHA(SHA(data) ^ additionalEntropy)**です。
+あなたが **AddEntropy(data)** を呼び出すときNBitcoinが行うのは、  
+**additionalEntropy = SHA(SHA(data) ^ additionalEntropy)** です。  
+
 <!---
 Then when you generate a new number:  
 --->
-そして、新しい数値を取得するときの結果は:　　
-**result = SHA(PRNG() ^ additionalEntropy)**
+そして、新しい数値を取得するときの結果は:  
+**result = SHA(PRNG() ^ additionalEntropy)** です。
 
+<!---
 ## Key Derivation Function {#key-derivation-function}
-
+--->
+## 鍵導出関数 {#key-derivation-function}
+<!---
 However, what is most important is not the number of possibilities. It is the time that an attacker would need to successfully break your key. That’s where KDF enters the game.
+--->
+しかし、もっとも重要なことは、可能性の数の多さではなく、攻撃者がどれくらいの時間が、あなたの鍵を破ることに成功するのに必要かということである。
 
+<!---
 KDF, or **Key Derivation Function** is a way to have a stronger key, even if your entropy is low.
+--->
+KDF もしくは **鍵導出関数(Key Derivation Function)** が、たとえエントロピーが低くても、より強い鍵をもつための１つの方法である。  
 
+<!---
 Imagine that you want to generate a seed, and the attacker knows that there are 10.000.000 possibilities.  
 Such a seed would be normally cracked pretty easily.
-
+--->
+シード値を生成してみたいと想像してみよう、そして攻撃者が１千万個の可能性があることをしっていたとする。  
+そのようなシードは通常、クラックして破るのは非常に簡単だ。
+<!---
 But what if you could make the enumeration slower?  
 A KDF is a hash function that waste computing resources on purpose.  
 Here is an example:
+--->
+しかし、もしあなたがその列挙する処理を遅くすることができたとしたらどうだろう？
+KDFはハッシュ関数で意図的に演算資源を無駄に使わせることができる。
+これが例だ:  
 
 ```cs
 var derived = SCrypt.BitcoinComputeDerivedKey("hello", new byte[] { 1, 2, 3 });
 RandomUtils.AddEntropy(derived);
 ```  
-
+<!---
 Even if your attacker knows that your source of entropy is 5 letters, he will need to run Scrypt to check a possibility, which take 5 seconds on my computer.
+--->
+もし仮に、攻撃者があなたのエントロピーの元が５文字だとしってたとしても、彼はScryptを実行して可能性を確認しないといけない。私のコンピューターでは、それは５秒かかった。  
 
 The bottom line is: There is nothing paranoid into distrusting a PRNG, and you can mitigate an attack by both adding entropy and also using a KDF.  
 Keep in mind that an attacker can decrease entropy by gathering information about you or your system.  
