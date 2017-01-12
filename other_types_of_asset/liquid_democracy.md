@@ -1,40 +1,40 @@
 ## Liquid Democracy {#liquid-democracy}
 
-### Overview {#overview}
+### 概要 {#overview}
 
-This part is a purely conceptual exercise of one application of colored coins.
+この章は単純にカラードコインの1つのアプリケーションの概念的なエクササイズとなっている。
 
-Let’s imagine a company where some decisions are taken by a board of investors after a vote.
+投票の後、投資家によっていくつか決定がなされる会社を想像してほしい。
 
-*   Some investors do not know enough about a topic, so they would like to delegate decisions about some subjects to someone else.
-*   There is potentially a huge number of investors.
-*   As the CEO, you want the ability to sell voting power for financing the company.
-*   As the CEO, you want the ability to cast a vote when you decide.
+* 何人かの投資家はトピックを十分に知らないから、いくつかの議題を他の誰かに委任したいと思っている。
+* かなりたくさんの投資家がいる可能性もある。
+* CEOとして、会社に資金を提供するために投票権を売れるようにしたい
+* CEOとして、決定するときに票を投じることができるようにしたい
 
-How Colored Coins can help to organize such a vote transparently?
+どうやってカラードコインによって、このような投票を透明性を維持したままで行えるようにできるだろうか。
 
-But before beginning, let’s talk about some downside of voting on the Blockchain:
+しかし始める前に、ブロックチェーン上で投票を行うときのいくつかの欠点に触れておきたい。
 
-*   Nobody knows the real identity of a voter.
-*   Miners could censor (even if it would be provable, and not in their interest.)
-*   Even if nobody knows the real identity of the voter, behavioral analysis of a voter across several vote might reveal his identity.
+* だれも投票者が実際に誰なのかを知らない
+* マイナーは気づけてしまうかもしれない（たとえそれが可能であったとして、興味はないと思われるが）
+* たとえだれも投票者が実際に誰なのか知らないとして、いくつかの票を通じた投票者のふるまいに対する分析によって、アイデンティティがひょっとすると明らかになってしまうかもしれない
 
-Whether these points are relevant or not is up to the vote organizer to decide.
+これらのポイントが妥当かどうかは、その投票をとりまとめる人の決定次第である。
 
-Let’s take an overview of how we would implement that.
+どのようにしてそれを実装するか、概要を見てみよう。
 
-### Issuing voting power {#issuing-voting-power}
+### 投票権を発行する {#issuing-voting-power}
 
-Everything start with the founder of the company (let’s call him Boss) wanting to sell “decision power” in his company to some investors. The decision power can take the shape of a colored coin that we will call for the sake of this exercise a “Power Coin”.
+すべては投資家に対して会社の「決定ができる権利」を売りたい会社の創設者（ボスと呼ぼう）によって始まる。決定権は、このエクササイズでは「Power Coin」と呼ぶことにするが、カラードコインを形作れる。
 
-Let’s represent it in purple:  
+紫色で表現しよう。
 
-![](../assets/PowerCoin.png)  
+![](../assets/PowerCoin.png)
 
-Let’s say that three persons are interested, Satoshi, Alice and Bob. (Yes, them again)  
-So Boss decides to sell each Power Coin at 0.1 BTC each.
+たとえば3人が興味を持ったとして、その3人をサトシ、アリスとボブとしよう（そう、再登場だ）。  
+そしてボスはPower Coinを0.1BTCで売ることに決めた。
 
-Let’s start funding some money to the ```powerCoin``` address, ```satoshi```, ```alice``` and ```bob```.  
+`powerCoin`アドレス、`satoshi`、`alice`そして`bob`にビットコインを与えよう。
 
 ```cs
 var powerCoin = new Key();
@@ -54,11 +54,11 @@ var init = new Transaction()
 
 var repo = new NoSqlColoredTransactionRepository();
 repo.Transactions.Put(init);
-```  
+```
 
-Imagine that Alice buy 2 Power coins, here is how to create such transaction.  
+アリスが2つPower coinを買ったことにしよう。ここにそのトランザクションの作り方を示す。
 
-![](../assets/Power2Alice.png)  
+![](../assets/Power2Alice.png)
 
 ```cs
 var issuance = GetCoins(init,powerCoin)
@@ -78,36 +78,36 @@ var toAlice =
     .SetChange(alice)
     .BuildTransaction(true);
 repo.Transactions.Put(toAlice);
-```  
+```
 
-In summary, powerCoin issues 2 Power Coins to Alice and send the change to himself. Likewise, Alice send 0.2 BTC to powerCoin and send the change to herself.
+要約すると、powerCoinは2つのPower Coinをアリスに発行し、お釣りを自身に送っている。同様にアリスは0.2BTCをpowerCoinに送り、そのお釣りを自身に返す。
 
-Where **GetCoins** is  
+**GetCoins**はこのようになっている。
 
 ```cs
 private IEnumerable<Coin> GetCoins(Transaction tx, Key owner)
 {
     return tx.Outputs.AsCoins().Where(c => c.ScriptPubKey == owner.ScriptPubKey);
 }
-```  
+```
 
-For some reason, Alice, might want to sell some of her voting power to Satoshi.  
+理由があってアリスはひょっとするとサトシに投票権のいくつかを売りたくなるかもしれない。
 
-![](../assets/PowerCoin2.png)  
+![](../assets/PowerCoin2.png)
 
-You can note that I am double spending the coin of Alice from the **init** transaction.  
-****Such thing would not be accepted on the Blockchain. However, we have not seen yet how to retrieve unspent coins from the Blockchain easily, so let’s just imagine for the sake of the exercise that the coin was not double spent.
+**init**トランザクションからアリスのコインをダブルスペンドしていることがわかるだろう。  
+_\*\*これはビットコインブロックチェーンでは受け入れられないだろう。しかしまだブロックチェーンから簡単に使われていないコインを引き出す方法を見ていないから、エクササイズではコインはダブルスペンドされていなかったと仮定しよう。_
 
-Now that Alice and Satoshi have some voting power, let’s see how Boss can run a vote.
+今、アリスとサトシが投票権を持っている。どのようにしてボスが投票をさせるか見てみよう。
 
-### Running a vote {#running-a-vote}
+### 投票の実施 {#running-a-vote}
 
-By consulting the Blockchain, Boss can at any time know **ScriptPubKeys** which owns Power Coins.  
-So he will send Voting Coins to these owner, proportionally to their voting power, in our case, 1 voting coin to Alice and 1 voting coin to Satoshi.  
+ブロックチェーンを調べれば、ボスはいつでもPower Coinを持っている**ScriptPubKey**を知ることができる。  
+そしてボスはPower Coinを持っている人に、その投票権に比例したVoting Coinを送る。このケーススタディーではアリスに1voting coin、サトシに1voting coin送ることとしよう。
 
 ![](../assets/PowerCoin3.png)
 
-First, I need to create some funds for **votingCoin**.  
+最初に**votingCoin**に対してビットコインを付与する必要がある。
 
 ```cs
 var votingCoin = new Key();
@@ -119,9 +119,9 @@ var init2 = new Transaction()
     }
 };
 repo.Transactions.Put(init2);
-```  
+```
 
-Then, issue the voting coins.  
+そしてvoting coinを発行する。
 
 ```cs
 issuance = GetCoins(init2, votingCoin).Select(c => new IssuanceCoin(c)).ToArray();
@@ -135,15 +135,15 @@ var toVoters =
     .SetChange(votingCoin)
     .BuildTransaction(true);
 repo.Transactions.Put(toVoters);
-```  
+```
 
-### Vote delegation {#vote-delegation}
+### 投票の委任 {#vote-delegation}
 
-The problem is that the vote concern some financial aspect of the business, and Alice is mostly concerned by the marketing aspect.
+問題は、投票はビジネスの財務的な側面にも議題が及んでおり、アリスは主にマーケティングの側面に関心があるということだ。
 
-Her decision is to handout her voting coin to someone she trusts having a better judgment on financial matter. She chooses to delegate her vote to Bob.  
+アリスは、財務的な問題に関して自分よりも良い判断をすると信頼している誰かに投票権を譲渡することに決めた。彼女はボブに委任相手に選んだ。
 
-![](../assets/PowerCoin4.png)  
+![](../assets/PowerCoin4.png)
 
 ```cs
 var aliceVotingCoin = ColoredCoin.Find(toVoters,repo)
@@ -157,22 +157,22 @@ var toBob =
     .SendAsset(bob, new AssetMoney(votingCoin, 1))
     .BuildTransaction(true);
 repo.Transactions.Put(toBob);
-```  
+```
 
-You can notice that there is no **SetChange** the reason is that the input colored coin is spent entirely, so nothing is left to be returned.
+**SetChange**がないことがわかるだろう。それはインプットのカラードコインが完全に使われているからで、お釣りとして戻すものがないからである。
 
-### Voting {#voting}
+### 投票 {#voting}
 
-Imagine that Satoshi is too busy and decide not to vote. Now Bob must express his decision.  
-The vote concerns whether the company should ask for a loan to the bank for investing into new production machines.
+サトシがとても忙しすぎて投票しないことに決めたとしよう。またボブは自分の意思決定を表さないといけない。  
+その投票では会社が銀行に対して、新しい設備投資のために負債借り入れを申し入れるかどうかに関してだ。
 
-Boss says on the company’s website:
+ボスは会社のウェブサイトでこう周知した。
 
-Send your coins to 1HZwkjkeaoZfTSaJxDw6aKkxp45agDiEzN for yes and to 1F3sAm6ZtwLAUnj7d38pGFxtP3RVEvtsbV for no.
+賛成なら1HZwkjkeaoZfTSaJxDw6aKkxp45agDiEzNにコインを、反対なら1F3sAm6ZtwLAUnj7d38pGFxtP3RVEvtsbVにコインを送ること。
 
-Bob decides that the company should take the loan:  
+ボブは会社は負債を借り入れるべきだと決めた。
 
-![](../assets/PowerCoin5.png)  
+![](../assets/PowerCoin5.png)
 
 ```cs
 var bobVotingCoin = ColoredCoin.Find(toVoters, repo)
@@ -187,20 +187,20 @@ var vote =
     .SendAsset(BitcoinAddress.Create("1HZwkjkeaoZfTSaJxDw6aKkxp45agDiEzN"),
                 new AssetMoney(votingCoin, 1))
     .BuildTransaction(true);
-```  
+```
 
-Now Boss can compute the result of the vote and see 1-Yes 0-No, Yes win, so he takes the loan.  
-Every participants can also count the result by themselves.
+さてボスは投票結果を自動計算できる。その結果、賛成が1、反対が0で賛成多数のため、負債を借り入れる。  
+すべての参加者が自分たちでも結果を数えられる。
 
-### Alternative: Use of Ricardian Contract {#alternative-use-of-ricardian-contract}
+### 代案：Ricardian Contractを使う {#alternative-use-of-ricardian-contract}
 
-In the previous exercise, we have supposed that Boss announced the modalities of the vote out of the Blockchain, on the company’s website.
+これまでのエクササイズでは、ボスがブロックチェーンの外の世界、つまり会社のウェブサイトで投票の方法をアナウンスした。
 
-This works great, but Bob need to know that the website exists.
+これはうまく機能したが、ボブはそのウェブサイトが存在していることを知る必要があった。
 
-Another solution is to publish the modalities of the vote directly on the Blockchain within an **Asset Definition File**, so some software can automatically get it and present it to Bob.
+もう1つの解決法はブロックチェーンで、つまり**Asset Definition File**の中で直接、投票の方法を記録してしまうことだ。そうするとソフトウェアが自動的にそれを把握し、ボブにそれを提示させることができる。
 
-The only piece of code that would have changed is during the issuance of the Voting Coins to voters.  
+それによって変わるコードはほんの少しで、Voting Coinを投票する人に発行するところだ。
 
 ```cs
 issuance = GetCoins(init2, votingCoin).Select(c => new IssuanceCoin(c)).ToArray();
@@ -215,14 +215,15 @@ var toVoters =
     .SetChange(votingCoin)
     .BuildTransaction(true);
 repo.Transactions.Put(toVoters);
-```  
+```
 
-In such case, Bob can see that during the issuance of his voting coin, an **Asset Definition File** was published, which is nothing more than a JSON document whose schema is partially [specified in Open Asset](https://github.com/OpenAssets/open-assets-protocol/blob/master/asset-definition-protocol.mediawiki).The schema can be extended to have information about things like:
+このケースでは、ボブがvoting coinを発行する中で**Asset Definition File**が記録されていたことを把握することができる。それはスキーマが部分的に[Open Assetに明示されている](https://github.com/OpenAssets/open-assets-protocol/blob/master/asset-definition-protocol.mediawiki)JSONの他の何物でもない。スキーマは以下のような情報を持つように拡張することができる。
 
-*   Expiration of the vote
-*   Destination of the votes for each candidates
-*   Human friendly description of it
+* 投票の期限
+* 各候補に対する投票先
+* Asset Definition Fileに記録されている内容の、人間の目に優しい表現
 
-However, imagine that a hacker wants to cheat the vote. He can always modify the json document (either man in the middle attack, physical access to boss.com, or access to Bob’s machine) so Bob is tricked and send his vote to the wrong candidate.
+しかしハッカーが投票権を盗みたいと思っているとしよう。彼はいつもJSONのドキュメントを操作することができる（もしくは中間者が攻撃したり、ボスのウェブサイトに物理的にアクセスしたりまたはボブのソフトウェアに物理的にアクセスしたり）ことで、ボブは騙されて異なる候補に投票してしまう。
 
-Transforming the **Asset Definition File** into a **Ricardian Contract** by signing it would make any modification immediately detectable by Bob’s software. (See [Proof Of Authenticity](https://github.com/OpenAssets/open-assets-protocol/blob/master/asset-definition-protocol.mediawiki) in the Asset Definition Protocol)
+署名することによって**Asset Definition File**を**Ricardian Contract**に置き換えることで、ボブのソフトウェアがあらゆる変更をすぐに検知できるようになるだろう（Asset Definition Protocolの[Proof Of Authenticity](https://github.com/OpenAssets/open-assets-protocol/blob/master/asset-definition-protocol.mediawiki)を見てほしい）。
+
