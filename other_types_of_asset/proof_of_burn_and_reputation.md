@@ -1,32 +1,32 @@
 ## Proof of Burn and Reputation {#proof-of-burn-and-reputation}
 
-The question is simple: in a P2P market were law enforcement is too expensive, how participants might minimize the probability to get scammed?
+ここでの問題は単純だ。P2Pのマーケットでは法的な執行はあまりにもコストが高くつきすぎるが、どのようにして参加者が詐欺にあう可能性を最小化できるだろうか。
 
-OpenBaazar seems [to be the first](https://gist.github.com/dionyziz/e3b296861175e0ebea4b) trying to use proof of burn as a reputation determinant.
+OpenBaazarは決定力のある評価としてproof of burnを使おうとしている[先駆者](https://gist.github.com/dionyziz/e3b296861175e0ebea4b)だ。
 
-There is several responses to that (escrow or notary/arbiter), but one that we will explore here is called Proof Of Burn.
+詐欺対策はいくつかの方法（エスクロー、公証人/仲裁人）があるが、ここで探求するのはProof Of Burnと呼ばれるものだ。
 
-Imagine yourself in the middle age, and you live in a small village with several local merchants.  
-One day, a traveling merchant comes to your village and sells you some goods at an unbelievable low price compared to local one.
+自分が中世で、何人かの地元の商人と一緒に小さい村に住んでいることを想像してほしい。  
+ある日、旅人の商人があなたの村に来て、地元の価格と比べると信じられないくらい安い価格でいくつか商品を売ろうとしている。
 
-However, traveling merchant are well known for scamming people with low quality product, because losing reputation is a small price to pay for them compared to local merchants.  
-Local Merchant invested into a nice store, advertising and their reputation. Unhappy customers can easily destroy them. But the traveling merchant, having no local store and only transient reputation do not have those incentives to not scam people.
+しかしその旅人の商品は、悪質な商品で人を騙す手口に精通していた。なぜならば土着の商人と比べて、評価を失うことは彼らにとっては取るに足らない代償だからだ。  
+土着の商人は素晴らしい店、広告とその評価に投資していた。不幸な顧客は簡単にそれを壊すことができる。しかし旅人の商人は土着の店を持っていないし、一時的な評価なんぞ人を騙さないようにするきっかけにはまったくならない。
 
-On the internet, where the creation of an identity is so cheap, all merchants are potentially as the travelling one from the middle age.  
-The solution of market providers was to gather the real identity of every participant in the market, so law enforcement become possible.
+インターネットでは、アイデンティティを作ることはとてもたやすく、すべての商人は中世以降の旅人の商人になりえる。  
+マーケットの提供者の解決策はマーケットにおけるすべての参加者の実際のアイデンティティを集め、そして法的執行を可能とすることだ。
 
-If you get scammed on Amazon of Ebay, your bank will most likely refund you, because they have a way to find the thief by contacting Amazon and Ebay.
+もしAmazonやEbayで詐欺にあったら、銀行が結構な確率であなたにお金を戻してくれることだろう。なぜならばAmazonやEbayに連絡することで泥棒を見つける方法があるからだ。
 
-In a purely P2P market using Bitcoin, we do not have that. If you get scam, you lose money.  
-So how a buyer can trust the traveling merchant?  
-The response is: by checking how much he invested into his reputation.
+単純なP2Pのマーケットでビットコインを使うとき、泥棒を見つけることはできない。もし詐欺にあうと、お金を失ってしまう。  
+ということで、どのようにして買い手は旅人の商人を信じることができるだろうか？  
+その答えは、その人が評価に対してどの程度投資をしているかをチェックすることだ。
 
-So as a good intentioned seller, you want to inspire confidence to your customer. For that you will destroy some of your wealth, and every customer will see. This is the definition of “investing into your reputation”.
+善良な売り手なら、その自信を顧客に示したいと思うだろう。そのためには富を削るだろうし、すべての顧客はそれを見るだろう。これが「評価に投資する」ことの定義だ。
 
-Imagine you burned 50 BTC for your reputation. And a customer want to buy 2 BTC of goods from you. He has good reason to believe that you will not scam him, because you invested more into your reputation that what you can get out of him by scamming.  
-It becomes not economically profitable for you to scam him.
+あなたが評価のために50BTCを使ったとしよう。そして顧客はあなたから2BTCの商品を買いたいとする。顧客はあなたが自分を騙さないと信じる良い理由がある。なぜならばあなたが、詐欺を働くことによって彼からだまし取ることができるもの以上に、評価に対して投資しているからだ。  
+あなたが顧客を騙すことは経済的に有益ではないということになる。
 
-The technical details will surely vary and change over time, but here is an example of Proof of Burn.  
+技術的な詳細はきっと時間がたつにつれてバリエーションが増えたり変わったりするだろうが、ここにはProof of Burnの例を示す。
 
 ```cs
 var alice = new Key();
@@ -57,7 +57,7 @@ burn.Outputs.Add(new TxOut(Money.Coins(1.0m), opReturn));
 burn.Sign(alice, false);
 
 Console.WriteLine(burn);
-```  
+```
 
 ```json
 {
@@ -78,7 +78,8 @@ Console.WriteLine(burn);
     }
   ]
 }
-```  
+```
 
-Once in the Blockchain, this transaction is undeniable proof that Alice invested money for her bakery.  
-The Coin with ```ScriptPubKey OP_RETURN 4275726e7420666f722022416c6963652042616b65727922``` do not have any way to be spent, so those coins are lost forever.
+ブロックチェーンで一度、このトランザクションが作成されるだけで、アリスが自分のベーカリーにお金を投資したという否定できない証明となる。  
+`ScriptPubKey OP_RETURN 4275726e7420666f722022416c6963652042616b65727922`を伴うコインはいかなる方法でも使えないようになっており、これらのコインは永遠に失われる。
+
