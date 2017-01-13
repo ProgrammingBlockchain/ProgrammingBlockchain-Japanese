@@ -427,12 +427,17 @@ Key 5 : xprv9tvBA4Kt8UTuTdiEhN8iVDr5rfAPSVsCKpDia4GtEsb87eHr8yRVveRhkeLEMvo3XWL3
 <!--
 You only need to save the **masterKey**, since you can generate the same suite of private keys over and over.  
 -->
-**masuwa**
+**マスターキー** だけを保存する必要がある。なぜなら、同じ一連の秘密鍵を何度も生成できるからである。  
+
+<!--
 As you can see, these keys are **ExtKey** and not **Key** as you are used to. However, this should not stop you since you have the real private key inside:  
-
+-->
+見ればわかるように、これらの鍵は、 **ExtKey** であり、使い慣れた **Key** ではない。しかし、内部に秘密鍵をもっているので、問題ない。
 ![](../assets/ExtKey.png)  
-
+<!--
 You can go back from a **Key** to an **ExtKey** by supplying the **Key** and the **ChainCode** to the **ExtKey** constructor. This works as follows:  
+-->
+**Key** と **ChainCode** を **ExtKey** のコンストラクターに渡すことで **Key** から **ExtKey** に戻すことも可能である。以下のようにする:  
 
 ```cs
 ExtKey extKey = new ExtKey();
@@ -442,11 +447,19 @@ Key key = extKey.PrivateKey;
 ExtKey newExtKey = new ExtKey(key, chainCode);
 ```  
 
+<!--
 The **base58** type equivalent of **ExtKey** is called **BitcoinExtKey**.
+-->
+**base58** 型の **ExtKey** は、 **BitcoinExtKey** という。  
 
+<!--
 But how can we solve our second problem: delegating address creation to a peer that can potentially be hacked (like a payment server)?
-
+-->
+しかし、どうやって２つ目の問題を解決するのだろうか?: 潜在的にハッキングされる可能性のある相手（支払サーバー）にアドレスの作成を委譲する。  
+<!--
 The trick is that you can “neuter” your master key, then you have a public (without private key) version of the master key. From this neutered version, a third party can generate public keys without knowing the private key.
+-->
+トリックは、マスターキーの無性化ができるということである。そして、秘密鍵をもたない公開可能なバージョンのマスターキーを持つことができる。無性化されたマスターキーから、第三者機関は、秘密鍵なしに公開鍵を作成できるのだ。  
 
 ```cs
 ExtPubKey masterPubKey = masterKey.Neuter();
@@ -464,9 +477,10 @@ PubKey 2 : xpub67uQd5a6WCY6Dxbqk9Jo9iopKZUqg8pU1bWXbnesppsR3Nem8y4CVFjKnzBUkSVLG
 PubKey 3 : xpub67uQd5a6WCY6HQKya2Mwwb7bpSNB5XhWCR76kRaPxchE3Y1Y2MAiSjhRGftmeWyX8cJ3kL7LisJ3s4hHDWvhw3DWpEtkihPpofP3dAngh5M
 PubKey 4 : xpub67uQd5a6WCY6JddPfiPKdrR49KYEuXUwwJJsL5rWGDDQkpPctdkrwMhXgQ2zWopsSV7buz61e5mGSYgDisqA3D5vyvMtKYP8S3EiBn5c1u4
 ```  
-
+<!--
 So imagine that your payment server generates pubkey1, you can get the corresponding private key with your private master key.
-
+-->
+では、支払サーバーがpubkey1を生成したと想定してみよう。すると対応した秘密鍵を秘密マスターキーを使って得ることができる。  
 ```cs
 masterKey = new ExtKey();
 masterPubKey = masterKey.Neuter();
@@ -486,57 +500,94 @@ Console.WriteLine("Expected address : " + key1.PrivateKey.PubKey.GetAddress(Netw
 Generated address : 1Jy8nALZNqpf4rFN9TWG2qXapZUBvquFfX
 Expected address : 1Jy8nALZNqpf4rFN9TWG2qXapZUBvquFfX
 ```  
-
+<!--
 **ExtPubKey** is similar to **ExtKey** except that it holds a **PubKey** and not a **Key**.
+-->
+**ExtPubKey** は **ExtKey** に似ている。が、違いは、 **PubKey** を保持しており **Key** は保持していない。  
+
+
 
 ![](../assets/ExtPubKey.png)  
-
+<!--
 Now we have seen how Deterministic keys solve our problems, let’s speak about what the “hierarchical” is for.
+-->
+ここまで、決定性鍵が我々の問題を解決してくれるのを見てきた。では、次は、 **階層的** がなにを意味するかについて議論してみよう。  
 
+<!--
 In the previous exercise, we have seen that by combining master key + index we could generate another key. We call this process **Derivation**, master key is the **parent key**, and the generated key is called **child key**.
+-->
+前の演習では、マスターキーとインデックス番号の組み合わせにより 鍵を生成するのを見てきた。このプロセスを **派生** と呼び、マスターキーは **親の鍵** で、生成される鍵は、**子供の鍵** である。  
 
+<!--
 However, you can also derivate children from the child key. This is what the “hierarchical” stands for.
+-->
+しかし、さらに 子供の鍵から派生した さらに子供の鍵を複数作ることができる。これが **階層的** の意味である。  
 
+<!--
 This is why conceptually more generally you can say: Parent Key + KeyPath => Child Key  
-
+-->
+なので、概念的に、 こういうことができる: 親の鍵 ＋ 鍵のパス → 子供の鍵
 ![](../assets/Derive1.png)  
 
 ![](../assets/Derive2.png)  
 
-
+<!--
 In this diagram, you can derivate Child(1,1) from parent in two different way:  
-
+-->
+この図に書かれているように、親から 子供(1,1)を２つのやり方で派生させることができる。
 ```cs
 ExtKey parent = new ExtKey();
 ExtKey child11 = parent.Derive(1).Derive(1);
 ```  
 
-Or  
+もしくは、    
 
 ```cs
 ExtKey parent = new ExtKey();
 ExtKey child11 = parent.Derive(new KeyPath("1/1"));
 ```  
-
+<!--
 So in summary:  
+-->
+なので、まとめると:
 
 ![](../assets/DeriveKeyPath.png)  
 
+<!--
 It works the same for **ExtPubKey**.  
+-->
+**ExtPubKey** も同じように取り扱うことができる。  
 
+<!--
 Why do you need hierarchical keys? Because it might be a nice way to classify the type of your keys for multiple accounts. More on [BIP44](https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki).
+-->
+なぜ 階層的な鍵が必要になるのだろう？ なぜなら、自分の複数の口座のための鍵を分類するのは、良い方法だろうからだ。  
 
+<!--
 It also permits segmenting account rights across an organization.
+-->
+そして、 組織の内部において口座の権限を分けて管理することができるようにもなる。  
 
+<!--
 Imagine you are CEO of a company. You want control over all wallets, but you don’t want the Accounting department to spend the money from the Marketing department.
+-->
+自分をある会社のCEOだとしてみよう。すると、会社のウォレットをすべて管理したいだろう。しかし、経理部に、マーケティング部のお金を使ってほしくない。  
 
+<!--
 So your first idea would be to generate one hierarchy for each department.  
+-->
+すると最初に思いつくアイデアは、１つの部署に１つの階層鍵を生成することになる。  
 
-![](../assets/CeoMarketingAccounting.png)  
-
+![](../assets/CeoMarketingAccounting.png)   
+<!--
 However, in such case, **Accounting** and **Marketing** would be able to recover the CEO’s private key.
+-->
+しかし、そのような場合、**経理部** と **マーケティング部**  はCEOの秘密鍵を 逆生成できるかもしれない。  
 
+<!--
 We define such child keys as **non-hardened**.  
+-->
+そのような子供鍵を **非硬化** であると定義する。
 
 ![](../assets/NonHardened.png)  
 
@@ -556,10 +607,15 @@ Console.WriteLine("CEO recovered: " + ceoKeyRecovered.ToString(Network.Main));
 CEO: xprv9s21ZrQH143K2XcJU89thgkBehaMqvcj4A6JFxwPs6ZzGYHYT8dTchd87TC4NHSwvDuexuFVFpYaAt3gztYtZyXmy2hCVyVyxumdxfDBpoC
 CEO recovered: xprv9s21ZrQH143K2XcJU89thgkBehaMqvcj4A6JFxwPs6ZzGYHYT8dTchd87TC4NHSwvDuexuFVFpYaAt3gztYtZyXmy2hCVyVyxumdxfDBpoC
 ```  
-
+<!--
 In other words, a **non-hardened key** can “climb” the hierarchy.**Non-hardened keys** should only be used for categorizing accounts that belongs to a **single control**.
+-->
+別の言い方でいうと、 **非硬化鍵**　は　階層を "登る" ことができる。**非硬化鍵** は、単一制御されるタイプにカテゴライズされた口座にだけ使用されるべきでる。  
 
+<!--
 So in our case, the CEO should create a **hardened key**, so the accounting department will not be able to climb.
+-->
+なので、我々のケースですは、CEOは 硬化鍵を作成しなければならない。そうすれば、経理部は、階層を登って秘密鍵を見つけることはできない。  
 
 ```cs
 ExtKey ceoKey = new ExtKey();
@@ -571,16 +627,23 @@ ExtPubKey ceoPubkey = ceoKey.Neuter();
 ExtKey ceoKeyRecovered = accountingKey.GetParentExtKey(ceoPubkey); //Crash
 ```  
 
+<!--
 You can also create hardened keys by via the **ExtKey.Derivate**(**KeyPath)**, by using an apostrophe after a child’s index:
+-->
+同じように、**ExtKey.Derivate**(**KeyPath)** を使って硬化鍵を作成することもできる。その場合、子供のインデックス値の後ろにアポストロフィを付ける。  
 
 ```cs
 var nonHardened = new KeyPath("1/2/3");
 var hardened = new KeyPath("1/2/3'");
 ```  
-
+<!--
 So let’s imagine that the Accounting Department generates 1 parent key for each customer, and a child for each of the customer’s payments.
-
+-->
+では、経理部は、顧客ごとに１つの親鍵を生成したと想定してみよう。そして、顧客からの支払いごとに子供鍵を使う。  
+<!--
 As the CEO, you want to spend the money on one of these addresses. Here is how you would proceed.  
+-->
+CEOであるあなたは、そのうちの１つのアドレスから支払をしたいとした場合、こうやって行う。  
 
 ```cs
 ceoKey = new ExtKey();
@@ -592,15 +655,24 @@ KeyPath path = new KeyPath(accounting + "/" + customerId + "/" + paymentId);
 ExtKey paymentKey = ceoKey.Derive(path);
 ```  
 
+<!--
 ## Mnemonic Code for HD Keys (BIP39) {#mnemonic-code-for-hd-keys-bip39}
-
+-->
+## HD鍵のためのネモニック(記憶しやすい)コード(BIP39){#mnemonic-code-for-hd-keys-bip39}
+<!--
 As you have seen, generating HD keys is easy. However, what if we want an easy way to transmit such key by telephone or hand writing?
+-->
+これまで見たように、HD鍵を作成することは簡単である。しかし、もし、そんな鍵を電話や手書きで人に伝える簡単な方法があればどうだろうか？  
 
+<!--
 Cold wallets like Trezor, generate the HD Keys from a sentence that can easily be written down. They call such sentence “the seed” or “mnemonic”. And it can eventually be protected by a password or a PIN.  
+-->
+Tresorのようなコールドウォレットは、簡単に書き留められるようなある文章をもとに、HD鍵を生成する。そういった文章は **シード** と言われたり **ネモニック(記憶法)** と言われる。そして、それはパスワードやPIN番号で暗号化される。  
 ![](../assets/Trezor.png)  
-
+<!--
 The language that you use to generate your easy to write sentence is called a **Wordlist**  
-
+-->
+文章を生成するために使用される言葉は、**単語リスト** と呼ばれる。
 ![](../assets/RootKey.png)  
 ```cs
 Mnemonic mnemo = new Mnemonic(Wordlist.English, WordCount.Twelve);
@@ -610,39 +682,71 @@ Console.WriteLine(mnemo);
 
 ```minute put grant neglect anxiety case globe win famous correct turn link```  
 
+<!--
 Now, if you have the mnemonic and the password, you can recover the **hdRoot** key.  
+-->
+
+ここで、もし、ネモニックとパスワードを持っていたら、 **階層ルート** の鍵を見つけることができる。  
 
 ```cs
 mnemo = new Mnemonic("minute put grant neglect anxiety case globe win famous correct turn link",
                 Wordlist.English);
 hdRoot = mnemo.DeriveExtKey("my password");
 ```  
-
+<!--
 Currently supported **wordlist** are, English, Japanese, Spanish, Chinese (simplified and traditional).  
+-->
+現時点でサポートされている **単語リストの** 言語は、英語、日本語、スペイン語、中国語（簡体字と繁体字）である。  
 
+<!--
 ## Dark Wallet {#dark-wallet}
+-->
+## ダークウォレット {#dark-wallet}
 
+<!--
 This name is unfortunate since there is nothing dark about it, and it attracts unwanted attention and concerns. Dark Wallet is a practical solution that fix our two initial problems:
-
+-->
+この名前は、運が悪い。なぜならまったくもってこのウォレットは、ダークではないからだ。不必要な注目や懸念を集めてしまっている。ダークウォレットは、我々の最初の２つの問題に対する実践的な解決策である。  
+<!--
 *   Prevent outdated backups
 *   Delegating key / address generation to an untrusted peer
+-->
+*   古くなって使えなくなるウォレットのバックアップ
+*   鍵とアドレスの生成を信用していない相手に移譲すること
 
+<!--
 But it has a bonus killer feature.
+-->
+しかし、このウオレットは、ボーナス的なすごい機能をもつのだ。  
 
+<!--
 You have to share only one address with the world (called **StealthAddress**), without leaking any privacy.
-
+-->
+あなたは、唯一（ **ステルスアドレス** と呼ばれる）アドレスだけをほかの人たちにシェアするだけでよいのだ。よって、プライバシーを失うことがない。  
+<!--
 Let’s remind us that if you share one **BitcoinAddress** with everybody, then all can see your balance by consulting the blockchain… That’s not the case with a **StealthAddress**.
-
+-->
+ここで思い出してほしいのは、１つの **ビットコインアドレス** をみんなと共有すると、すべての人たちは、ブロックチェーンをみれば、あなたの持っているビットコインの残高を知ることができる。しかし、**ステルスアドレス** は、それには当たらない。  
+<!--
 This is a real shame it was labeled as **dark** since it solves partially the important problem of privacy leaking caused by the pseudo-anonymity of Bitcoin. A better name would have been: **One Address**.
-
+-->
+このウォレットがダークと命名されたのは、とても残念なことである。なぜかというと それは 部分的にでもビットコインの疑似匿名性によって起きる、重要な問題を解決するからである。よりよい名前は、**１つのアドレス** だったかもしれない。  
+<!--
 In Dark Wallet terminology, here are the different actors:
-
+-->
+ダークウォレットの用語を使うと、以下のように アクターを表現する:
+<!--
 *   The **Payer** knows the **StealthAddress** of the **Receiver**
 *   The **Receiver** knows the **Spend Key**, a secret that will allow him to spend the coins he receives from one of such transaction.
 *   **Scanner** knows the **Scan Key**, a secret that allows him to detect the transactions those belong to the **Receiver**.
-
+-->
+*   **ぺイヤー** は、 **レシーバー** の **ステルスアドレス** を知っている。
+*   **レシーバー** は、 **スペンド鍵** を知っていて、その秘密のコードで、それにより彼が受け取るコインを消費することができる。
+*   **スキャナー** は、**スキャン鍵** を知っていて、 その秘密のコードで、 **レシーバー** に属する取引を特定することができる。
+<!--
 The rest is operational details.Underneath, this **StealthAddress** is composed of one or several **Spend PubKey** (for multi sig), and one **Scan PubKey**.  
-
+-->
+以降は、操作の詳細になる。 内部的には、このステルスアドレスは、１つもしくは複数(複数署名の場合)の **スペンド公開鍵** と１つの **スキャン公開鍵** で構成されている。
 ![](../assets/StealthAddress.png)  
 
 ```cs
@@ -657,15 +761,20 @@ BitcoinStealthAddress stealthAddress
         bitfield: null,
         network: Network.Main);
 ```  
-
+<!--
 The **payer**, will take your **StealthAddress**, generate a temporary key called **Ephem Key** and will generate a **Stealth Pub Key**, from which the Bitcoin address to which the payment will be done is generated.  
-
+-->
+**支払者** は、あなたの **ステルスアドレス** を使って、一時的に使用する **一時キー** を作成し、そこから **ステルス公開鍵** を生成する。それから、支払が行われるビットコインアドレスが作成される。  
 ![](../assets/EphemKey.png)
-
+<!--
 Then, he will package the **Ephem PubKey** in a **Stealth Metadata** object embedded that in the OP_RETURN of the transaction (as we have done for the first challenge)
+-->
+そして、（最初のチャレンジでやったように）OP_RETURNに埋め込まれた **ステルスメタデータ** の中に **一時キー** をパッケージする。  
 
+<!--
 He will also add the output to the generated bitcoin address. (the address of the **Stealth pub key**)
-
+-->
+さらに、アウトプットを生成されたビットコインアドレス（ **ステルス公開鍵** のアドレス）へ追加する。
 ![](../assets/StealthMetadata.png)  
 
 ```cs
@@ -674,8 +783,10 @@ Transaction transaction = new Transaction();
 stealthAddress.SendTo(transaction, Money.Coins(1.0m), ephemKey);
 Console.WriteLine(transaction);
 ```  
-
+<!--
 The creation of the **EphemKey** being an implementation detail, you can omit it, NBitcoin will generate one automatically:  
+-->
+**一時鍵** の生成の実装については、詳細すぎるので、無視してよいだろう。NBitcoinが自動的に生成してくれる:  
 
 ```cs
 Transaction transaction = new Transaction();
@@ -704,25 +815,45 @@ Console.WriteLine(transaction);
   ]
 }
 ```  
-
+<!--
 Then the payer add and signs the inputs, then sends the transaction on the network.
+-->
+そして、ぺイヤーは、インプットをトランザクションに追加し署名をする。それからビットコインネットワークにトランザクションを送信する。  
 
+<!--
 The **Scanner** knowing the **StealthAddress** and the **Scan Key** can recover the **Stealth PubKey** and so expected **BitcoinAddress** payment.  
-
+-->
+**ステルスアドレス** と **スキャン鍵** を知る **スキャナー** は、**ステルス公開鍵** を取得できるので、予定された **ビットコインアドレス** への支払いも確認できる。   
 ![](../assets/ScannerRecover.png)  
 
+<!--
 Then the scanner checks if one of the output of the transaction correspond to such address. If it is, then **Scanner** notifies the **Receiver** about the transaction.
+-->
+それから **スキャナー** は、トランザクションのアウトプットがそのアドレスに対するものかをチェックし、もし、そうであるなら **スキャナー** は、 **レシーバー** にたいしてトランザクションについて通知する。  
 
+<!--
 The **Receiver** can then get the private key of the address with his **Spend Key**.  
+-->
+**レシーバー** は、**スペンド鍵** を使うことでそのアドレスの秘密鍵を取得できる。  
 
 ![](../assets/ReceiverStealth.png)  
 
+<!--
 The code explaining how, as a Scanner, to scan a transaction and how, as a Receiver, to uncover the private key, will be explained later in the **TransactionBuilder** (Other types of ownership) part.
+-->
+スキャナーとして、どうやってトランザクションをスキャンするか。レシーバーとして、どうやって秘密鍵を見つけるか、は、あとの **トランザクションビルダー** の説明で出てくる。  
 
+<!--
 It should be noted that a **StealthAddress** can have multiple **spend pubkeys**, in which case, the address represent a multi sig.
+-->
+ここで知ってほしいのは、**ステルスアドレス** は、複数の **スペンド公開鍵** を持つことができることだ。それを使うばあい、そのアドレスは、マルチシグようのアドレスということになる。  
 
+<!--
 One limit of Dark Wallet is the use of **OP_RETURN**, so we can’t easily embed arbitrary data in the transaction as we have done for in Bitcoin Transfer. (Current bitcoin rules allows only one OP_RETURN of 40 bytes, soon 80, per transaction)  
+-->
+ダークウォレットの１つの制限事項は、**OP_RETURN** を使用するということである。すなわち、トランザクションに、任意のデータを埋め込むことが簡単にできない。(現在のビットコインのルールでは。OP_RETURNには４０バイトしか許されていない、もうすぐ８０バイトになる予定だ。)
 
+<!--
 > ([Stackoverflow](http://bitcoin.stackexchange.com/a/29648/26859)) As I understand it, the "stealth address" is intended to address a very specific problem. If you wish to solicit payments from the public, say by posting a donation address on your website, then everyone can see on the block chain that all those payments went to you, and perhaps try to track how you spend them.  
 >
 With a stealth address, you ask payers to generate a unique address in such a way that you (using some additional data which is attached to the transaction) can deduce the corresponding private key. So although you publish a single "stealth address" on your website, the block chain sees all your incoming payments as going to separate addresses and has no way to correlate them. (Of course, any individual payer knows their payment went to you, and can trace how you spend it, but they don't learn anything about other people's payments to you.)  
@@ -732,3 +863,13 @@ But you can get the same effect another way: just give each payer a unique addre
 So the only difference with stealth addresses is essentially to move the chore of producing a unique address from the server to the client. Indeed, in some ways stealth addresses may be worse, since very few people use them, and if you are known to be one of them, it will be easier to connect stealth transactions with you.  
 >
 It doesn't provide "100% anonymity". The fundamental anonymity weakness of Bitcoin remains - that everyone can follow the chain of payments, and if you know something about one transaction or the parties to it, you can deduce something about where those coins came from or where they went.
+-->
+> ([Stackoverflow](http://bitcoin.stackexchange.com/a/29648/26859)) 私が理解するに、"ステルスアドレス"とは、ある特定の問題に対応するために作られた。一般の人々からお金を集めたいと思ったら、例えば寄付のためのアドレスを自分のウエブサイトに載せるとか、そうすると、ブロックチェーン上ですべての支払いの情報が見られてしまう。もしかしたら、あなたがそのアドレスから何に支払ったかを追跡されるだろう。
+>
+ステルスアドレスを使うケースでは、支払者にユニークなアドレスを生成するように依頼する。そうすることで、そのトランザクションにくっついた追加情報を使うだけで、対応した秘密鍵を推測することができる。そして、あなたは、１つのステルスアドレスをウェブサイトに公開したにもかかわらず、ブロックチェイン上では、すべて違ったアドレスに支払が行われることになり、それぞれアドレスの関連性を見つけることは不可能だ。（もちろん支払者は、支払先アドレスをしっているので。そこからどこにお金を送ったかは見ることができるが、ほかの支払者には、それはみることができない。）
+>
+しかし、ほかの方法でもどうような効果を得ることはできる:それぞれの支払者にたいして、固有の別々のアドレスを渡せばよい。１つの公開アドレスをウェブサイト載せる代わりに、例えば、押されるごとの新しいアドレスを生成し、秘密鍵を保存するようなボタンを置いておくとか、事前に用意しておいた公開アドレスのリストから次々とアドレスを選んで使うようなボタンを配置する（もちろん秘密鍵は、安全な場所に保存しておく）。ステルスアドレスを使用するときと同様に、 支払はすべて個別のアドレスへ行われ、アドレス間の相関は全くないし、１りの支払者が、別の支払情報を見ることもできない。
+>
+なので、ステルスアドレスを使用することとの唯一の違いは、サーバーが面倒なアドレス作成の処理をしなくてよいということである。実は、ある意味でステルスアドレスを使用するのは悪いことかもしれない。なぜなら、ステルスアドレスを使用する人が少ないため、もしあなたがステルスアドレスを使用してると知られてしまうと、ステルスアドレスのトランザクションは、あなたのものであると分かってしまうからだ。
+>
+この方法は"１００％の匿名性"を提供しない。ビットコインの基本的な匿名性に対する弱さは、残ってしまう。すなわち、だれでも、支払のいチェーン、つながりを見ることができるということだ。なので、もし、あなたが、あるトランザクションそのもの、もしくは、そのトランザクションの関係者だと知るならば、そのビットコインがどこからきて、どこへいったのを見ることができるのだ。
