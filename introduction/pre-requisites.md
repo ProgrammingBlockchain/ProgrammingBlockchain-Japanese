@@ -1,4 +1,4 @@
-## Pre-requisties {#pre-requisites}
+## 前提 {#pre-requisites}
 
 ### スキル {#skills}
 
