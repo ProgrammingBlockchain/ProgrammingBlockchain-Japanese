@@ -1,8 +1,8 @@
-## Bitcoin address {#bitcoin-address}
+## ビットコインアドレス {#bitcoin-address}
 
-**ビットコインアドレス**が、支払いを受けるために相手に教えるものであることは知ってのとおり。  
+**ビットコインアドレス**が、支払いを受けるために公表するものであることは知ってのとおり。  
 ![](../assets/BitcoinAddress.png)  
-あなたがもらったビットコインを使うために、ウォレットが**秘密鍵**を使うということも、もしかしたら知っているだろうか。  
+このアドレス宛てにあなたがもらったビットコインを使うために、ウォレットが**秘密鍵**を使うということも、たぶん知っているだろう。  
 ![](../assets/PrivateKey.png)
 
 秘密鍵はネットワークには保管されず、インターネットにアクセスすることなく生成される。
@@ -13,12 +13,6 @@
 Key privateKey = new Key(); // generate a random private key
 ```
 
-> 日本語版注：ファイルの先頭にNBitcoinのライブラリを使う宣言をする必要がある。
->
-> ```
-> using NBitcoin;
-> ```
-
 秘密鍵から**公開鍵**を作成する。これは一方向のみの生成となっていて、逆に公開鍵から秘密鍵は作れない。
 
 ![](../assets/PrivKeyPubKey.png)
@@ -28,22 +22,14 @@ PubKey publicKey = privateKey.PubKey;
 Console.WriteLine(publicKey); // 0251036303164f6c458e9f7abecb4e55e5ce9ec2b2f1d06d633c9653a07976560c
 ```
 
-> 日本語版注：ファイルの先頭にSystemのライブラリを使う宣言をする必要がある。
->
-> ```
-> using System;
-> ```
-
 ビットコインには2つの**ネットワーク**がある。
 
 * **TestNet** は開発環境を目的としたビットコインのネットワーク。このネットワーク上のビットコインに価値はない。
 * **MainNet** はユーザー含めてあらゆる人が使うネットワークである。
 
 > 注釈：TestNetのコインは**faucets**を使うことですぐに手に入る。「get testnet bitcoins」で検索してほしい。
->
-> 日本語版注：日本語版ではTestNetを開発環境、MainNetを本番環境と訳す。
 
-公開鍵からビットコインアドレスは簡単に作れる。そのアドレスが使われるネットワークを指定する必要がある。
+公開鍵と生成されるアドレスが使われるネットワークから、ビットコインアドレスは簡単に作れる。
 
 ![](../assets/PubKeyToAddr.png)
 
@@ -52,7 +38,7 @@ Console.WriteLine(publicKey.GetAddress(Network.Main)); // 1PUYsjwfNmX64wS368ZR5F
 Console.WriteLine(publicKey.GetAddress(Network.TestNet)); // n3zWAo2eBnxLr3ueohXnuAa8mTVBhxmPhq
 ```
 
-**正確に言うと、ビットコインアドレスは先頭1バイト（開発環境か本番環境かで異なる）と公開鍵ハッシュで構成されており、それらが結合され、Base58Checkにエンコードされる。**
+**正確に言うと、ビットコインアドレスは先頭1バイト（TestNetかMainNetかで異なる）と公開鍵ハッシュで構成されており、それらが結合され、Base58Checkにエンコードされる。**
 
 ![](../assets/PubKeyHashToBitcoinAddress.png)
 
@@ -74,7 +60,7 @@ Console.WriteLine(mainNetAddress); // 1PUYsjwfNmX64wS368ZR5FMouTtUmvtmTY
 Console.WriteLine(testNetAddress); // n3zWAo2eBnxLr3ueohXnuAa8mTVBhxmPhq
 ```
 
-> 参考：本番環境で実践的にビットコインプログラミングをすることで、ミスしたときに二度と同じミスをしないように気をつけられる。
+> 参考：MainNetで実践的にビットコインプログラミングをすることで、ミスしたときに二度と同じミスをしないように気をつけられる。
 
 
 
