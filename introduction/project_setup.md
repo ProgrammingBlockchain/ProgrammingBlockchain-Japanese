@@ -1,13 +1,11 @@
-## Project Setup {#project-setup}
+## プロジェクトのセットアップ {#project-setup}
 
 説明を始める前に、どのようにVisual StudioまたはXamarin等でプロジェクトをセットアップするかを示す。
 
 1. プロジェクトを作成する（.NET 4.5以上）
 2. ソリューションエクスプローラーの「パッケージ」で右クリックし、「パッケージの追加」をクリック
-3. Windowsでは「**NBitcoin**」、MacやLinuxでは「**NBitcoin.Mono**」を追加する。
+3. 「**NBitcoin**」を追加する。
    ![](../assets/nuget.png)  
-
-> 参考 **:** MacやLinuxで「NBitcoin」をインストールしてしまうと、必要なクラスが揃わないので注意すること。
 
 NBitcoinは、この本のメイン筆者であるNicolas Dorierがメンテナンスしている、.NETで作られたオープンソースライブラリである。C\#でビットコインのソフトウェアを開発するのであれば、このライブラリを使うべきだろう。NBitcoinはクロスプラットフォームアプリケーションをサポートする。
 
