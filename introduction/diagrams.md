@@ -4,8 +4,8 @@
 
 たとえば以下の図解で言えば、このように読む。
 
-`Key + Password = EncryptedKey    
-EncryptedKey + Password = Key`
+`Key + Password = EncryptedKey   
+ EncryptedKey + Password = Key`
 
 ![](../assets/encrypted_key.png)
 
