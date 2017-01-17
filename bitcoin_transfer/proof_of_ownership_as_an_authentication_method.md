@@ -1,4 +1,4 @@
-## Proof of ownership as an authentication method {#proof-of-ownership-as-an-authentication-method}
+## 証明の方法としての所有権のあかし {#proof-of-ownership-as-an-authentication-method}
 
 > \[[2016.05.02](https://www.youtube.com/watch?v=dZNtbAFnr-0)\] 私の名前はクレイグ・ライトだ。これからビットコインで最初に作成されたトランザクションに関連付けられた公開鍵を使ってメッセージに署名することをデモンストレーションしよう。
 
@@ -12,7 +12,7 @@ Console.WriteLine(signature); // IN5v9+3HGW1q71OqQ1boSZTm0/DCiMpI8E4JB1nD67TCbIV
 
 これはそんなに難しいことだろうか？
 
-クレイグ・ライトという人物を覚えているかもしれない。彼は自分がサトシ・ナカモトであると私たちに切に信じでほしいと思っていた人物だ。  
+クレイグ・ライトという人物を覚えているかもしれない。彼は自分がサトシ・ナカモトであると私たちに切に信じてほしいと思っていた人物だ。  
 彼はいくつかの簡単なエンジニアリングを使って、一握りの影響力のあるビットコイン業界の人物やジャーナリストを納得させることに成功した。  
 が、幸運なことにデジタル署名はそんなにうまくいかなかった。  
 ジェネシスブロックにある、最初のビットコイントランザクションのアドレスを[インターネット](https://en.bitcoin.it/wiki/Genesis_block)でさくっと見てみよう。
