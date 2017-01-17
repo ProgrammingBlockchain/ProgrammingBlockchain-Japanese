@@ -2,11 +2,14 @@
 
 [コードサンプルはこちら。](https://github.com/ProgrammingBlockchain/ProgrammingBlockchainCodeExamples/)
 
-## この本を読むにはこちら
+## [この本を読むにはこちら](https://programmingblockchain.gitbooks.io/programmingblockchainjapanese/content/)
+
+## コミュニティ
+[![Gitter](https://badges.gitter.im/MetacoSA/NBitcoin.svg)](https://gitter.im/MetacoSA/NBitcoin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 ## 他の言語版
-
 英語
+[Read](https://programmingblockchain.gitbooks.io/programmingblockchain/content/)- [GitHub](https://github.com/ProgrammingBlockchain/ProgrammingBlockchain) - [GitBook](https://www.gitbook.com/book/programmingblockchain/programmingblockchain)
 
 インドネシア語: [Read](https://nopara73.gitbooks.io/programmingblockchainindonesian/content/) - [GitHub](https://github.com/ProgrammingBlockchain/ProgrammingBlockchain-Indonesian) - [GitBook](https://www.gitbook.com/book/nopara73/programmingblockchainindonesian)
 
@@ -27,10 +30,10 @@
 
 1. [Githubでこの本のページ](https://github.com/ProgrammingBlockchain/ProgrammingBlockchain-Japanese)にアクセスする
 2. フォークする
-3. フォークを複製してPCにダウンロードする
+3. フォークしたレポジトリをクローンする
 4. [Gitbook editor](https://www.gitbook.com/editor)をダウンロードしてインストールする
 5. Gitbook editorを起動する
-6. フォークしてダウンロードしたディレクトリを選択してインポートする
+6. フォークしてクローンしたディレクトリを選択してインポートする
 7. 本を編集する
 8. 保存して同期する
 9. プルリクエストする
@@ -39,7 +42,7 @@
 
 読みながら修正や追加を通じた貢献をすることで、より早く身につきます。どこかで理解することに悪戦苦闘した場合、後続の読者のためにもわかりやすく言い換えてプルリクエストしてください。
 
-英語ですが、[課題解決](https://github.com/ProgrammingBlockchain/ProgrammingBlockchain/issues)を支援いただくことも可能です。（大学生のためのアドバイスですが、就活には卒業証明書よりもGitHubでの活躍のほうが役に立ちます。）
+[課題解決](https://github.com/ProgrammingBlockchain/ProgrammingBlockchain-Japanese/issues)に協力することもできます。（大学生のためのアドバイスですが、就活には卒業証明書よりもGitHubでの活躍のほうが役に立ちます。）
 
 # 私たちへの寄付
 
@@ -52,7 +55,6 @@
 ## リンク
 
 [GitHubでこの本を見る](https://github.com/ProgrammingBlockchain/ProgrammingBlockchain-Japanese)  
-GitBookでこの本を見る（PDF、epub、mobiでダウンロードもできます）  
+[GitBookでこの本を見る](https://www.gitbook.com/book/programmingblockchain/programmingblockchainjapanese)（PDF版、epub版、mobi版でダウンロードもできます）  
 [コードサンプル](https://github.com/ProgrammingBlockchain/ProgrammingBlockchainCodeExamples/)  
-[作成者の一覧](http://n.bitcoin.ninja/)（ここではこの本を読み進め、また貢献することに成功した人たちが一覧化されています）
-
+[成功者の殿堂](http://n.bitcoin.ninja/)（ここではこの本の中にあるチャレンジを完了できた人たちが一覧になっています。）
