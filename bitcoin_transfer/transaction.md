@@ -2,7 +2,7 @@
 
 > \([Mastering Bitcoin](https://github.com/bitcoinbook/bitcoinbook/)\) トランザクションは、ビットコインシステムの中で最も重要な部分です。システムの他の要素はすべて、トランザクションが作成され、ビットコインネットワークを伝搬し、検証され、最後にグローバルなトランザクション元帳（ブロックチェーン）に追加されるという、一連の流れを支えるように作られています。トランザクションは、ビットコインシステムの参加者間の価値の移転をエンコードしたデータ構造です。個々のトランザクションは、簿記の元帳であるブロックチェーンに記された、誰でも見ることができる取引記録です。
 
-トランザクションは受け取り手がいないかもしれないし、複数いることもあるかもしれない。**それは送り手にも同じことが言えるのだ！**ブロックチェーン上では、前章で示したとおり、送り手と受け取り手がいつもScriptPubKeyによって抽象化されている。
+トランザクションは受け取り手がいないかもしれないし、複数いることもあるかもしれない。**それは送り手にも同じことが言えるのだ！**ビットコインブロックチェーン上では、前章で示したとおり、送り手と受け取り手がいつもScriptPubKeyによって抽象化されている。
 
 もしビットコインコアを使っていたら、Transactionsタブをクリックすると、このようにトランザクションを参照できる。
 
@@ -19,7 +19,7 @@
 Blockchain.infoのようなブロックエクスプローラーでトランザクションを閲覧することができる。 [https://blockchain.info/tx/f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94](https://blockchain.info/tx/f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94)  
 しかし開発者としてはおそらく、より簡単にクエリを実行したりパースしたりすることができるサービスがほしいと思うだろう。
 
-C\#の開発者、そしてNBitcoinのユーザーとしては、Nicolas Dorierの[QBit Ninja](http://docs.qbitninja.apiary.io/#)が最適な選択肢と思われる。ブロックチェーンに対してクエリを発行でき、またウォレットを追跡するためのオープンソースのWebAPIである。  
+C\#の開発者、そしてNBitcoinのユーザーとしては、Nicolas Dorierの[QBit Ninja](http://docs.qbitninja.apiary.io/#)が最適な選択肢と思われる。ビットコインブロックチェーンに対してクエリを発行でき、またウォレットを追跡するためのオープンソースのWebAPIである。  
 QBit NinjaはMicrosoft Azure Storageを基盤としている[NBitcoin.Indexer](https://github.com/MetacoSA/NBitcoin.Indexer)に依拠している。C\#開発者にはこのAPIのラッパーを開発するのではなく、[NuGet client package](http://www.nuget.org/packages/QBitninja.Client)を使うことが期待されている。
 
 [http://api.qbit.ninja/transactions/f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94](http://api.qbit.ninja/transactions/f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94)にアクセスしてみると、トランザクションの内容を見ることができる。
@@ -127,7 +127,7 @@ var scriptPubKey = transaction.Outputs.First().ScriptPubKey;
 TxOut txOut = new TxOut(twentyOneBtc, scriptPubKey);
 ```
 
-すべての**トランザクションアウトプット**は、そのアウトプット自体とそのアウトプットがトランザクションの中で何番目かを示すインデックスを含む、トランザクションIDによってブロックチェーンの中で一意に識別されている。その一意に識別できる情報のことを**OutPoint**と呼ぶ。
+すべての**トランザクションアウトプット**は、そのアウトプット自体とそのアウトプットがトランザクションの中で何番目かを示すインデックスを含む、トランザクションIDによってビットコインブロックチェーンの中で一意に識別されている。その一意に識別できる情報のことを**OutPoint**と呼ぶ。
 
 ![](../assets/OutPoint.png)
 
