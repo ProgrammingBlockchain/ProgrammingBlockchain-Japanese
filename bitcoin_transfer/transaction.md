@@ -1,8 +1,8 @@
 ## Transaction {#transaction}
 
-> \([Mastering Bitcoin](https://github.com/bitcoinbook/bitcoinbook/)\) トランザクションはビットコインシステムの中で最も重要な部分だ。ビットコインの中のあらゆるものが、トランザクションを作り、ネットワーク上を伝播し、確認し、最後にトランザクションのグローバルな台帳、つまりビットコインブロックチェーンに加わることを確認するように設計されている。トランザクションはビットコインシステムへの参加者たちの間の価値の移動を暗号に書き直すデータ構成となっている。1つ1つのトランザクションはビットコインブロックチェーン、つまりグローバルな複式記帳型の台帳における、公開された記帳となっている。
+> \([Mastering Bitcoin](https://github.com/bitcoinbook/bitcoinbook/)\) トランザクションは、ビットコインシステムの中で最も重要な部分です。システムの他の要素はすべて、トランザクションが作成され、ビットコインネットワークを伝搬し、検証され、最後にグローバルなトランザクション元帳（ブロックチェーン）に追加されるという、一連の流れを支えるように作られています。トランザクションは、ビットコインシステムの参加者間の価値の移転をエンコードしたデータ構造です。個々のトランザクションは、簿記の元帳であるブロックチェーンに記された、誰でも見ることができる取引記録です。
 
-1つのトランザクションは受け取り手がいないかもしれないし、複数いることもあるかもしれない。そして送り手にも同じことが言えるのだ！ブロックチェーン上では、前章で示したとおり、送り手と受け取り手がいつもScriptPubKeyによって抽象化されている。
+トランザクションは受け取り手がいないかもしれないし、複数いることもあるかもしれない。**それは送り手にも同じことが言えるのだ！**ブロックチェーン上では、前章で示したとおり、送り手と受け取り手がいつもScriptPubKeyによって抽象化されている。
 
 もしビットコインコアを使っていたら、Transactionsタブをクリックすると、このようにトランザクションを参照できる。
 
@@ -17,9 +17,9 @@
 > 注釈：承認されていないトランザクションを扱うためにTransaction IDを使ってはいけない。Transaction IDは承認される前は複製できてしまうからだ。これを「トランザクション展性」という。
 
 Blockchain.infoのようなブロックエクスプローラーでトランザクションを閲覧することができる。 [https://blockchain.info/tx/f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94](https://blockchain.info/tx/f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94)  
-しかし開発者としては、クエリを実行したりパースしたりすることがより簡単なサービスがほしいとおそらく思うだろう。
+しかし開発者としてはおそらく、より簡単にクエリを実行したりパースしたりすることができるサービスがほしいと思うだろう。
 
-C\#の開発者、そしてNBitcoinのユーザーとしては、Nicolas Dorierの[QBit Ninja](http://docs.qbitninja.apiary.io/#)が最適な選択肢と思われる。ビットコインブロックチェーンに対してクエリを発行でき、またウォレットを追跡するためのオープンソースのWebAPIである。  
+C\#の開発者、そしてNBitcoinのユーザーとしては、Nicolas Dorierの[QBit Ninja](http://docs.qbitninja.apiary.io/#)が最適な選択肢と思われる。ブロックチェーンに対してクエリを発行でき、またウォレットを追跡するためのオープンソースのWebAPIである。  
 QBit NinjaはMicrosoft Azure Storageを基盤としている[NBitcoin.Indexer](https://github.com/MetacoSA/NBitcoin.Indexer)に依拠している。C\#開発者にはこのAPIのラッパーを開発するのではなく、[NuGet client package](http://www.nuget.org/packages/QBitninja.Client)を使うことが期待されている。
 
 [http://api.qbit.ninja/transactions/f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94](http://api.qbit.ninja/transactions/f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94)にアクセスしてみると、トランザクションの内容を見ることができる。
@@ -48,13 +48,6 @@ var transactionId = uint256.Parse("f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e7
 GetTransactionResponse transactionResponse = client.GetTransaction(transactionId).Result;
 ```
 
-> 日本語版注：ファイルの先頭にQBitNinja.ClientとQBitNinja.Client.Modelsを使う宣言する必要がある。
->
-> ```
-> using QBitNinja.Client;
-> using QBitNinja.Client.Models;
-> ```
-
 **transactionResponse**の型は**GetTransactionResponse**で、QBitNinja.Client.Modelsのネームスペースに定義されている。同じ結果を**NBitcoin.Transaction**型でも取り出せる。
 
 ```cs
@@ -68,7 +61,7 @@ Console.WriteLine(transactionResponse.TransactionId); // f13dc48fb035bbf0a6e989a
 Console.WriteLine(transaction.GetHash()); // f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94
 ```
 
-**GetTransactionResponse**はトランザクションの中で使われるインプットの値やScriptPubKeyのようなトランザクションについての追加的な情報を含んでいる。
+**GetTransactionResponse**はトランザクションの中で使われるインプットの値やScriptPubKeyのような、トランザクションについての追加的な情報を含んでいる。
 
 本章で言及したいのはインプットとアウトプットである。1つのScriptPubKeyに13.19683492BTCが送られていることがわかるだろう。
 
@@ -87,16 +80,10 @@ foreach (var coin in receivedCoins)
 }
 ```
 
-> 日本語版注：ファイルの先頭にSystem.Collections.Genericを使う宣言をする必要がある。
->
-> ```
-> using System.Collections.Generic;
-> ```
+QBitNinjaのGetTransactionResponseクラスを使って、「受け取った」BTCの情報を表示した。  
+**Exercise : **QBitNinjaのGetTransactionResponseクラスを使って、「使われた」BTCの情報を表示してみよう！
 
-QBitNinjaのGetTransactionResponseクラスを使って、受け取ったBTCの情報を表示した。  
-**Exercise : **QBitNinjaのGetTransactionResponseクラスを使って、使われたBTCの情報を表示してみよう！
-
-さて、NBitcoinのTransactionクラスを使って受け取ったBTCの情報の情報をどのように表示するか見てみよう。
+さて、NBitcoinのTransactionクラスを使って、QBitNinjaで表示した「受け取った」BTCの情報と同じものを、どのように表示するか見てみよう。
 
 ```cs
 var outputs = transaction.Outputs;
@@ -140,17 +127,11 @@ var scriptPubKey = transaction.Outputs.First().ScriptPubKey;
 TxOut txOut = new TxOut(twentyOneBtc, scriptPubKey);
 ```
 
-> 日本語版注：ファイルの先頭にSystem.Linqを使う宣言をする必要がある。
->
-> ```
-> using System.Linq;
-> ```
-
-すべてのトランザクションアウトプットは、そのアウトプット自体とそのアウトプットがトランザクションの中で何番目かを示すインデックスを含む、トランザクションIDによってビットコインブロックチェーンの中で一意に識別されている。その一意に識別できる情報のことを**OutPoint**と呼ぶ。
+すべての**トランザクションアウトプット**は、そのアウトプット自体とそのアウトプットがトランザクションの中で何番目かを示すインデックスを含む、トランザクションIDによってブロックチェーンの中で一意に識別されている。その一意に識別できる情報のことを**OutPoint**と呼ぶ。
 
 ![](../assets/OutPoint.png)
 
-例えば、いま着目しているトランザクションのトランザクションアウトプットの中で、最初のOutpointは以下である。\(4788c5ef8ffd0463422bcafdfab240f5bf0be690482ceccde79c51cfce209edd, 0\).
+例えば、いま着目しているトランザクションの中で、13.19683492 BTCを伴っているトランザクションアウトプットのOutpointは以下である。\(4788c5ef8ffd0463422bcafdfab240f5bf0be690482ceccde79c51cfce209edd, 0\).
 
 ```cs
 OutPoint firstOutPoint = spentCoins.First().Outpoint;
@@ -158,13 +139,11 @@ Console.WriteLine(firstOutPoint.Hash); // 4788c5ef8ffd0463422bcafdfab240f5bf0be6
 Console.WriteLine(firstOutPoint.N); // 0
 ```
 
-> 日本語版注：QBitNinjaClientでOutPointを参照している。なお、spentCoinsはQBitNinjaのGetTransactionResponseクラスを使って、使われたBTCの情報を表示するときに設定する変数である。
-
-さて、トランザクションのインプット（すなわち**TxIn**）に目を向けてみよう。
+さて、インプット（すなわちトランザクションインプット）に目を向けてみよう。
 
 ![](../assets/TxIn.png)
 
-**TxIn**は支払いに使われた**TxOut**の**Outpoint**と**ScriptSig**（署名のことで所有権の証明とも言える）によって構成されている。今題材にしているトランザクションでは現に9つのインプットがある。
+**トランザクションインプット**は支払いに使おうとしているトランザクションアウトプットの**Outpoint**と**ScriptSig**（ScriptSigは所有権の証明とも言える）によって構成されている。今題材にしているトランザクションでは現に9つのインプットがある。
 
 ```cs
 Console.WriteLine(transaction.Inputs.Count); // 9
@@ -182,7 +161,7 @@ Console.WriteLine(firstPreviousTransaction.IsCoinBase); // False
 
 やろうと思えばこの方法を使って、**コインベーストランザクション**、つまりマイナーによって新しく発掘されたコインを含むトランザクションにたどり着くまで、トランザクションIDをさかのぼり続けることができる。  
 **Exercise**：題材にしているトランザクションの1番目のインプットをさかのぼり、コインベーストランザクションを見つけよう！  
-ヒント：数分後または3、40分後に僕はさかのぼるのを諦めた。
+ヒント：数分後または3、40分後に私はさかのぼるのを諦めた。
 
 そう、君の推測は正しい。これを行うのは最も効率的な方法ではないが、良い練習にはなる。
 
@@ -199,7 +178,7 @@ Console.WriteLine(spentAmount.ToDecimal(MoneyUnit.BTC)); // 13.19703492
 
 このトランザクションでは、13.19**68**3492 BTCが受け取られている。
 
-**Exercise:** Get the total received amount, as I have been done with the spent amount.
+**Exercise：**使用したコインを取得したのと同じように、受け取ったコインの総量を取得してみよう。
 
 0.0002 BTC（言い換えれば13.19**70**3492 - 13.19**68**3492）が計上されていないということだ！インプットとアウトプットの差は**トランザクション手数料**あるいは**マイニング手数料**とか言われている。これはマイナーが、与えられたトランザクションをブロックに含めるためにかき集める手数料となっている。
 
