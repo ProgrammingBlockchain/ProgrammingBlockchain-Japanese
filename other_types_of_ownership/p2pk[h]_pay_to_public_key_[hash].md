@@ -11,7 +11,7 @@ Console.WriteLine(publicKeyHash); // 41e0d7ab8af1ba5452b824116a31357dc931cf28
 Console.WriteLine(bitcoinAddress); // 171LGoEKyVzgQstGwnTHVh3TFTgo5PsqiY
 ```
 
-また、ビットコインブロックチェーンに関する限り、**ビットコインアドレス**というようなものはないということも学んだ。ビットコインブロックチェーンは**ScriptPubKey**を用いて受け取り手を認識し、その**ScriptPubKey**はビットコインアドレスから生成できる。
+また、ビットコインブロックチェーンに関して、**ビットコインアドレス**というようなものはないということも学んだ。ビットコインブロックチェーンは**ScriptPubKey**を用いて受け取り手を認識し、このような**ScriptPubKey**であればビットコインアドレスから生成できる。
 
 ```cs
 var scriptPubKey = bitcoinAddress.ScriptPubKey;
@@ -26,7 +26,7 @@ var sameBitcoinAddress = scriptPubKey.GetDestinationAddress(Network.Main);
 
 ### P2PK\(Pay to Public Key\)
 
-しかし、すべての**ScriptPubKey**がビットコインアドレスを表現しているわけではない。たとえばジェネシスと呼ばれているビットコインブロックチェーンの最初のトランザクションがそうだ。
+しかし、すべての**ScriptPubKey**がビットコインアドレスを表しているわけではない。たとえばジェネシスと呼ばれているビットコインブロックチェーンの最初のトランザクションがそうだ。
 
 ```cs
 Block genesisBlock = Network.Main.GetGenesis();
@@ -61,9 +61,9 @@ Console.WriteLine(firstScriptPubKeyEver); // 04678afdb0fe5548271967f1a67130b7105
 
 ビットコインアドレスは次のように表す：**OP\_DUP OP\_HASH160 &lt;hash&gt; OP\_EQUALVERIFY OP\_CHECKSIG**
 
-しかし今表示しているものはこうだ：**&lt;pubkey&gt; OP\_CHECKSIG**
+しかし今表示されているものはこうだ：**&lt;pubkey&gt; OP\_CHECKSIG**
 
-事実として最初は、**公開鍵**が直接**scriptPubKey**に使われていた。
+確かに最初は、**公開鍵**が直接**scriptPubKey**に使われていた。
 
 ```cs
 var firstPubKeyEver = firstScriptPubKeyEver.GetDestinationPublicKeys().First();
@@ -86,16 +86,16 @@ Pay to public key : 02fb8021bc7dedcc2f89a67e75cee81fedb8e41d6bfa6769362132544dfd
 Pay to public key hash : OP_DUP OP_HASH160 0ae54d4cec828b722d8727cb70f4a6b0a88207b2 OP_EQUALVERIFY OP_CHECKSIG
 ```
 
-これら2つの支払い方法は**P2PK** \(pay to public key\)とか**P2PKH** \(pay to public key hash\)とかとして言われている。
+これら2つの支払い方法は**P2PK** \(pay to public key\)や**P2PKH** \(pay to public key hash\)と言われている。
 
-サトシは後に、2つの理由でP2PKではなくP2PKHを使うことを決めた。
+サトシは後に、以下の2つの理由でP2PKではなくP2PKHを使うことを決めた。
 
 * 楕円曲線暗号（**公開鍵**や**秘密鍵**に使われれている暗号）が、楕円曲線上の離散対数問題を解くための改良されたショアのアルゴリズムによって解かれてしまうから。簡単に言い換えるとそれが意味するのは、理論上、量子コンピューターがそう遠くない未来に**公開鍵から秘密鍵を導出してしまう**ということだ。ビットコインを使うときだけ公開鍵を算出することによって、そういった攻撃を無力化することができる（一度使われたビットコインアドレスが二度と使われない前提で）。
 * ハッシュがより小さくなるので（20バイトになる）、印刷するにも小さくできるしQRコードのような小さい記録媒体に埋め込むことが簡単になる。
 
 最近ではP2PKを直接使う理由がないが、後に述べるP2SHと組み合わせてまだ使われている。
 
-> （[議論](https://www.reddit.com/r/Bitcoin/comments/4isxjr/petition_to_protect_satoshis_coins/d30we6f/)）もしP2PKの使用についてより早く取り組まなければ、ビットコインの価値に深刻な影響をおよぼすだろう。
+> （[議論](https://www.reddit.com/r/Bitcoin/comments/4isxjr/petition_to_protect_satoshis_coins/d30we6f/)）早くP2PKを宛先にしないようにしなければ、ビットコインの価値に深刻な影響をおよぼすだろう。
 
 ### Exercise
 
