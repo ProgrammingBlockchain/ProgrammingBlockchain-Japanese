@@ -15,9 +15,7 @@ Console.WriteLine(signature); // IN5v9+3HGW1q71OqQ1boSZTm0/DCiMpI8E4JB1nD67TCbIV
 クレイグ・ライトという人物を覚えているかもしれない。彼は自分がサトシ・ナカモトであると私たちに切に信じてほしいと思っていた人物だ。  
 彼はいくつかの簡単なエンジニアリングを使って、一握りの影響力のあるビットコイン業界の人物やジャーナリストを納得させることに成功した。  
 が、幸運なことにデジタル署名はそんなにうまくいかなかった。  
-ジェネシスブロックにある、最初のビットコイントランザクションのアドレスを[インターネット](https://en.bitcoin.it/wiki/Genesis_block)でさくっと見てみよう。
-
-[1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa](https://blockchain.info/address/1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa) とある。さあ彼の主張を確かめてみよう。
+ジェネシスブロックにある、最初のビットコイントランザクションのアドレスを[インターネット](https://en.bitcoin.it/wiki/Genesis_block)でさくっと見てみよう。[1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa](https://blockchain.info/address/1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa) とある。さあ彼の主張を確かめてみよう。
 
 ```cs
 var message = "I am Craig Wright";
@@ -33,11 +31,11 @@ Console.WriteLine("Is Craig Wright Satoshi? " + isCraigWrightSatoshi);
 
 ここにコインを移動させずにどうやって特定のアドレスを自分のものだと証明できるかを示す。
 
-**Address:**  
+**ビットコインアドレス：**  
 [1KF8kUVHK42XzgcmJF4Lxz4wcL5WDL97PB](https://blockchain.info/address/1KF8kUVHK42XzgcmJF4Lxz4wcL5WDL97PB)  
-**Message:**  
+**メッセージ：**  
 Nicolas Dorier Book Funding Address  
-**Signature:**  
+**署名：**  
 H1jiXPzun3rXi0N9v9R5fAWrfEae9WPmlL5DJBj1eTStSvpKdRR8Io6/uT9tGH/3OnzG6ym5yytuWoA9ahkC3dQ=
 
 これはNicolas Dorierがこの本の秘密鍵を所有していることの証明で構成されている。  
