@@ -1,28 +1,27 @@
-# はしがき {#foreword}
+# まえがき {#foreword}
 
 これは私の心に響いたアイン・ランド作の『水源』からの引用である。
 
-> Gail Wynand, the powerful puppet master of the world, and Howard Roark, the protagonist building architect discussed together. Gail finds a strange relief when he is with Roark, not knowing where it comes from, he questions him.  
-> Wynand asked:  
-> "Howard, have you ever been in love?"  
-> Roark turned to look straight at him and answer quietly:  
-> "I still am."  
-> "But when you walk through a building, what you feel is greater than that?"  
-> "Much greater, Gail"  
-> "I was thinking of people who say that happiness is impossible on earth. Look how hard they all try to find some joy in life. Look how they struggle for it. Why should any living creature exist in pain? By what conceivable right can anyone demand that a human being exist for anything but his own joy? Every one of them wants it. Every part of him wants it. But they never find it. I wonder why. They whine and say they don't understand the meaning of life. There's a particular kind of people that I despise. Those who seek some sort of a higher purpose or 'universal goal,' who don't know what to live for, who moan that they must ‘find themselves.’ You hear it all around us. That seems to be the official bromide of our century. Every book you open. Every drooling self-confession. It seems to be the noble thing to confess. I'd think it would be the most shameful one."  
-> "Look, Gail". Roark got up, reached out, tore a thick branch off a tree, held it in both hands, one fist closed at each end; then, his wrists and knuckles tensed against the resistance, he bent the branch slowly into an arc. "Now I can make what I want of it: a bow, a spear, a cane, a railing. That's the meaning of life."  
-> "Your strength?"  
-> "Your work." He tossed the branch aside. "The material the earth offers you and what you make of it..."
+> ゲイル・ワイナンド、世界を操るもの、とハワード・ローク、主人公である建築家が、一緒に議論している。ゲイルは、なぜか分からないが、ロークといるときに不思議な解放感を感じることに気づく。
+> ワイナンドが尋ねる:  
+> "ハワード、君は恋に落ちたことはあるかい？"  
+> ロークは、彼のほうへ向き、まっすぐみて静かに答えた:  
+> "いまも恋に落ちているよ。"  
+> "でも、建物の中を歩いている時、その気持ちは、建物よりも大きいかい？"  
+> "かなりね、ゲイル。"  
+> "地球では幸せにはなれないなんていう人たちのことを、考えていた。彼らがどれだけ懸命に、人生の中に喜びを見つけようとしているか見てみろよ。そして、どれだけ、そのためにもがいているか。どうして生きとし生けるものが、苦しみの中に存在する必要がある？ 一体どんな権利があって、人間が自分自身の喜びなしに存在しなければならないんだよ。みんなそれを欲しがってる。体全体で欲しがっているというのに。でも、見つけられないんだ。なぜか分からないよ。彼らは、愚痴をいって、人生の意味が分からないというんだ。俺が軽蔑するタイプのやつらはな、ある種の高い目的もしくは、いわゆる”普遍的な目標”を追い求めているやつらだ。やつらは、何のために生きてるかをしらず、”自分自身を見つける”必要があると、嘆くんだ。君も周りでそんなのを聞くだろ。それがどうも、今世紀における公式に常識のようだよ。開く本、開く本。口々に言われるたわいもない自己開示。 いかにも、高尚な告白にように言われてる。私は、そんなのは、最も恥ずべきことだと考えるよ。"  
+> "ゲイル"。ロークは、立ち上がり、手を伸ばし、太い枝を木から折って、両端を、閉じて両手で持った。そして、手首と指の付け根で木の抵抗に反して、枝をゆっくり弧の形に曲げた。"これで、私は、自分の好きなものをこいつから作ることができる。弓、槍、杖、さく。これが人生の意味さ。"  
+> "君の強さってことかい？"  
+> "仕事さ。" 彼は、枝を横にほおり投げた。"地球は材料を提供する、そして、それをもとに、我々は、なにかを作るのだ。"
 
 私が思うに、ビットコインブロックチェーンはこの小説に出てくる木の枝なのではないか。ブロックチェーンは興味のない人にとってみれば、うんざりするし役に立たないビットの集まりのように思えるだろう。しかしプログラマーや起業家にとってみたら、私たちの想像によってどんなかたちにも変えられる素晴らしい原石なのだ。私たちこそがビットコインブロックチェーンに意味と目的を吹き込むのである。
 
-枝から弓、槍やステッキを作ることのできる木を知る必要があるように、ビットコインブロックチェーンを形作ることのできるプログラミングを知る必要がある。興味のない人が思う役に立たないビットの集まりを、スキルと賢さでどんなものにでも形作ることができるということに気づいてもらえることを願う。
+枝から弓、槍や杖を作ることのできる木を知る必要があるように、ビットコインブロックチェーンを形作ることのできるプログラミングを知る必要がある。興味のない人が思う役に立たないビットの集まりを、スキルと賢さでどんなものにでも形作ることができるということに気づいてもらえることを願う。
 
-ここで警告させてほしい。ビットコインを学ぶことは映画『マトリックス』で出てきた赤い錠剤を手にするようなものだ。いつのまにか自分が、今の仕事をやめて、ビットコインにフルタイムで没頭する準備ができていることに気づくかもしれない。
+ここで警告させてほしい。ビットコインを学ぶことは映画『マトリックス』で出てきた赤い錠剤を手にするようなものだ。いつのまにか自分が、今の仕事をやめて、ビットコインにフルタイムで没頭する気になっているかもしれない。
 
 この本によってビットコインブロックチェーンの利用方法を基礎から応用まで学べる。API（ビットコインコアから提供されているRPCのAPIなど）の利用方法が学べるのではなく、APIそのものの作り方が学べるだろう。
 
 > ナカモトサトシはかつて、ビットコインを「色で言うと退屈なグレー」と表現した。
 
 APIにあわせてプログラミングすればアプリケーションを早くローンチできるが、そのAPIによってイノベーションを起こせなくなってしまうこともある。ビットコインブロックチェーンを完全に理解すれば、開発者はそのポテンシャルを完全に開放できる。
-
