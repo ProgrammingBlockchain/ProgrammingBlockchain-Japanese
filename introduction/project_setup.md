@@ -7,7 +7,7 @@
 3. 「**NBitcoin**」を検索しインストールする。
    ![](../assets/nuget_jp.png)  
 
-> **ヒント:** もし、MAC か Linux を使っていて NBitcoin.Mono でなく、NBitcoin を参照するようにすると、いくつかのクラスが見えなくなる。  
+> **ヒント:** MacやLinuxでも、NBitcoin.Monoではなく、NBitcoinを使うこと。
 
 NBitcoinは、この本のメイン筆者であるNicolas Dorierがメンテナンスしている、.NETで作られたオープンソースライブラリである。C\#でビットコインのソフトウェアを開発するのであれば、このライブラリを使うべきだろう。NBitcoinはクロスプラットフォームアプリケーションをサポートする。
 
@@ -17,3 +17,4 @@ NBitcoinは、この本のメイン筆者であるNicolas Dorierがメンテナ�
 ![](../assets/visualstudio_enablesourceserversupport_jp.png)
 
 これで、もしNBitcoinのコードにステップインをすると、ソースコードがGitHubから自動的に取得され、visual studioのデバッガーに表示される。
+
