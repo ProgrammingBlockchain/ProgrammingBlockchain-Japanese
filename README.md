@@ -2,7 +2,7 @@
 
 [コードサンプルはこちら。](https://github.com/ProgrammingBlockchain/ProgrammingBlockchainCodeExamples/)
 
-## [この本を読むにはこちら](https://programmingblockchain.gitbooks.io/programmingblockchainjapanese/content/)
+## [この本を読むにはこちら](https://programmingblockchain.gitbooks.io/programmingblockchain-japanese/content/)
 
 ## コミュニティ
 [![Gitter](https://badges.gitter.im/MetacoSA/NBitcoin.svg)](https://gitter.im/MetacoSA/NBitcoin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
@@ -55,6 +55,6 @@
 ## リンク
 
 [GitHubでこの本を見る](https://github.com/ProgrammingBlockchain/ProgrammingBlockchain-Japanese)  
-[GitBookでこの本を見る](https://www.gitbook.com/book/programmingblockchain/programmingblockchainjapanese)（PDF版、epub版、mobi版でダウンロードもできます）  
+[GitBookでこの本を見る](https://www.gitbook.com/book/programmingblockchain/programmingblockchain-japanese)（PDF版、epub版、mobi版でダウンロードもできます）  
 [コードサンプル](https://github.com/ProgrammingBlockchain/ProgrammingBlockchainCodeExamples/)  
 [成功者の殿堂](http://n.bitcoin.ninja/)（ここではこの本の中にあるチャレンジを完了できた人たちが一覧になっています。）
