@@ -2,7 +2,7 @@
 
 * [README](README.md)
 * [前書き](foreword.md)
-    * [第二（コミュニティ）版](second_communitry_edition.md)
+    * [第2（コミュニティ）版](second_communitry_edition.md)
 * [イントロダクション](introduction/README.md)
     * [なぜ ビットコインプログラミングではなく、ブロックチェーンプログラミング ？](introduction/why_blockchain_programming_and_not_bitcoin_program.md)
     * [なぜ C\# か？](introduction/why_c.md)
