@@ -1,4 +1,4 @@
-## 証明の方法としての所有権のあかし {#proof-of-ownership-as-an-authentication-method}
+## 個人認証として所有権の証明 {#proof-of-ownership-as-an-authentication-method}
 
 > \[[2016.05.02](https://www.youtube.com/watch?v=dZNtbAFnr-0)\] 私の名前はクレイグ・ライトだ。これからビットコインで最初に作成されたトランザクションに関連付けられた公開鍵を使ってメッセージに署名することをデモンストレーションしよう。
 
@@ -46,4 +46,3 @@ H1jiXPzun3rXi0N9v9R5fAWrfEae9WPmlL5DJBj1eTStSvpKdRR8Io6/uT9tGH/3OnzG6ym5yytuWoA9
 PGPがどのように動いているか知っているだろうか？ビットコインブロックチェーンととてもよく似ていないだろうか？  
 たぶんビットコインブロックチェーンはよりユーザーフレンドリーな、PGPの代わりとしての基盤となり得るだろう。  
 どうかNBitcoinでそれを作って欲しい。:-\)
-

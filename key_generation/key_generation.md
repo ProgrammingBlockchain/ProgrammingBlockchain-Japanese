@@ -273,7 +273,7 @@ However, you have two problems with that:
 *   All backups of your wallet that you have will become outdated when you generate a new key.  
 *   You cannot delegate the address creation process to an untrusted peer.  
 -->
-*   新しい鍵を生成することで、自分の持つウォレットのバックアップがすべて古いものになってしまう。
+*   新しい鍵を生成することで、自分の持つウォレットのバックアップが古くて使えなってしまう。
 *   アドレスの作成処理を信用できない相手に委譲することができなくなる。
 
 <!--

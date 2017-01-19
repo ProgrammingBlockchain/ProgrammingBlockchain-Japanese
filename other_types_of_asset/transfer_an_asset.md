@@ -1,4 +1,4 @@
-## Transfer an Asset {#transfer-an-asset}
+## 資産の移動 {#transfer-an-asset}
 
 さあ今、僕が**BlockchainProgrammingコイン**を送ったと想定してみよう。  
 どのようにして僕にそのコインを送り返せるだろうか。  
@@ -80,4 +80,3 @@ Console.WriteLine(tx);
 Confirmedされていないとはいえ、基本的にはアセットの移動はこれで成功だ。
 
 ![](../assets/Coinprism2.png)
-

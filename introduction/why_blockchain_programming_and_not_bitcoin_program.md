@@ -1,4 +1,4 @@
-## なぜ ブロックチェイン プログラミングであり、ビットコイン プログラミングでないのか？ {#why-blockchain-programming-and-not-bitcoin-programming}
+## なぜ ブロックチェイン プログラミングで、ビットコイン プログラミングでないか？ {#why-blockchain-programming-and-not-bitcoin-programming}
 
 ビットコインにとってのブロックチェーンとは、宝石にとっての金の関係と似ている。
 

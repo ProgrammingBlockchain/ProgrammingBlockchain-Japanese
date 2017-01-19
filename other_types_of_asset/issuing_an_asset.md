@@ -1,4 +1,4 @@
-## Issuing an Asset {#issuing-an-asset}
+## 資産の発行 {#issuing-an-asset}
 
 ### 目的 {#objective}
 
@@ -159,6 +159,3 @@ var book = BitcoinAddress.Create("1KF8kUVHK42XzgcmJF4Lxz4wcL5WDL97PB");
 var assetId = new AssetId(book).GetWif(Network.Main);
 Console.WriteLine(assetId); // AVAVfLSb1KZf9tJzrUVpktjxKUXGxUTD4e
 ```
-
-
-

@@ -1,4 +1,4 @@
-## Unit tests {#unit-tests}
+## 単体テスト {#unit-tests}
 
 前の章では、**カラードコイン**資産をコードするのに苦労していたように見えたかもしれない。  
 なぜかというと**カラードコイン**から**トランザクション**を生成する方法を見せたかっただけだからだ。
@@ -259,4 +259,3 @@ Colored :
 もしサードパーティーのサービスに依存したくなければ、**IColoredTransactionRepository**を自前で作ることもできる。
 
 より詳しい内容は[NBitcoin tests](https://github.com/MetacoSA/NBitcoin/blob/master/NBitcoin.Tests/transaction_tests.cs)で見ることができるし、コードプロジェクトの中にある私の記事の1つの「[Build Them all](https://www.codeproject.com/articles/835098/nbitcoin-build-them-all)」でも見ることができる。（マルチシグでのカラードコインの発行や交換）
-
