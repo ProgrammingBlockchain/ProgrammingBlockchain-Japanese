@@ -1,8 +1,8 @@
-## Arbitrary {#arbitrary}
+## 任意性 {#arbitrary}
 
-ビットコインコアのバージョン0.10から、**RedeemScript**は任意とすることができるようになった。それはビットコインのスクリプト言語を用いて、「所有権」が何を意味するかに関する自分の定義を作ることができるようになったということだ。
+ビットコインコアのバージョン0.10から、**RedeemScript**の内容は任意とすることができるようになった。それはビットコインのスクリプト言語を用いて、「所有権」が何を意味するかに関して自分の定義を作ることができるようになったということだ。
 
-たとえば、僕が、UTF8にバイト化された僕の誕生日を知っている人、もしくは秘密鍵：**1KF8kUVHK42XzgcmJF4Lxz4wcL5WDL97PB**を知っている人になら誰でもビットコインをあげられるのだ。
+たとえば僕が、UTF8にバイト化された僕の誕生日を知っている人、もしくは秘密鍵：**1KF8kUVHK42XzgcmJF4Lxz4wcL5WDL97PB**を知っている人になら誰でもビットコインをあげられるとしよう。
 
 スクリプト言語の詳細についてはスコープ外だが、いろいろなウェブサイト上で簡単にドキュメントを見つけられるし、スタックベースの言語なのでアセンブラを触っていた人ならだれでも読むことができるはずだ。
 
@@ -53,10 +53,10 @@ Script scriptSig = new Script(pushBirthdate, selectIf, redeemBytes);
 spending.Inputs[0].ScriptSig = scriptSig;
 ```
 
-**scriptSig**の中で、**OP\_1**を入れたから、**RedeemScript**に**OP\_IF**を挿入していることがわかるだろう。  
+**scriptSig**の中で、**OP\_1**を入れたから、**RedeemScript**に**OP\_IF**を挿入していることがわかる。  
 このような**scriptSig**を生成するテンプレートはないが、手動でP2SHの**scriptSig**を作る方法がわかるだろう。
 
-そして**scriptSig**が**scriptPubKey**の所有権を証明することを確認できるだろう。
+そして**scriptSig**が**scriptPubKey**の所有権を証明することを確認できる。
 
 ```cs
 //Verify the script pass
@@ -82,7 +82,7 @@ scriptSig = p2pkhProof + selectIf + redeemBytes;
 spending.Inputs[0].ScriptSig = scriptSig;
 ```
 
-そして持っていることを確認する。
+そして秘密鍵を持っていることを証明する。
 
 ```cs
 //Verify the script pass
