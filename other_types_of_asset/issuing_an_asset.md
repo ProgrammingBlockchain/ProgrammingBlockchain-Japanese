@@ -2,11 +2,11 @@
 
 ### 目的 {#objective}
 
-このエクササイズの目的のために、**BlockchainProgrammingコイン**を発行しよう。
+このエクササイズのために、**BlockchainProgrammingコイン**を発行しよう。
 
 僕に**0.004ビットコイン**を送るごとに**BlockchainProgrammingコイン**を1つ手に入れられる。  
 もしなにか言葉を添えてもらえると**さらにもう1つ**手に入れられる。  
-さらにこれは[Hall of The Makers](http://n.bitcoin.ninja/)に名を連ねる絶好の機会だ。
+さらにこれは[成功者の殿堂](http://n.bitcoin.ninja/)に名を連ねる絶好の機会だ。
 
 どのようにこの特徴をコーディングするか見てみよう。
 
@@ -87,7 +87,7 @@ Console.WriteLine(tx);
 ![](../assets/ColorMaker.png)
 
 今のケースではカラードコインの数は10だけで、それが`nico`に対して僕が発行したアセットの数だ。Metadataは任意のデータだ。あとの説明で「Asset Definition」を示すURLを示すところだとわかる。  
-**Asset Definition**はそのアセットが何なのかを描写するドキュメントだ。定義するかどうかは任意なのでここでは使っていない（Ricardian Contractの章でこれに触れる）。
+**Asset Definition**はそのアセットが何なのかを表現する文書だ。定義するかどうかは任意なのでここでは使っていない（Ricardian Contractの章でこれに触れる）。
 
 さらに詳しい説明は [Open Asset Specification](https://github.com/OpenAssets/open-assets-protocol/blob/master/specification.mediawiki)をチェックしてほしい。
 
@@ -159,3 +159,6 @@ var book = BitcoinAddress.Create("1KF8kUVHK42XzgcmJF4Lxz4wcL5WDL97PB");
 var assetId = new AssetId(book).GetWif(Network.Main);
 Console.WriteLine(assetId); // AVAVfLSb1KZf9tJzrUVpktjxKUXGxUTD4e
 ```
+
+
+
