@@ -1,4 +1,4 @@
-## Liquid Democracy {#liquid-democracy}
+## 流動体民主主義 {#liquid-democracy}
 
 ### 概要 {#overview}
 
@@ -16,8 +16,8 @@
 しかし始める前に、ブロックチェーン上で投票を行うときのいくつかの欠点に触れておきたい。
 
 * だれも投票者が実際に誰なのかを知らない
-* マイナーは気づけてしまうかもしれない（たとえそれが可能であったとして、興味はないと思われるが）
-* たとえだれも投票者が実際に誰なのか知らないとして、いくつかの票を通じた投票者のふるまいに対する分析によって、アイデンティティがひょっとすると明らかになってしまうかもしれない
+* マイナーは投票の内容に気づけてしまうかもしれない（たとえそれが可能であったとして、興味はないと思われるが）
+* たとえだれも投票者が実際に誰なのか知らないとしても、いくつかの票を通じた投票者のふるまいに対する分析によって、アイデンティティがひょっとすると明らかになってしまうかもしれない
 
 これらのポイントが妥当かどうかは、その投票をとりまとめる人の決定次第である。
 
@@ -141,7 +141,7 @@ repo.Transactions.Put(toVoters);
 
 問題は、投票はビジネスの財務的な側面にも議題が及んでおり、アリスは主にマーケティングの側面に関心があるということだ。
 
-アリスは、財務的な問題に関して自分よりも良い判断をすると信頼している誰かに投票権を譲渡することに決めた。彼女はボブに委任相手に選んだ。
+アリスは、財務的な問題に関して、自分よりも良い判断をすると信頼している誰かに投票権を譲渡することに決めた。彼女はボブを委任相手に選んだ。
 
 ![](../assets/PowerCoin4.png)
 
@@ -168,7 +168,7 @@ repo.Transactions.Put(toBob);
 
 ボスは会社のウェブサイトでこう周知した。
 
-賛成なら1HZwkjkeaoZfTSaJxDw6aKkxp45agDiEzNにコインを、反対なら1F3sAm6ZtwLAUnj7d38pGFxtP3RVEvtsbVにコインを送ること。
+賛成なら 1HZwkjkeaoZfTSaJxDw6aKkxp45agDiEzN にコインを、反対なら 1F3sAm6ZtwLAUnj7d38pGFxtP3RVEvtsbV にコインを送ること。
 
 ボブは会社は負債を借り入れるべきだと決めた。
 
@@ -192,7 +192,7 @@ var vote =
 さてボスは投票結果を自動計算できる。その結果、賛成が1、反対が0で賛成多数のため、負債を借り入れる。  
 すべての参加者が自分たちでも結果を数えられる。
 
-### 代案：Ricardian Contractを使う {#alternative-use-of-ricardian-contract}
+### 代案：リカーディアン・コントラクトを使う {#alternative-use-of-ricardian-contract}
 
 これまでのエクササイズでは、ボスがブロックチェーンの外の世界、つまり会社のウェブサイトで投票の方法をアナウンスした。
 
@@ -225,5 +225,5 @@ repo.Transactions.Put(toVoters);
 
 しかしハッカーが投票権を盗みたいと思っているとしよう。彼はいつもJSONのドキュメントを操作することができる（もしくは中間者が攻撃したり、ボスのウェブサイトに物理的にアクセスしたりまたはボブのソフトウェアに物理的にアクセスしたり）ことで、ボブは騙されて異なる候補に投票してしまう。
 
-署名することによって**Asset Definition File**を**Ricardian Contract**に置き換えることで、ボブのソフトウェアがあらゆる変更をすぐに検知できるようになるだろう（Asset Definition Protocolの[Proof Of Authenticity](https://github.com/OpenAssets/open-assets-protocol/blob/master/asset-definition-protocol.mediawiki)を見てほしい）。
+署名することによって**Asset Definition File**を**リカーディアン・コントラクト**に置き換えることで、ボブのソフトウェアがあらゆる変更をすぐに検知できるようになるだろう（Asset Definition Protocolの[Proof Of Authenticity](https://github.com/OpenAssets/open-assets-protocol/blob/master/asset-definition-protocol.mediawiki)を見てほしい）。
 
