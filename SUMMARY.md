@@ -39,7 +39,7 @@
     * [P2W\* over P2SH](other_types_of_ownership/p2w_over_p2sh.md)
     * [任意性](other_types_of_ownership/arbitrary.md)
     * [TransactionBuilderを使ってみる](other_types_of_ownership/using_the_transactionbuilder.md)
-* [その他の資産](other_types_of_asset/README.md)
+* [その他のアセットタイプ](other_types_of_asset/README.md)
     * [カラードコイン](other_types_of_asset/colored_coins.md)
     * [資産の発行](other_types_of_asset/issuing_an_asset.md)
     * [資産の移動](other_types_of_asset/transfer_an_asset.md)
