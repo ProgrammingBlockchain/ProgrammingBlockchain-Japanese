@@ -89,7 +89,7 @@ NBitcoinでは、**P2SH\(P2WPKH\)**に署名することは、ScriptCoinを用�
 もし、P2SH/P2WSH/P2SH\(P2WSH\)/P2SH\(P2WPKH\)が複雑に思えていても、怖がることはない。  
 NBitcoinでは、**すべての支払い形式において**、**ScriptCoin**を作ることだけしか求めない。それは**P2SH**の章で説明したとおりで、P2WSHかP2SHのRedeem ScriptとScriptPubKeyを与えてやれば作ることができる。
 
-NBitcoinに関して言えば、使いたいと思っているトランザクションアウトプットを使い、正しいredeem scriptがあれば、前章の「**Multi Sig」**の章で説明されたように、そして次の「**Using the TransactionBuilder**」の章でも説明するが、**TransactionBuilder**が正しい署名の仕方を把握してくれる。
+NBitcoinに関して言えば、使いたいと思っているトランザクションアウトプットを使い、正しいredeem scriptがあれば、前章の「**マルチシグ」**の章で説明されたように、そして次の「**Using the TransactionBuilder**」の章でも説明するが、**TransactionBuilder**が正しい署名の仕方を把握してくれる。
 
 ![](../assets/ScriptCoin.png)
 
