@@ -33,7 +33,7 @@
 * [その他の所有権](other_types_of_ownership/README.md)
     * [P2PK\[H\] \(Pay to Public Key \[Hash\]\)](other_types_of_ownership/p2pk[h]_pay_to_public_key_[hash].md)
     * [P2WPKH \(Pay to Witness Public Key Hash\)](other_types_of_ownership/p2wpkh_pay_to_witness_public_key_hash.md)
-    * [Multi Sig](other_types_of_ownership/multi_sig.md)
+    * [マルチシグ](other_types_of_ownership/multi_sig.md)
     * [P2SH \(Pay To Script Hash\)](other_types_of_ownership/p2sh_pay_to_script_hash.md)
     * [P2WSH \(Pay to Witness Script Hash\)](other_types_of_ownership/p2wsh_pay_to_witness_script_hash.md)
     * [P2W\* over P2SH](other_types_of_ownership/p2w_over_p2sh.md)
