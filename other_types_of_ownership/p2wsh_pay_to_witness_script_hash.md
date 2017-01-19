@@ -1,6 +1,6 @@
 ## P2WSH \(Pay to Witness Script Hash\) {#p2wsh-pay-to-witness-script-hash}
 
-P2PKHとP2WPKHとの関係と同じで、P2SHとP2WSHとのちがいは`scriptSig`にP2SHにおける支払いで記録されていたものの場所と、生成される`scriptPubKey`だけだ。
+P2PKHとP2WPKHとの関係と同じで、P2SHとP2WSHとのちがいはP2SHにおける支払いで`scriptSig`に記録されていたものの場所と、生成される`scriptPubKey`だけだ。
 
 `scriptPubKey`は以下のように変わる。まずP2SHの形式は以下のとおり。
 
@@ -32,5 +32,5 @@ Console.WriteLine(key.PubKey.ScriptPubKey.WitHash.ScriptPubKey);
   ]
 ```
 
-P2SHの支払いで説明したとおり、P2WSHでもまったく同様に署名するときは`ScriptCoin`クラスを使う。
+P2SHの支払いで説明したとおり、P2WSHでもまったく同様で署名するときは`ScriptCoin`クラスを使う。
 
