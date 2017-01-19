@@ -49,5 +49,5 @@
     * [Proof of Burn と評判](other_types_of_asset/proof_of_burn_and_reputation.md)
     * [秘密鍵を守る](security/protecting_your_private_keys.md)
 * [ケース・スタディ](implementations/README.md)
-    * [ヒドゥンウオレット: 鍵の管理\(HD ウォレット\)](implementations/hiddenbitcoinkey_storage_hd_wallet_md.md)
+    * [HiddenWallet：鍵の管理\(HD ウォレット\)](implementations/hiddenbitcoinkey_storage_hd_wallet_md.md)
 

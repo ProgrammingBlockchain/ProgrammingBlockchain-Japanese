@@ -1,4 +1,4 @@
-# ヒドゥンビットコイン: 鍵の管理\(HD ウォレット\) {#hiddenbitcoin-keystorage}
+# HiddenWallet：鍵の管理\(HD ウォレット\) {#hiddenbitcoin-keystorage}
 
 \([nopara73](https://github.com/nopara73)\)私は[HiddenWallet](https://github.com/nopara73/HiddenWallet)というプライバシー重視のビットコインウォレットを開発している。[HiddenBitcoin](https://github.com/nopara73/HiddenWallet)のライブラリーはNBitcoinとユーザーインターフェースの間の抽象化レイヤーの導入となっている。
 
@@ -283,3 +283,6 @@ public string StealthAddress => new BitcoinStealthAddress
     (_scanPrivateKey.PubKey, new[] {_spendPrivateKey.PubKey}, 1, null, _network
     ).ToWif();
 ```
+
+
+
