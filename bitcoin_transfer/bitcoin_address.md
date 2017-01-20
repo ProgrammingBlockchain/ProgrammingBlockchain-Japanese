@@ -31,7 +31,7 @@ Console.WriteLine(publicKey); // 0251036303164f6c458e9f7abecb4e55e5ce9ec2b2f1d06
 
 > 注釈：TestNetのコインは**faucets**を使うことですぐに手に入る。「get testnet bitcoins」で検索してほしい。
 
-公開鍵と生成されるアドレスが使われるネットワークから、ビットコインアドレスは簡単に作れる。
+公開鍵と生成するアドレスを使うネットワークのタイプをもとに、ビットコインアドレスは簡単に作れる。
 
 ![](../assets/PubKeyToAddr.png)
 
