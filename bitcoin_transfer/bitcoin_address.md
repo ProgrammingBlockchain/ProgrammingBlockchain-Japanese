@@ -12,7 +12,7 @@
 秘密鍵を生成してみよう。
 
 ```cs
-Key privateKey = new Key(); // generate a random private key
+Key privateKey = new Key(); // ランダムな秘密鍵を生成
 ```
 
 秘密鍵から**公開鍵**を作成する。これは一方向のみの生成となっていて、逆に公開鍵から秘密鍵は作れない。
