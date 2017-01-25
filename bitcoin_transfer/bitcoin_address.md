@@ -27,7 +27,7 @@ Console.WriteLine(publicKey); // 0251036303164f6c458e9f7abecb4e55e5ce9ec2b2f1d06
 ビットコインには2つの**ネットワーク**がある。
 
 * **TestNet** は開発を目的としたビットコインのネットワーク。このネットワーク上のビットコインに価値はない。
-* **MainNet** は普通のみんなが使うネットワークである。
+* **MainNet** は普通のユーザーが使うネットワークである。
 
 > 注釈：TestNetのコインは**faucets（蛇口）**サイトを使うことですぐに手に入る。「get testnet bitcoins」で検索してほしい。
 
@@ -62,6 +62,3 @@ Console.WriteLine(testNetAddress); // n3zWAo2eBnxLr3ueohXnuAa8mTVBhxmPhq
 ```
 
 > 参考：MainNetでビットコイン プログラミングを練習すれば、起こしたミスは、忘れられないものになるだろう。
-
-
-
