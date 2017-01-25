@@ -1,13 +1,13 @@
 ## ビットコインアドレス {#bitcoin-address}
 
-**ビットコインアドレス**が、支払いを受けるために公表するものであることは知ってのとおり。  
+**ビットコインアドレス**が、支払いを受けるために公開するものであることは知ってのとおりだ。  
 
 ![](../assets/BitcoinAddress.png)  
 
 このアドレス宛てにあなたがもらったビットコインを使うために、ウォレットが**秘密鍵**を使うということも、たぶん知っているだろう。  
 ![](../assets/PrivateKey.png)
 
-秘密鍵はネットワークには保管されず、インターネットにアクセスすることなく生成される。
+秘密鍵はネットワークには保管されず、インターネットにアクセスすることなく生成することができる。
 
 秘密鍵を生成してみよう。
 
@@ -26,12 +26,12 @@ Console.WriteLine(publicKey); // 0251036303164f6c458e9f7abecb4e55e5ce9ec2b2f1d06
 
 ビットコインには2つの**ネットワーク**がある。
 
-* **TestNet** は開発環境を目的としたビットコインのネットワーク。このネットワーク上のビットコインに価値はない。
-* **MainNet** は普通のみなさんが使うネットワークである。
+* **TestNet** は開発を目的としたビットコインのネットワーク。このネットワーク上のビットコインに価値はない。
+* **MainNet** は普通のみんなが使うネットワークである。
 
-> 注釈：TestNetのコインは**faucets**を使うことですぐに手に入る。「get testnet bitcoins」で検索してほしい。
+> 注釈：TestNetのコインは**faucets（蛇口）**サイトを使うことですぐに手に入る。「get testnet bitcoins」で検索してほしい。
 
-公開鍵と生成するアドレスを使うネットワークのタイプをもとに、ビットコインアドレスは簡単に作れる。
+公開鍵とアドレスを使用するネットワークの種類から、ビットコインアドレスを簡単に作ることができる。
 
 ![](../assets/PubKeyToAddr.png)
 
@@ -40,7 +40,7 @@ Console.WriteLine(publicKey.GetAddress(Network.Main)); // 1PUYsjwfNmX64wS368ZR5F
 Console.WriteLine(publicKey.GetAddress(Network.TestNet)); // n3zWAo2eBnxLr3ueohXnuAa8mTVBhxmPhq
 ```
 
-**正確に言うと、ビットコインアドレスは先頭1バイト（TestNetかMainNetかで異なる）と公開鍵ハッシュで構成されており、それらが結合され、Base58Checkにエンコードされる。**
+**正確に言うと、ビットコインアドレスはバージョンを示す先頭1バイト（TestNetかMainNetかで異なる）と公開鍵ハッシュで構成されており、それらが結合された後、Base58Checkにエンコードされる。**
 
 ![](../assets/PubKeyHashToBitcoinAddress.png)
 
@@ -51,18 +51,17 @@ var mainNetAddress = publicKeyHash.GetAddress(Network.Main);
 var testNetAddress = publicKeyHash.GetAddress(Network.TestNet);
 ```
 
-> 注釈：公開鍵ハッシュは公開鍵をSHA256でハッシュ化し、その結果に対してRIPEMD160でハッシュ化してビッグエンディアンで並べている。「RIPEMD160\(SHA256\(pubkey\)\)」のように表せるだろう。
+> 注釈：公開鍵ハッシュは、まず公開鍵をSHA256でハッシュ化し、その結果に対してRIPEMD160でさらにハッシュ化してビッグエンディアンで並べている。プログラミング関数なら、「RIPEMD160\(SHA256\(pubkey\)\)」のように表せるだろう。
 
-Base58Checkは誤字を防止するためのチェックサムがあったり、「0（ゼロ）」や「O（オー）」のようにどちらとも見える文字を使っていない点で均整が取れている。
-
-Base58Checkエンコードされたビットコインアドレスは、ビットコインのウォレットを使っているユーザーが、意図していないネットワークにビットコインを送ってしまわないように確認できるようになっている。
+Base58Checkエンコーディングには誤字を防止するためのチェックサムがあったり、「0（ゼロ）」や「O（オー）」のようにどちらとも見える文字を使わないようにするという気の利いた機能がある。  
+Base58Checkエンコードされたビットコインアドレスは、ウォレットを使っているユーザーが、間違えて意図していないネットワークにビットコインを確実に送らないようにする。
 
 ```cs
 Console.WriteLine(mainNetAddress); // 1PUYsjwfNmX64wS368ZR5FMouTtUmvtmTY
 Console.WriteLine(testNetAddress); // n3zWAo2eBnxLr3ueohXnuAa8mTVBhxmPhq
 ```
 
-> 参考：MainNetで実践的にビットコインプログラミングをすることで、ミスしたときに二度と同じミスをしないように気をつけられる。
+> 参考：MainNetでビットコイン プログラミングを練習すれば、起こしたミスは、忘れられないものになるだろう。
 
 
 
