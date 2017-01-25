@@ -1,12 +1,12 @@
 ## ScriptPubKey {#payment-script}
 
-ひょっとするとビットコインブロックチェーンに関しては、ビットコインアドレスなどというものはないのだが、知らないだろうか。内部的には、ビットコインのプロトコルでは、ビットコインを受け取る人を**ScriptPubKey**で認識することになっている。
+ひょっとすると知らないかもしれないが、実は、ビットコイン ブロックチェーンの内部には、ビットコインアドレスなどというものはない。内部的には、ビットコインのプロトコルでは、ビットコインを受け取る人を**ScriptPubKey**で認識することになっている。
 
 ![](../assets/ScriptPubKey.png)  
-**ScriptPubKey**とはこのように表現される。  
+**ScriptPubKey**は、例えば、このように表現される。  
 `OP_DUP OP_HASH160 14836dbe7f38c5ac3d49e8d790af808a4ee9edcf OP_EQUALVERIFY OP_CHECKSIG`
 
-これはビットコインの所有権を主張するためにどんな条件が揃わなければならないかを説明する、短いスクリプトである。この本のレッスンを進めていく中で、**ScriptPubKey**の中にある命令をいくつか見ることになる。
+この短いスクリプトはビットコインの所有権を主張するために、どんな条件が揃わなければならないかを説明するものだ。この本のレッスンを進めていく中で、**ScriptPubKey**の中にある命令をいくつか見ることになる。
 
 ScriptPubKeyはビットコインアドレスから生成することができる。これはすべてのビットコインのクライアントが、「人間の目に易しい」ビットコインアドレスから、ビットコインブロックチェーンが読み込むことのできるアドレスへ変換するために行っているステップの1つである。
 
@@ -22,13 +22,11 @@ Console.WriteLine(mainNetAddress.ScriptPubKey); // OP_DUP OP_HASH160 14836dbe7f3
 Console.WriteLine(testNetAddress.ScriptPubKey); // OP_DUP OP_HASH160 14836dbe7f38c5ac3d49e8d790af808a4ee9edcf OP_EQUALVERIFY OP_CHECKSIG
 ```
 
-注目してほしいのだが、TestNetの**ScriptPubKey**とMainNetの**ScriptPubKey**が同じになっている。
+TestNetの**ScriptPubKey**とMainNetの**ScriptPubKey**が同じになっているのに気づいただろうか？  
+そして、**ScriptPubKey**には公開鍵ハッシュが含まれているのに気づいただろうか？  
+この時点では詳細には触れないでおくが、ScriptPubKeyはビットコインアドレスと全く関係がないように見えるが、公開鍵ハッシュを持っているのだ。  
 
-もう1つ注目してほしいのだが、**ScriptPubKey**には公開鍵ハッシュが含まれている。
-
-この時点では詳細には触れないでおくが、ScriptPubKeyはビットコインアドレスと全く関係がないように見えるが、公開鍵ハッシュを表しているのだ。
-
-ビットコインアドレスはそのアドレスが使われるネットワークを指し示す1バイトと公開鍵で構成されているのであった。だから**ScriptPubKey**とネットワークを指し示す情報からビットコインアドレスに戻すことができる。
+ビットコインアドレスはそのアドレスが使われるネットワークを指し示す1バイトのバージョンバイトと公開鍵のハッシュ値で構成されている。だから**ScriptPubKey**の情報とネットワークを指し示す情報からビットコインアドレスに戻すことができる。
 
 ```cs
 var paymentScript = publicKeyHash.ScriptPubKey;
@@ -49,5 +47,5 @@ Console.WriteLine(mainNetAddress == sameMainNetAddress2); // True
 
 さてここまでで、秘密鍵、公開鍵、公開鍵ハッシュ、ビットコインアドレスとScriptPubKeyの関係性を理解したと思う。
 
-次の章からはScriptPubKeyだけを使う。ビットコインアドレスはユーザーインターフェースの発想から使われるものだからだ。
+次の章からは基本的にScriptPubKeyだけを使う。ビットコインアドレスはユーザーインターフェースの発想から使われるものだからだ。
 
