@@ -5,32 +5,32 @@
 <!---
 ## Is it random enough? {#is-it-random-enough}
 --->
-## それは十分にランダムだろうか？ {#is-it-random-enough}
+## それは本当にランダムだろうか？ {#is-it-random-enough}
 <!---
 When you call **new Key()**, under the hood, you are using a PRNG (Pseudo-Random-Number-Generator) to generate your private key. On windows, it uses the **RNGCryptoServiceProvider**, a .NET wrapper around the Windows Crypto API.
 --->
 
-**new Key()** でコンストラクターを呼び出すと、内部ではPRNG(疑似乱数生成器)を使って秘密鍵を生成している。ウインドウズ上では、Windows Crypto APIの.Netラッパーである **RNGCryptoServiceProvider** を使用している。  
+**new Key()** でコンストラクターを呼び出すと、内部ではPRNG(疑似乱数生成器)を使って秘密鍵を生成している。WindowsOS上では、Windows Crypto APIの.Netラッパーである **RNGCryptoServiceProvider** を使用している。  
 
 <!---
 On Android, I use the **SecureRandom**, and in fact, you can use your own implementation with **RandomUtils.Random**.
 --->
-アンドロイドでは、私は **SecureRandom** を使用する。実際のところ **RandomUtils.Random** を使って自分独自の実装を使うことができる。  
+アンドロイドでは、私は **SecureRandom** を使用する。実際は **RandomUtils.Random** を使って自分独自の実装を使うことができる。  
 
 <!---
 On IOS, I have not implemented it and you need to create your **IRandom** implementation.
 --->
-iOS上では、私はまだ実装したことはないが、自分で**IRandom** の実装クラスを作る必要がある。  
+iOS上では、私はまだ実装したことはないが、自分で **IRandom** の実装クラスを作る必要がある。  
 
 <!---
 For a computer, being random is hard. But the biggest issue is that it is impossible to know if a series of number is really random.
 --->
-コンピュータにとって、ランダムであることは、困難だ。しかし、一番大きな問題は、ある一連の数値が本当にランダムかどうかを知ることが不可能だということである。  
+コンピューターにとってランダムにすることは難しい。しかし、1番大きな問題は、ある一連の数値が本当にランダムかどうかを知ることが不可能だということである。  
 
 <!---
 If malware modifies your PRNG (and so, can predict the numbers you will generate), you won’t see it until it is too late.
 --->
-もし、マルウエアがあなたのPRNGを改ざんした場合（なので、あなたが生成する数値を予測できる）、手遅れになるまでそれを知ることはない。  
+もし、マルウェアがあなたのPRNGを改ざんした場合（なので、あなたが生成する数値を予測できる）、手遅れになって初めて改ざんされたことに気づくことになる。
 
 <!---
 It means that a cross platform and naïve implementation of PRNG (like using the computer’s clock combined with CPU speed) is dangerous. But you won’t see it until it is too late.
@@ -40,12 +40,12 @@ It means that a cross platform and naïve implementation of PRNG (like using the
 <!---
 For performance reasons, most PRNG works the same way: a random number, called **Seed**, is chosen, then a predictable formula generates the next numbers each time you ask for it.
 --->
-パフォーマンス上の理由から ほとんどのPRNGは同じように機能する。**シード** とよばれるランダムな数値が１つ選ばれ、呼び出す度に結果が予測可能な式によって次の値が生成される。  
+パフォーマンス上の理由から ほとんどのPRNGは同じように機能する。**シード** とよばれるランダムな数値が1つ選ばれ、呼び出す度に、結果が予測可能な式によって次の値が生成される。  
 
 <!---
 The amount of randomness of the seed is defined by a measure we call **Entropy**, but the amount of **Entropy** also depends on the observer.
 --->
-シードのランダムさの度合は、**エントロピー** と呼ばれる計測値で定義される、エントロピー度は、観測者にも依存する。  
+シードのランダムさの度合は、**エントロピー** と呼ばれる計測値で定義されるが、エントロピー度は、観測者にも依存する。  
 
 <!---
 Let’s say you generate a seed from your clock time.  
@@ -58,7 +58,7 @@ And let’s imagine that your clock has 1ms of resolution. (Reality is more ~15m
 If your attacker knows that you generated the key last week, then your seed has  
 1000 \* 60 \* 60 \* 24 \* 7 = 604800000 possibilities.
 --->
-もし攻撃者が、あなたが先週、鍵を生成したと知ってるとすると、シード値は、  
+もしあなたが先週鍵を生成したと、攻撃者が知っているとすると、シード値は、  
 1000 \* 60 \* 60 \* 24 \* 7 = 604800000 通りある。  
 
 <!---
@@ -69,7 +69,7 @@ For such attacker, the entropy is LOG(604800000;2) = 29.17 bits.
 <!---
 And enumerating such number on my home computer took less than 2 seconds. We call such enumeration “brute forcing”.
 --->
-そのような回数を順番に処理するには、私の自宅のコンピュータでやっても２秒以下しかかからない。このように順番に全可能性を当たってみる処理のことを”総当たり式”と呼ぶ。  
+その程度の回数だと順番に処理するとして、私の自宅のコンピュータで処理させても２秒以下しかかからない。このように順番に全可能性を当たってみる処理のことを”総当たり式”と呼ぶ。  
 
 <!---
 However let’s say, you use the clock time + the process id for generating the seed.  
@@ -83,7 +83,7 @@ So now, the attacker needs to enumerate 604800000 \* 1024 possibilities, which t
 Now, let’s add the time when I turned on my computer, assuming the attacker knows I turned it on today, it adds 86400000 possibilities.  
 --->
 今度は、攻撃者は、604800000 \* 1024 回を順番に当たっていく必要があり、それには2000秒かかる。  
-さて、ここに、コンピューターを起動した日時の情報も足してみよう。攻撃者は私が今日起動したと知っているとすると、86400000 通りの可能性が追加できる。  
+さて、ここに、コンピューターを起動した日時の情報も足してみよう。攻撃者は私が今日起動したと知っているとしても、86400000 通りの可能性が追加できる。  
 
 <!---
 Now the attacker needs to enumerate 604800000 \* 1024 \* 86400000 = 5,35088E+19 possibilities.  
@@ -120,7 +120,7 @@ An interesting way of generating entropy quickly is by asking human intervention
 <!---
 If you don’t completely trust the platform PRNG (which is [not so paranoic](http://android-developers.blogspot.fr/2013/08/some-securerandom-thoughts.html)), you can add entropy to the PRNG output that NBitcoin is using.  
 --->
-もし、あなたがプラットフォームのPRNGを完全に信頼できない（それはそれほど[おかしな事ではない](http://android-developers.blogspot.fr/2013/08/some-securerandom-thoughts.html)）なら、NBitcoinが使用するPRNGからの出力にたいしてエントロピーを足すことができる。
+もし、あなたがプラットフォームのPRNGを完全に信頼できない（それはそれほど[おかしな事ではない](http://android-developers.blogspot.fr/2013/08/some-securerandom-thoughts.html)）なら、NBitcoinが使用する、PRNGからの出力にたいしてエントロピーを足すことができる。
 
 ```cs
 RandomUtils.AddEntropy("hello");
@@ -130,7 +130,7 @@ var nsaProofKey = new Key();
 <!---
 What NBitcoin does when you call **AddEntropy(data)** is:
 --->
-あなたが **AddEntropy(data)** を呼び出すときNBitcoinが行うのは、  
+あなたが **AddEntropy(data)** を呼び出すときNBitcoinが処理するのは、  
 **additionalEntropy = SHA(SHA(data) ^ additionalEntropy)** だ。  
 
 <!---
