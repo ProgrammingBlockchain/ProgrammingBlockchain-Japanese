@@ -61,4 +61,4 @@ Console.WriteLine(mainNetAddress); // 1PUYsjwfNmX64wS368ZR5FMouTtUmvtmTY
 Console.WriteLine(testNetAddress); // n3zWAo2eBnxLr3ueohXnuAa8mTVBhxmPhq
 ```
 
-> 参考：MainNetでビットコイン プログラミングを練習すれば、起こしたミスは、忘れられないものになるだろう。
+> 参考：MainNetでビットコイン プログラミングを練習すると、やってしまった失敗は、きっと忘れられないものになるだろう。
