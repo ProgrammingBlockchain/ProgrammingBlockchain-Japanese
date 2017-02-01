@@ -1,14 +1,14 @@
-## ビットコインを支払いに使う {#spend-your-coin}
+## ビットコインを使ってみる {#spend-your-coin}
 
-さあ今や**ビットコインアドレス**、**ScriptPubKey**、**秘密鍵**や**マイナー**とはなにかがわかったのだから、自分の手で初めての**トランザクション**を作れるだろう。
+さあ今や **ビットコインアドレス**、**ScriptPubKey**、**秘密鍵**や**マイナー** とは何かが、分かったので、自分の手で初めての**トランザクション**を作れるだろう。
 
-このレッスンを進めて1行ごとにコードを追加していくにつれて、Twitterスタイルなメッセージ形式でこの本へのフィードバックを残すメソッドを作るようになっている。
+このレッスンを進めて1行ごとにコードを追加していくと、最終的に、Twitterライクなメッセージで、この本へのフィードバックを残すプログラムを作るようになっている。
 
-前のレッスンでやったように、使いたい**トランザクションアウトプット**を含む**トランザクション**を見てみよう。
+では、前のレッスンでやったように、消費したい **トランザクションアウトプット** を含む **トランザクション** を見てみよう。
 
-新しい**コンソールプロジェクト**（.NET4.5以上）を作り、**QBitNinja.Client**のNuGetパッケージをインストールしてほしい。
+新しい **コンソールプロジェクト**（.NET4.5以上）を作り、**QBitNinja.Client** のNuGetパッケージをインストールしてほしい。
 
-もう秘密鍵を作成し、表示させられるだろうか？もう対応するビットコインアドレスを取得し、そこにビットコインを送金できるだろうか？もしできなくても心配しないでほしい。どうやってそれができるか簡単に繰り返そう。
+すでに秘密鍵を作成して、メモを取っただろうか？そして、その鍵に対応するビットコインアドレスを取得して、ビットコインを送金しただろうか？もし、まだやってなくても心配しないでいい、どうやってやるかここで簡単に繰り返そう。
 
 ```cs
 var network = Network.Main;
@@ -21,12 +21,12 @@ Console.WriteLine(bitcoinPrivateKey);
 Console.WriteLine(address);
 ```
 
-**bitcoinPrivateKey**と**address**の値をメモし、そこに複数コインを送ってそのトランザクションIDをメモしよう。（トランザクションIDは[blockchain.info](https://blockchain.info/)のようなウォレットやブロックエクスプローラーで（おそらく）見つけられる）
+**bitcoinPrivateKey** と **address** の値をメモし、そこにいくらかのコインを送り、そのトランザクションIDをメモしてくれ。（トランザクションIDは、自分のウオレットアプリに（多分）表示される、それか、[blockchain.info](https://blockchain.info/)のようなブロックエクスプローラーで（アドレスから）見つけることができうｒ。）
 
-秘密鍵をインポートする。
+次に、秘密鍵をインポートする。
 
 ```cs
-var bitcoinPrivateKey = new 
+var bitcoinPrivateKey = new
 BitcoinSecret("cSZjE4aJNPpBtU6xvJ6J4iBzDgTmzTjbq8w2kqnYvAprBCyTsG4x");
 var network = bitcoinPrivateKey.Network;
 var address = bitcoinPrivateKey.GetAddress();
@@ -46,11 +46,11 @@ Console.WriteLine(transactionResponse.TransactionId); // e44587cf08b4f03b0e8b4ae
 Console.WriteLine(transactionResponse.Block.Confirmations);
 ```
 
-さあ、トランザクションを生成する情報はすべて揃った。必要な質問はこれだ。「**どこから、どこへ、いくら？**」
+さあ、これでトランザクションを生成する情報はすべて揃った。で、必要な質問はこれだ。「**どこから、どこへ、いくら？** 送るか」
 
 ### どこから？
 
-このケースでは、2番目のoutpointを使いたいが、どのようにそれを把握したかを示す。
+このケースでは、前のトランザクションの2番目のoutpointを使いたいのだが、どのようにそれを見つけたのかを示す。
 
 ```cs
 var receivedCoins = transactionResponse.ReceivedCoins;
@@ -63,8 +63,8 @@ foreach (var coin in receivedCoins)
     }
 }
 if(outPointToSpend == null)
-    throw new Exception("TxOut doesn't contain our ScriptPubKey");
-Console.WriteLine("We want to spend {0}. outpoint:", outPointToSpend.N + 1);
+    throw new Exception("エラー：どのトランザクションアウトプットも送ったコインのScriptPubKeyを持ってない！");
+Console.WriteLine("{0}番目のアウトポイントを使いたい。", outPointToSpend.N + 1);
 ```
 
 支払いのためにはトランザクションの中でこのoutpointを参照する必要がある。以下のようにトランザクションを生成する。
@@ -80,12 +80,12 @@ transaction.Inputs.Add(new TxIn()
 ### どこへ？
 
 必要な質問は覚えているだろうか？「**どこから、どこへ、いくら？**」だ。  
-**トランザクションインプット**を組み立ててトランザクションに加えることが、「どこから」という質問への答えだった。  
-**トランザクションアウトプット**を組み立ててトランザクションに加えることが、残っている質問の1つへの答えである。
+**トランザクションインプット** を組み立ててトランザクションに加えることが、「どこから？」という質問への答えだった。  
+**トランザクションアウトプット** を組み立ててトランザクションに加えることは、残っている２つの質問への答えである。
 
 この本への寄付アドレス：[1KF8kUVHK42XzgcmJF4Lxz4wcL5WDL97PB](https://blockchain.info/address/1KF8kUVHK42XzgcmJF4Lxz4wcL5WDL97PB)  
-寄付されたお金は本の残りを書いている間、私が食事できて素直にいられるように使う「Coffee and Sushi Wallet」という僕のウォレットに入る。  
-もしこのチャレンジを完遂させることに成功すると、[http://n.bitcoin.ninja/](http://n.bitcoin.ninja/)の**成功者の殿堂**の中に自分の寄付を見つけることができるだろう（寛大さの順に表示される）。
+寄付されたお金は、本の残りを書いている間 私が食事できて素直にいられる為使う「コーヒー＆寿司ウオレット」という名前の僕のウォレットに入る。  
+もしこのチャレンジに成功すると、[http://n.bitcoin.ninja/](http://n.bitcoin.ninja/)の **成功者の殿堂リスト** の中に自分の寄付を見つけることができるだろう（気前の良さ順に表示される）。
 
 ```cs
 var hallOfTheMakersAddress = new BitcoinPubKeyAddress("1KF8kUVHK42XzgcmJF4Lxz4wcL5WDL97PB");
@@ -99,9 +99,9 @@ var hallOfTheMakersAddress = BitcoinAddress.Create("mzp4No5cmCXjZUpf112B1XWsvWBf
 
 ### いくら？
 
-もし**1BTC**を伴う**トランザクションインプット**から**0.5BTC**を使いたいとしても、確実にすべてを使い切らないといけないのだ！  
-図解が以下に示すとおり、**トランザクションアウトプット**が**0.5**BTCを成功者の殿堂に、そしてあなたに**0.4999**BTCを戻すように仕分けている。  
-残りの**0.0001BTC**はどうなったのだろう？これはマイナーの手数料となっていて、彼らがこのトランザクションを次のブロックに含めるためのインセンティブとなっているのであった。
+もし **1BTC** を伴う **トランザクションインプット** から **0.5BTC** を使いたいとしても、確実にすべてのコインを使い切らななければならない！  
+図解が以下に示すとおり、**トランザクションアウトプット** が **0.5** BTCを成功者の殿堂に、そしてあなたに**0.4999**BTCを戻すように仕分けている。  
+残りの **0.0001BTC** はどうなったのだろう？これはマイナーの手数料となっていて、彼らがこのトランザクションを次のブロックに含めるためのインセンティブとなっているのであった。
 
 ![](../assets/SpendTx.png)
 
@@ -122,21 +122,21 @@ transaction.Outputs.Add(hallOfTheMakersTxOut);
 transaction.Outputs.Add(changeBackTxOut);
 ```
 
-ここで微調整をしてみよう。  
-この章全体で使用している例で僕が使っているビットコインアドレスをブロックエクスプローラーでチェックできる。（例ではTestNetを使っている。）
+ここでコードの微調整をしてみる。  
+以下のリンクから、この章のサンプルコードでっているビットコインアドレスをブロックエクスプローラーでチェックできる。（TestNetのアドレスを使っているが。）
 
 [http://tbtc.blockr.io/address/info/mzK6Jy5mer3ABBxfHdcxXEChsn3mkv8qJv](http://tbtc.blockr.io/address/info/mzK6Jy5mer3ABBxfHdcxXEChsn3mkv8qJv)
 
 ```cs
-// How much you want to TO
+// ビットコインをいくら送金先に送りたいか
 var hallOfTheMakersAmount = new Money(0.5m, MoneyUnit.BTC);
-/* At the time of writing the mining fee is 0.05usd
- * Depending on the market price and
- * On the currently advised mining fee,
- * You may consider to increase or decrease it
+/* これを書いている時点では、マイニング手数料は５セント
+ * だが、ビットコインのマーケット価格と
+ * その時の推奨手数料レートに合わせて
+ * 手数料を上げるか、もしくは、下げるかを考慮する必要がある。
 */
 var minerFee = new Money(0.0001m, MoneyUnit.BTC);
-// How much you want to spend FROM
+// UTXOからいくらトータルでビットコインを 使いたいか。
 var txInAmount = receivedCoins[(int) outPointToSpend.N].TxOut.Amount;
 Money changeBackAmount = txInAmount - hallOfTheMakersAmount - minerFee;
 ```
@@ -164,7 +164,7 @@ transaction.Outputs.Add(hallOfTheMakersTxOut);
 transaction.Outputs.Add(changeBackTxOut);
 ```
 
-### ビットコインブロックチェーン上のメッセージ
+### ブロックチェーン上でのメッセージ送信
 
 さあ、フィードバックを追加しよう！フィードバックは40バイト以下でなければならない。そうでないとアプリケーションがクラッシュする。  
 このフィードバックはトランザクションと一緒に、（トランザクションが承認された後に）[成功者の殿堂](http://n.bitcoin.ninja/)の中に現れる。
@@ -179,8 +179,8 @@ transaction.Outputs.Add(new TxOut()
 });
 ```
 
-まとめるために、署名する前にトランザクション全体を見てほしい。  
-3つの**トランザクションアウトプット**があり、2つは**コイン付き**で、1つは**コインなし**（メッセージあり）となっている。「普通の」**トランザクションアウトプット**とメッセージ付きの**トランザクションアウトプット**の**ScriptPubKey**ではちがいがあることに気づくだろう。
+署名する前に、ここまでをまとめるため、トランザクション全体を見てほしい。  
+3つの**トランザクションアウトプット**があり、2つは**コイン付き**で、1つは**コインなし**（メッセージあり）となっている。そこで、「普通の」**トランザクションアウトプット** の **ScriptPubKey** とメッセージ付きの **トランザクションアウトプット** の **ScriptPubKey** の違いに気づくだろう。
 
 ```json
 {
@@ -216,14 +216,14 @@ transaction.Outputs.Add(new TxOut()
 }
 ```
 
-**トランザクションインプット**により着目してほしい。そこに**prev\_out**と**scriptSig**がある。  
-**Exercise**：読み進む前に、このコードの中で**scriptSig**が何になるかとどのように取得できるかをつきとめてみよう！
+**トランザクションインプット**により着目してほしい。そこには **prev\_out**と**scriptSig**がある。  
+**Exercise**：読み進む前に、このコードの中で **scriptSig** に何を入れるのか、そして、どのようにそれをコーディングして取得できるかを考えてみよう！
 
 ブロックエクスプローラーで、**prev\_out**の**ハッシュ**をチェックしてみよう。
 
 [http://tbtc.blockr.io/tx/info/e44587cf08b4f03b0e8b4ae7562217796ec47b8c91666681d71329b764add2e3](http://tbtc.blockr.io/tx/info/e44587cf08b4f03b0e8b4ae7562217796ec47b8c91666681d71329b764add2e3)  
-ここで**prev\_out**の数は1つだ。インデックスは0から始まるから、トランザクションの2番目のアウトプットを使いたいということになる。  
-ブロックエクスプローラーの中で相当するアドレスが`mzK6Jy5mer3ABBxfHdcxXEChsn3mkv8qJv`であるとわかり、このようにアドレスからscriptSigが得られる。
+ここで**prev\_out**のnの値(インデックス)は1だ。インデックスは0から始まるから、トランザクションの2番目のアウトプットを使いたいということになる。  
+ブロックエクスプローラーの中で該当するアドレスが`mzK6Jy5mer3ABBxfHdcxXEChsn3mkv8qJv`であるとわかるので、このようにアドレスからscriptSigが得られる。
 
 ```cs
 var address = BitcoinAddress.Create("mzK6Jy5mer3ABBxfHdcxXEChsn3mkv8qJv");
@@ -232,17 +232,17 @@ transaction.Inputs[0].ScriptSig = address.ScriptPubKey;
 
 ### トランザクションに署名する
 
-さあトランザクションを作成したので、署名しなければならない。言い換えれば、私たちはトランザクションインプットの中で参照したトランザクションアウトプットが自分のものであると証明しなければならないのだ。
+さあトランザクションを作成したので、署名しなければならない。言い換えれば、私たちはトランザクションインプットの中で参照した前トランザクションのアウトプットが自分のものであると証明しなければならないのだ。
 
-署名は[複雑](https://en.bitcoin.it/w/images/en/7/70/Bitcoin_OpCheckSig_InDetail.png)だと思われるかもしれないが、単純化できる。
+署名は[複雑](https://en.bitcoin.it/w/images/en/7/70/Bitcoin_OpCheckSig_InDetail.png)だと思われるかもしれないが、我々がそれを簡単にしよう。
 
-最初に**scriptSig**に**入れた値**から、どのようにそれを得たかをコードから振り返ってみよう。思い出してほしい、ブロックエクスプローラーから上記のアドレスをコピー＆ペーストしただろうが、今度はQBitNinjaのtransactionResponseから取得してみよう。
+最初に**scriptSig**に**入れた値**から、どのようにそれを得たかをコードから振り返ってみよう。思い出してほしい、ブロックエクスプローラーから上記のアドレスをコピー＆ペーストしただろうが、今度はビットコインシークレットから取得してみよう。
 
 ```cs
 transaction.Inputs[0].ScriptSig =  bitcoinPrivateKey.ScriptPubKey;
 ```
 
-そして秘密鍵を署名のために与える必要がある。
+そして秘密鍵を署名のためにパラメーターとして与える必要がある。
 
 ```cs
 transaction.Sign(bitcoinPrivateKey, false);
@@ -269,7 +269,7 @@ else
 }
 ```
 
-#### インストールされているBitcoin Coreを使って：
+#### ローカルにインストールされているBitcoin Coreを使って：
 
 ```cs
 using (var node = Node.ConnectToLocal(network)) //Connect to the node
@@ -283,13 +283,12 @@ using (var node = Node.ConnectToLocal(network)) //Connect to the node
 }
 ```
 
-**ここで使っている**コードブロックはノードへのコネクションを閉じるところまで手当てしている。これがすべてだ！
+ここれは*using**コードブロックで、ノードとのコネクションを閉じる処理を、させている。これがすべてだ！
 
-ビットコインネットワークに直接接続することもできるが、信用されているノードに接続することをおすすめする（そのほうがより早くより簡単だ）。
+ビットコインネットワークに直接接続することもできるが、自分の信用できるノードに接続することをおすすめする（そのほうがより早いし、より簡単だ）。
 
 ## より多くの演習が必要なら：
 
 Youtube: [How to make your first transaction with NBitcoin](https://www.youtube.com/watch?v=X4ZwRWIF49w)  
 CodeProject: [Create a Bitcoin transaction by hand.](http://www.codeproject.com/Articles/1151054/Create-a-Bitcoin-transaction-by-hand)  
 CodeProject: [DotNetWallet - Build your own Bitcoin wallet in C\#](https://www.codeproject.com/script/Articles/ArticleVersion.aspx?waid=214550&aid=1115639)
-
