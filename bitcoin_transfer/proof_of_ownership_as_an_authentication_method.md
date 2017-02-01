@@ -13,9 +13,9 @@ Console.WriteLine(signature); // IN5v9+3HGW1q71OqQ1boSZTm0/DCiMpI8E4JB1nD67TCbIV
 これはそんなに難しいことだろうか？
 
 クレイグ・ライトという人物を覚えているかもしれない。彼は自分がサトシ・ナカモトであると私たちに切に信じてほしいと思っていた人物だ。  
-彼はいくつかの簡単なエンジニアリングを使って、一握りの影響力のあるビットコイン業界の人物やジャーナリストを納得させることに成功した。  
-が、幸運なことにデジタル署名はそんなにうまくいかなかった。  
-ジェネシスブロックにある、最初のビットコイントランザクションのアドレスを[インターネット](https://en.bitcoin.it/wiki/Genesis_block)でさくっと見てみよう。[1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa](https://blockchain.info/address/1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa) とある。さあ彼の主張を確かめてみよう。
+彼はあるソーシャルエンジニアリングの方法を使って、一握りの影響力のあるビットコイン業界の人物やジャーナリストを納得させることに成功した。  
+が、幸運なことにデジタル署名に関しては、そんなふうにうまくいかない。  
+ジェネシスブロックにある、最初のビットコイントランザクションのアドレスを[インターネット](https://en.bitcoin.it/wiki/Genesis_block)でさっと見てみよう。[1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa](https://blockchain.info/address/1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa) とある。さあ彼の主張を確かめてみよう。
 
 ```cs
 var message = "I am Craig Wright";
@@ -27,7 +27,7 @@ bool isCraigWrightSatoshi = address.VerifyMessage(message, signature);
 Console.WriteLine("Is Craig Wright Satoshi? " + isCraigWrightSatoshi);
 ```
 
-ネタバレ！結果はfalseになるだろう。
+ネタバレ注意！ブーリアンの値の結果はfalseになるだろう。
 
 ここにコインを移動させずにどうやって特定のアドレスを自分のものだと証明できるかを示す。
 
