@@ -21,7 +21,7 @@ Console.WriteLine(bitcoinPrivateKey);
 Console.WriteLine(address);
 ```
 
-**bitcoinPrivateKey** と **address** の値をメモし、そこにいくらかのコインを送り、そのトランザクションIDをメモしてくれ。（トランザクションIDは、自分のウオレットアプリに（多分）表示される、それか、[blockchain.info](https://blockchain.info/)のようなブロックエクスプローラーで（アドレスから）見つけることができうｒ。）
+**bitcoinPrivateKey** と **address** の値をメモし、そこにいくらかのコインを送り、そのトランザクションIDをメモしてくれ。（トランザクションIDは、自分のウオレットアプリに（多分）表示される、それか、[blockchain.info](https://blockchain.info/)のようなブロックエクスプローラーで（アドレスから）見つけることができる。）
 
 次に、秘密鍵をインポートする。
 
