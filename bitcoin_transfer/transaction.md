@@ -115,7 +115,7 @@ foreach (TxIn input in inputs)
 **TxOut**、**Output**と**out**は同義語である。  
 **OutPoint** と混同してはいけないが、この点については後ほど触れる。
 
-要約すると、あるTxOutとはビットコインの額その受け取り手の**ScriptPubKey**の組み合わせを示す。
+要約すると、あるTxOutとはビットコインの額とその受け取り手の**ScriptPubKey**の組み合わせを示す。
 
 ![](../assets/TxOut.png)  
 上図のとおり、いま対象のトランザクションにある一番最初のScriptPubKeyから21BTCを支払うトランザクションアウトプットを作ってみよう。
@@ -130,11 +130,11 @@ TxOut txOut = new TxOut(twentyOneBtc, scriptPubKey);
 
 ![](../assets/OutPoint.png)
 
-例えば、いま対象にしているトランザクションの13.19683492 BTCのアウトプットのOutpointは以下である。\(4788c5ef8ffd0463422bcafdfab240f5bf0be690482ceccde79c51cfce209edd, 0\).
+例えば、いま対象にしているトランザクションの13.19683492 BTCのアウトプットのOutpointは以下である。\(f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94, 0\).
 
 ```cs
-OutPoint firstOutPoint = spentCoins.First().Outpoint;
-Console.WriteLine(firstOutPoint.Hash); // 4788c5ef8ffd0463422bcafdfab240f5bf0be690482ceccde79c51cfce209edd
+OutPoint firstOutPoint = receivedCoins.First().Outpoint;
+Console.WriteLine(firstOutPoint.Hash); // f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94
 Console.WriteLine(firstOutPoint.N); // 0
 ```
 
@@ -179,7 +179,7 @@ Console.WriteLine(spentAmount.ToDecimal(MoneyUnit.BTC)); // 13.19703492
 
 **Exercise：** 使用したコインを取得したのと同じように、受け取ったコインの総量を取得してみよう。
 
-0.0002 BTC（言い換えれば13.19**70**3492 - 13.19**68**3492）が計上されていないということだ！インプットとアウトプットの差は**トランザクション手数料**あるいは**マイニング手数料**とか言われている。これはマイナーが、与えられたトランザクションをブロックに含めてもらうために渡す手数料である。
+0.0002 BTC（言い換えれば13.19**70**3492 - 13.19**68**3492）が計上されていないということだ！インプットとアウトプットの差は**トランザクション手数料**あるいは**マイニング手数料**と言われている。これはマイナーに、与えられたトランザクションをブロックに含めてもらうために渡す手数料である。
 
 ```cs
 var fee = transaction.GetFee(spentCoins.ToArray());
