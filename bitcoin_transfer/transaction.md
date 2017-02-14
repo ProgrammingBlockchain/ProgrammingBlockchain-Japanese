@@ -14,7 +14,7 @@
 
 > 注釈：Tranaction IDは「SHA256\(SHA256\(txbytes\)\)」と定義できる。
 >
-> 注釈：承認されていないトランザクションを扱うためにTransaction IDを使ってはいけない。Transaction IDは承認される前は改ざんできてしまうからだ。これを「トランザクション展性」という。
+> 注釈：承認されていないトランザクションを扱うときにTransaction IDを使ってはいけない。Transaction IDは承認される前は改ざんできてしまうからだ。これを「トランザクション展性」という。
 
 Blockchain.infoのようなブロックエクスプローラーでトランザクションを閲覧することができる。 [https://blockchain.info/tx/f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94](https://blockchain.info/tx/f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94)  
 しかし開発者としてはおそらく、より簡単にクエリを実行したりパースしたりすることができるサービスがほしいと思うだろう。  
@@ -60,7 +60,7 @@ Console.WriteLine(transactionResponse.TransactionId); // f13dc48fb035bbf0a6e989a
 Console.WriteLine(transaction.GetHash()); // f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94
 ```
 
-**GetTransactionResponse** はトランザクションの中で消費されようとしているインプットの値とか、インプットのScriptPubKeyのようなトランザクションデータに含まれない追加的な情報を含んでいる。
+**GetTransactionResponse** はトランザクションの中で消費されようとしているインプットの値や、インプットのScriptPubKeyのようなトランザクションデータに含まれない追加的な情報を含んでいる。
 
 ここで言及したい重要な部分は **インプット** と **アウトプット** である。1つのScriptPubKeyに13.19683492BTCが送られていることがわかるだろう。
 
@@ -188,3 +188,4 @@ Console.WriteLine(fee);
 
 注意してほしいのだが、**コインベーストランザクション** だけは、そのアウトプットの値がインプットの値より高い。これは事実上コインの創造に相当する。よって定義上、コインベーストランザクションに手数料は存在しない。コインベーストランザクションはすべてのブロックの最初のトランザクションとなっている。  
 コンセンサスルールによって、コインベーストランザクションの中のアウトプットの値の合計は、ブロック内のトランザクション手数料の合計とマイニング報酬の和を超えないようになっている。
+
