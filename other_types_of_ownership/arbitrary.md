@@ -1,16 +1,16 @@
 ## 任意性 {#arbitrary}
 
-ビットコインコアのバージョン0.10から、**RedeemScript**の内容は任意とすることができるようになった。それはビットコインのスクリプト言語を用いて、「所有権」が何を意味するかに関して自分の定義を作ることができるようになったということだ。
+ビットコインコアのバージョン0.10から、**RedeemScript** の内容は任意とすることができるようになった。それはビットコインのスクリプト言語を用いて、「所有権」が何を意味するかに関して自分の定義を作ることができるようになったということだ。
 
-たとえば僕が、UTF8にバイト化された僕の誕生日を知っている人、もしくは秘密鍵：**1KF8kUVHK42XzgcmJF4Lxz4wcL5WDL97PB**を知っている人になら誰でもビットコインをあげられるとしよう。
+たとえば僕が、UTF8にバイト化された僕の誕生日を知っている人、もしくは **1KF8kUVHK42XzgcmJF4Lxz4wcL5WDL97PB** に対応する秘密鍵を知っている人になら、誰でもビットコインをあげられるとしよう。
 
 スクリプト言語の詳細についてはスコープ外だが、いろいろなウェブサイト上で簡単にドキュメントを見つけられるし、スタックベースの言語なのでアセンブラを触っていた人ならだれでも読むことができるはずだ。
 
 > **注釈**：\([nopara73](https://github.com/nopara73)\)僕は [Davide De Rosa's tutorial](http://davidederosa.com/basic-blockchain-programming/bitcoin-script-language-part-one/) が1番楽しいチュートリアルだと思う。
 
-さあ最初は**RedeemScript**を作ってみよう。
+さあ最初は **RedeemScript** を作ってみよう。
 
-> **注釈**：このコードが正しく動くようにするために、**プロジェクト** -&gt; **参照の編集** -&gt; **Sysmtem.Numerics** の順番にクリックして参照を設定しよう。
+> **注釈**：このコードが正しく動くようにするために、**プロジェクト** -&gt; **参照の編集** -&gt; **System.Numerics** の順番にクリックして参照を設定しよう。
 
 ```cs
 BitcoinAddress address = BitcoinAddress.Create("1KF8kUVHK42XzgcmJF4Lxz4wcL5WDL97PB");
@@ -24,9 +24,9 @@ Script redeemScript = new Script(
     "OP_ENDIF");
 ```
 
-この**RedeemScipt**は、**ScriptCoin**を使う2つの方法を示している。2つの方法とは、1つが**birthHash**（僕の誕生日）を導出してくれるデータを知っていることで、もう1つがそのビットコインアドレスを持っていることだ。
+この **RedeemScipt** は、**ScriptCoin** を使う2つの方法を示している。2つの方法とは、1つが **birthHash**（僕の誕生日）を導出してくれるデータを知っていることで、もう1つがそのビットコインアドレスを持っていることだ。
 
-たとえば、この**redeemScript**にビットコインを送ったとしよう。
+たとえば、この **redeemScript** にビットコインを送ったとしよう。
 
 ```cs
 var tx = new Transaction();
@@ -42,7 +42,7 @@ Transaction spending = new Transaction();
 spending.AddInput(new TxIn(new OutPoint(tx, 0)));
 ```
 
-最初の選択肢は僕の誕生日を知っていて、**scriptSig**の中でそれを証明することだ。
+最初の選択肢は僕の誕生日を知っていて、**scriptSig** の中でそれを証明することだ。
 
 ```cs
 ////Option 1 : Spender knows my birthdate
@@ -53,10 +53,10 @@ Script scriptSig = new Script(pushBirthdate, selectIf, redeemBytes);
 spending.Inputs[0].ScriptSig = scriptSig;
 ```
 
-**scriptSig**の中で、**OP\_1**を入れたから、**RedeemScript**に**OP\_IF**を挿入していることがわかる。  
-このような**scriptSig**を生成するテンプレートはないが、手動でP2SHの**scriptSig**を作る方法がわかるだろう。
+**scriptSig** の中で、**OP\_1** を入れたから、条件判定の結果、**RedeemScript** の **OP\_IF** の節に入ることがわかる。  
+このような **scriptSig** を生成するテンプレートはないが、手動でP2SHの **scriptSig** を作る方法がわかるだろう。
 
-そして**scriptSig**が**scriptPubKey**の所有権を証明することを確認できる。
+そして **scriptSig** が **scriptPubKey** の所有権を証明することを確認できる。
 
 ```cs
 //Verify the script pass
@@ -68,7 +68,7 @@ var result = spending
 Console.WriteLine(result); // True
 ```
 
-このビットコインを使用する2番目の方法は、**1KF8kUVHK42XzgcmJF4Lxz4wcL5WDL97PB**（秘密鍵）を持っていることを証明することだ。
+このビットコインを使用する2番目の方法は、**1KF8kUVHK42XzgcmJF4Lxz4wcL5WDL97PB** が自分のビットコインアドレスであることを証明することだ。
 
 ```
 ////Option 2 : Spender knows my private key
@@ -82,7 +82,7 @@ scriptSig = p2pkhProof + selectIf + redeemBytes;
 spending.Inputs[0].ScriptSig = scriptSig;
 ```
 
-そして秘密鍵を持っていることを証明する。
+以下でビットコインアドレスが自分のものであることの証明の結果を確認できる。
 
 ```cs
 //Verify the script pass
@@ -94,6 +94,3 @@ result = spending
 Console.WriteLine(result); // True
 ///////////
 ```
-
-
-

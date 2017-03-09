@@ -1,20 +1,20 @@
 ## P2W\* over P2SH {#p2w-over-p2sh}
 
-ビットコインの要求をスクリプト化するための**witness scriptPubKey**を使うことが魅力的だと思われてきている一方で、実のところ最近のウォレットのほとんどが、P2PKHあるいはP2SHしかサポートしていない。
+ビットコインの要求をスクリプト化するための **witness scriptPubKey** を使うことが魅力的だと思われてきている一方で、実際最近のウォレットのほとんどは、P2PKHあるいはP2SHしかサポートしていない。
 
-古いソフトウェアが共存している間、segwitの利点を利用するためには、P2SH上でP2Wを使うことができる。古いBitcoinCoreを使っているノードにとっては、それは普通のP2SHを利用した支払いと捉える。
+古いソフトウェアが共存している間、segwitの利点を利用するために、P2SH上でP2Wを使うことができる。古いBitcoinCoreを使っているノードにとっては、それは普通のP2SHを利用した支払いと捉える。
 
-どんな**P2W\***でも**P2SH上のP2W\***に変換できる。以下の手順を踏む。
+どんな **P2W\*** でも **P2SH上のP2W\*** に変換できる。以下の手順を踏む。
 
-1. **ScriptPubKey**を、同じ内容を示すP2SHで置き換える
-2. 変換前の**ScriptPubKey**はトランザクションインプットの**scriptSig**の中に1つだけのプッシュとして記録される。
+1. **ScriptPubKey** を、同じ内容を示すP2SHで置き換える
+2. 変換前の **ScriptPubKey** はトランザクションインプットの **scriptSig** の中に1つだけのプッシュとして記録される。
 3. すべての他のデータはトランザクションインプットのwitnessに示される。
 
 心配しないでほしいのだが、もしこれが複雑だと思われたとしても、TransactionBuilderによって効果的にトランザクションを生成できる。
 
-P2SH上のP2WPKH、または略称の**P2SH\(P2WPKH\)**の例を見てみよう。
+P2SH上のP2WPKH、または略称では **P2SH\(P2WPKH\)** だが、例を見てみよう。
 
-**ScriptPubKey**を表示する。
+**ScriptPubKey** を表示する。
 
 ```cs
 var key = new Key();
@@ -23,7 +23,7 @@ Console.WriteLine(key.PubKey.WitHash.ScriptPubKey.Hash.ScriptPubKey);
 
 > 注意：これはとても畏怖の念を感じさせるコードだ。
 
-そうするとよく親しみのあるP2SHの**scriptPubKey**が表示される。
+そうするとよく親しみのあるP2SHの **scriptPubKey** が表示される。
 
 ```
 OP_HASH160 b19da5ca6e7243d4ec8eab07b713ff8768a44145 OP_EQUAL
@@ -44,15 +44,15 @@ OP_HASH160 b19da5ca6e7243d4ec8eab07b713ff8768a44145 OP_EQUAL
   ],
 ```
 
-**scriptSig**は先ほど出てきたScriptPubKey（言い換えると、**key.PubKey.WitHash.ScriptPubKey**）のP2SH化されたredeem scriptのプッシュでしかない。witnessは完全に通常の**P2WPKH**による支払いと同じになっている。
+**scriptSig** は先ほど出てきたScriptPubKey（言い換えると、**key.PubKey.WitHash.ScriptPubKey**）のP2SH化されたredeem scriptのプッシュでしかない。witnessは完全に通常の **P2WPKH** による支払いと同じになっている。
 
-NBitcoinでは、**P2SH\(P2WPKH\)**に署名することは、ScriptCoinを用いた通常のP2SHとほぼ同じようなものだ。
+NBitcoinでは、**P2SH\(P2WPKH\)** に署名することは、ScriptCoinを用いた通常のP2SHとほぼ同じようなものだ。
 
-同じ原則に則って、**P2SH\(P2WSH\)**がどのように見えるかを見てみよう。この場合、2つの異なるredeem scriptを扱わなければならない。トランザクションインプットの**scriptSig**に入れる必要のある**P2SHのredeem script**と、witnessに入れる必要のある**P2WSHのredeem script**だ。
+同じ原則に則って、**P2SH\(P2WSH\)** がどのように見えるかを見てみよう。この場合、2つの異なるredeem scriptを扱わなければならない。トランザクションインプットの **scriptSig** に入れる必要のある **P2SHのredeem script** と、witnessに入れる必要のある **P2WSHのredeem script** だ。
 
-最初のルールにもとづいて、**scriptPubKey**を表示してみよう。
+最初のルールにもとづいて、**scriptPubKey** を表示してみよう。
 
-1. **ScriptPubKey**をP2SHと同等の情報で置き換える。
+1. **ScriptPubKey** をP2SHと同等の情報で置き換える。
 
    ```cs
    var key = new Key();
@@ -65,11 +65,11 @@ NBitcoinでは、**P2SH\(P2WPKH\)**に署名することは、ScriptCoinを用�
 
    > **注意**：理解できるから、ここでキレて回線切断しないで！
 
-2. 置き換え前の**ScriptPubKey**はトランザクションインプットの**scriptSig**にたった1つのプッシュとして記録される。
+2. 置き換え前の **ScriptPubKey** はトランザクションインプットの **scriptSig** にたった1つのプッシュとして記録される。
 
 3. すべての他のデータはトランザクションインプットのwitnessにプッシュされる。
 
-項番3の「**他のデータ**」というのは、P2WSHにおける支払いの文脈では、**P2WSHのredeem script**のプッシュに続く、**P2WSHのredeem script**のパラメータを意味する。
+項番3の「**他のデータ**」というのは、P2WSHにおける支払いの文脈では、**P2WSHのredeem script** のプッシュに続く、**P2WSHのredeem script** のパラメータを意味する。
 
 ```json
 "in": [
@@ -84,16 +84,15 @@ NBitcoinでは、**P2SH\(P2WPKH\)**に署名することは、ScriptCoinを用�
   ],
 ```
 
-要約すると、P2SHのRedeem Scriptは、通常のP2WSHによる支払いとしてP2WSHのscriptPubKeyを得るためにハッシュされる。そして通常のP2SHの支払いとして、P2WSHのscriptPubKeyはハッシュされて置き換わり、まさにP2SHを作るために使われる。
+要約すると、P2SHのRedeem Scriptがハッシュされて、通常のP2WSHによる支払いとしてP2WSHのscriptPubKeyが得られる。そして通常のP2SHの支払いとして、P2WSHのscriptPubKeyはハッシュされて置き換わり、まさにP2SHを作るために使われる。
 
 もし、P2SH/P2WSH/P2SH\(P2WSH\)/P2SH\(P2WPKH\)が複雑に思えていても、怖がることはない。  
-NBitcoinでは、**すべての支払い形式において**、**ScriptCoin**を作ることだけしか求めない。それは**P2SH**の章で説明したとおりで、P2WSHかP2SHのRedeem ScriptとScriptPubKeyを与えてやれば作ることができる。
+NBitcoinでは、**これらP2SHが関連するすべての支払い形式において**、**ScriptCoin** を作ることだけしか求めない。それは **P2SH** の章で説明したとおりで、P2WSHかP2SHのRedeem ScriptとScriptPubKeyを与えてやれば、作ることができる。
 
-NBitcoinに関して言えば、使いたいと思っているトランザクションアウトプットを使い、正しいredeem scriptがあれば、前章の「**マルチシグ」**の章で説明されたように、そして次の「**Using the TransactionBuilder**」の章でも説明するが、**TransactionBuilder**が正しい署名の仕方を把握してくれる。
+NBitcoinに関して言えば、使いたいと思っているトランザクションアウトプットを使い、正しいredeem scriptがあれば、前章の「**マルチシグ**」の章で説明されたように、そして次の「**TransactionBuilderを使ってみる**」の章でも説明するが、**TransactionBuilder** が正しい署名の仕方を把握してくれる。
 
 ![](../assets/ScriptCoin.png)
 
 **P2SH/P2WSH/P2SH\(P2WSH\)/P2SH\(P2WPKH\)それぞれに互換性があるのだ。**
 
 P2WPKHまたはP2WSHの支払いの例をさらに見たい場合は、[http://n.bitcoin.ninja/checkscript](http://n.bitcoin.ninja/checkscript)で見られる。
-
