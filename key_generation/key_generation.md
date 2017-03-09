@@ -876,7 +876,7 @@ The **Receiver** can then get the private key of the address with his **Spend Ke
 <!--
 The code explaining how, as a Scanner, to scan a transaction and how, as a Receiver, to uncover the private key, will be explained later in the **TransactionBuilder** (Other types of ownership) part.
 -->
-スキャナーとして、どうやってトランザクションをスキャンするか、そして受領者としてどうやって秘密鍵を見つけるかについてのコードは、あとの **トランザクションビルダー** の章で説明する。  
+スキャナーとして、どうやってトランザクションをスキャンするか、そして受領者としてどうやって秘密鍵を見つけるかについてのコードは、あとの **TransactionBuilderを使ってみる** の章で説明する。  
 
 <!--
 It should be noted that a **StealthAddress** can have multiple **spend pubkeys**, in which case, the address represent a multi sig.
