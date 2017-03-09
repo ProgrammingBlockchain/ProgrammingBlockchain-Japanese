@@ -2,7 +2,7 @@
 
 ### P2PKH - 要点の振り返り
 
-**ビットコインアドレス**は**公開鍵のハッシュ**であることを学んだ。
+**ビットコインアドレス** は **公開鍵のハッシュ** であることを学んだ。
 
 ```cs
 var publicKeyHash = new Key().PubKey.Hash;
@@ -11,14 +11,14 @@ Console.WriteLine(publicKeyHash); // 41e0d7ab8af1ba5452b824116a31357dc931cf28
 Console.WriteLine(bitcoinAddress); // 171LGoEKyVzgQstGwnTHVh3TFTgo5PsqiY
 ```
 
-また、ブロックチェーン上には、**ビットコインアドレス**というようなものはないということも学んだ。ブロックチェーンでは **ScriptPubKey** を用いて受け取り手を認識し、**ScriptPubKey** は、ビットコインアドレスから生成できる。
+また、ブロックチェーン上には、**ビットコインアドレス** というようなものはないということも学んだ。ブロックチェーンでは **ScriptPubKey** を用いて受け取り手を認識し、**ScriptPubKey** は、ビットコインアドレスから生成できる。
 
 ```cs
 var scriptPubKey = bitcoinAddress.ScriptPubKey;
 Console.WriteLine(scriptPubKey); // OP_DUP OP_HASH160 41e0d7ab8af1ba5452b824116a31357dc931cf28 OP_EQUALVERIFY OP_CHECKSIG
 ```
 
-逆も、然りであり、ScriptPubKeyからアドレスを取得できる。
+逆も然りであり、ScriptPubKeyからアドレスを取得できる。
 
 ```cs
 var sameBitcoinAddress = scriptPubKey.GetDestinationAddress(Network.Main);
@@ -26,7 +26,7 @@ var sameBitcoinAddress = scriptPubKey.GetDestinationAddress(Network.Main);
 
 ### P2PK\(Pay to Public Key\)
 
-しかし、かならずしも 全ての**ScriptPubKey** がビットコインアドレスを表しているというわけではない。たとえばジェネシスと呼ばれているビットコインブロックチェーンの最初のトランザクションがそうだ。
+しかし必ずしも全ての **ScriptPubKey** がビットコインアドレスを表しているというわけではない。たとえばジェネシスと呼ばれているビットコインブロックチェーンの最初のトランザクションがそうだ。
 
 ```cs
 Block genesisBlock = Network.Main.GetGenesis();
@@ -87,18 +87,18 @@ Pay to public key : 02fb8021bc7dedcc2f89a67e75cee81fedb8e41d6bfa6769362132544dfd
 Pay to public key hash : OP_DUP OP_HASH160 0ae54d4cec828b722d8727cb70f4a6b0a88207b2 OP_EQUALVERIFY OP_CHECKSIG
 ```
 
-これら2つの支払い方法は**P2PK** \(pay to public key\)や**P2PKH** \(pay to public key hash\)と言われている。
+これら2つの支払い方法は **P2PK** \(pay to public key\)や **P2PKH** \(pay to public key hash\)と言われている。
 
 サトシは後に、以下の2つの理由でP2PKではなくP2PKHを使うことを決めた。
 
-* 楕円曲線暗号（**公開鍵**や**秘密鍵** に使われれている暗号）が、楕円曲線上の離散対数問題を解くための改良されたショアのアルゴリズムによって解かれてしまうから。簡単に言うとそれが意味するのは、理論上、量子コンピューターがそう遠くない未来に **公開鍵から秘密鍵を導出できてまう** ということだ。ビットコインを使うときだけ公開鍵を公開することによって、そういった攻撃を無力化することができる（一度使われたビットコインアドレスを二度と使わない前提だが）。
-* ハッシュ歯サイズがより小さくなるので（20バイトになる）、印刷するにも小さくできるしQRコードのような小さい記録媒体に埋め込むことがより簡単になる。
+* 楕円曲線暗号（**公開鍵**や**秘密鍵** に使われれている暗号）が、楕円曲線上の離散対数問題を解くために改良されたショアのアルゴリズムによって解かれてしまうから。簡単に言うとそれが意味するのは、理論上、量子コンピューターがそう遠くない未来に **公開鍵から秘密鍵を導出できてしまう** ということだ。ビットコインを使うときだけ公開鍵を公開することによって、そういった攻撃を無力化することができる（一度使われたビットコインアドレスを二度と使わない前提だが）。
+* ハッシュサイズがより小さくなるので（20バイトになる）、印刷するにも小さくできるしQRコードのような小さい記録媒体に埋め込むことがより簡単になる。
 
 最近ではP2PKを直接使う理由がないが、後に述べるP2SHと組み合わせてまだ使われている。
 
-> （[議論](https://www.reddit.com/r/Bitcoin/comments/4isxjr/petition_to_protect_satoshis_coins/d30we6f/)） 初期に使われてしまっているP2PKトランザクションの問題をこのまま放置しておくと、ビットコインの価値に深刻な影響をおよぼすようになるだろう。
+> （[議論](https://www.reddit.com/r/Bitcoin/comments/4isxjr/petition_to_protect_satoshis_coins/d30we6f/)） 初期に使われてしまっているP2PKトランザクションの問題をこのまま放置しておくと、ビットコインの価値に深刻な影響を及ぼすようになるだろう。
 
 ### Exercise
 
 \([nopara73](https://github.com/nopara73)\) この章を読んでいる間、略語（P2PK、P2PKH、P2Wなど）がとてもややこしいことに気づいた。  
-僕はそこで、レッスンを進める中でその略語に遭遇する都度、十分にその言葉を発音することを自分に強制した。そうすると突然すべてがわかるようになった。あなたにも同じことをするのをおすすめする。
+僕はそこで、レッスンを進める中でその略語に遭遇する都度、何回もその言葉を発音することにした。そうすると突然すべてがわかるようになった。あなたにも同じことをするのをおすすめする。
