@@ -2,7 +2,7 @@
 
 前の章で見たとおり、マルチシグは簡単にコードを書いて動かせはするが、P2SHを使わないと、顧客に対してマルチシグの`scriptPubKey`へビットコインを支払うようにお願いする方法がなかった。`BitcoinAddress`を手渡しできる限りは簡単にできるが。
 
-**P2SH**または**Pay To Script Hash**は`scriptPubKey`を、それがどれだけ複雑だとしても、簡単な`BitcoinScriptAddress`に表現する方法である。
+**P2SH** または **Pay To Script Hash** は`scriptPubKey`を、それがどれだけ複雑だとしても、簡単な`BitcoinScriptAddress`に表現する方法である。
 
 前の章ではこのマルチシグをこのように作っていた。
 
@@ -24,7 +24,7 @@ Console.WriteLine(scriptPubKey);
 
 複雑だと思わないだろうか？
 
-その代わりにその`scriptPubKey`が**P2SH**への支払いだとどのように見えるかを見てみよう。
+その代わりにその`scriptPubKey`が **P2SH** への支払いだとどのように見えるかを見てみよう。
 
 ```cs
 Key bob = new Key();
@@ -61,13 +61,13 @@ Console.WriteLine(redeemScript.Hash.GetAddress(Network.Main)); // 3E6RvwLNfkH6Py
 
 このようなアドレスはどのクライアントのウォレットも認識する。そのウォレットが「マルチシグ」とはなにかを理解していないとしてもだ。
 
-P2SHを使う支払いでは、ハッシュを得た`scriptPubKey`のことを**Redeem Script**と呼んでいる。
+P2SHを使う支払いでは、ハッシュを得た`scriptPubKey`のことを **Redeem Script** と呼んでいる。
 
 ![](../assets/RedeemScript.png)
 
-支払う人は**Redeem Scriptのハッシュ**についてだけ知っていれば良いから、**Redeem Script**を知ることはない。だから今のケースでは支払い者はビットコインを送金した先がボブ、サトシまたはアリスのマルチシグだということさえ知らないのだ。
+支払う人は **Redeem Scriptのハッシュ** についてだけ知っていれば良いから、**Redeem Script** を知ることはない。だから今のケースでは支払い者はビットコインを送金した先がボブ、サトシまたはアリスのマルチシグだということさえ知らないのだ。
 
-このようなトランザクションに署名することは前の章（Bitcoin transferの章）で実践したものと似ている。1つだけちがいがあるのは、トランザクションを**TransactionBuilder**で生成するときは**Redeem Script**を生成しなければならないということだ。
+このようなトランザクションに署名することは前の章（Bitcoin transferの章）で実践したものと似ている。1つだけちがいがあるのは、トランザクションを **TransactionBuilder** で生成するときは **Redeem Script** を生成しなければならないということだ。
 
 マルチシグのP2SHがコインを受け取って、`received`というトランザクションにあると想定しよう。
 
@@ -98,4 +98,3 @@ ScriptCoin coin = received.Outputs.AsCoins().First()
 ![](../assets/ScriptCoin.png)
 
 あとに続くトランザクションを生成して署名するコードは、マルチシグそのものを使ったトランザクションを説明した前章のコードとまったく同じである。
-

@@ -1,7 +1,7 @@
 ## マルチシグ {#multi-sig}
 
 ビットコインに対して所有権を共有することができる。  
-そのためには**m-of-n multi sig**を表す`scriptPubKey`を作る。つまり、ビットコインを使うためには与えられた**n**個の異なる公開鍵に対して、**m**個の秘密鍵で署名する必要があるということだ。
+そのためには **m-of-n multi sig** を表す`scriptPubKey`を作る。つまり、ビットコインを使うためには与えられた **n** 個の異なる公開鍵に対して、**m** 個の秘密鍵で署名する必要があるということだ。
 
 ビットコインを使うためにはボブ、アリスそしてサトシのうち2人が署名する必要のある、マルチシグを作ってみよう。
 
@@ -36,7 +36,7 @@ var received = new Transaction();
 received.Outputs.Add(new TxOut(Money.Coins(1.0m), scriptPubKey));
 ```
 
-ボブとアリスはニコに彼のサービスへの対価として1.0BTCを支払うことに同意した。ということでまず、彼らはトランザクションから、すでに受け取った`Coin`を取得する。
+ボブとアリスはニコに、彼のサービスへの対価として1.0BTCを支払うことに同意した。ということでまず、彼らはトランザクションから、すでに受け取った`Coin`を取得する。
 
 ```cs
 Coin coin = received.Outputs.AsCoins().First();
@@ -44,12 +44,12 @@ Coin coin = received.Outputs.AsCoins().First();
 
 ![](../assets/coin.png)
 
-それから`TransactionBuilder`を使って**まだ署名されていないトランザクション**を生成する。
+それから`TransactionBuilder`を使って **まだ署名されていないトランザクション** を生成する。
 
 ```cs
 BitcoinAddress nico = new Key().PubKey.GetAddress(Network.Main);
 TransactionBuilder builder = new TransactionBuilder();
-Transaction unsigned = 
+Transaction unsigned =
     builder
       .AddCoins(coin)
       .Send(nico, Money.Coins(1.0m))
@@ -118,11 +118,10 @@ Console.WriteLine(fullySigned);
 
 こうしてトランザクションはネットワークに送信できる準備ができた。
 
-ビットコインネットワークがここに説明したとおりマルチシグをサポートしているとしても、1つ質問するに値することがある。「マルチシグの`ScriptPubKey`が、以前の章で見てきたようなビットコインアドレスを使う程度の簡単さで表されていないが、ビットコインに対して知見を持ち合わせていない人に対して、どのようにサトシ、アリスまたはボブのマルチシグに対して支払うようお願いできるのだろうか？」
+ビットコインネットワークが、ここに説明したとおりマルチシグをサポートしているとしても、1つ質問するに値することがある。「マルチシグの`ScriptPubKey`が、以前の章で見てきたようなビットコインアドレスを使う程度の簡単さで表されていないが、ビットコインに対して知見を持ち合わせていない人に対して、どのようにサトシ、アリスまたはボブのマルチシグに対して支払うようお願いできるのだろうか？」
 
 `scriptPubKey`をビットコインアドレスと同じくらい簡単に、そしてコンパクトに表現できるとしたら、素晴らしいことだと思わないだろうか？
 
 そう。これは可能で、**Bitcoin Script Address**、またの名をPay to Script Hash\(P2SH\)と呼ばれている。
 
-最近では、ここで見た**Pay To Multi Sigそのもの**や**P2PKそのもの**は、説明したとおりに直接使われることは決してなく、**Pay To Script Hash**による支払いにラップされている。
-
+最近では、ここで見た **Pay To Multi Sigそのもの** や **P2PKそのもの** は、説明したとおりに直接使われることは決してなく、**Pay To Script Hash** による支払いにラップされている。

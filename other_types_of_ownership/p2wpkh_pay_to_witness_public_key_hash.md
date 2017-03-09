@@ -1,6 +1,6 @@
 ## P2WPKH \(Pay to Witness Public Key Hash\) {#p2wpkh-pay-to-witness-public-key-hash}
 
-2015年、Peter Wuilleが**Segregated Witness**、略して**segwit**と呼ばれる新しい機能をビットコインに提案した。基本的には、Segregated Witnessは所有権の証明を、トランザクションの**scriptSig**から、トランザクションインプットの**witness**と呼ばれる新しい部分に移すものだ。
+2015年、Peter Wuilleが **Segregated Witness**、略して **segwit** と呼ばれる新しい機能をビットコインに提案した。基本的には、Segregated Witnessは所有権の証明を、トランザクションの **scriptSig** から、トランザクションインプットの **witness** と呼ばれる新しい部分に移すものだ。
 
 この新しいスキームを使うことにはいくつかの理由があるが、ここには要点だけ述べるので詳細はこのリンクを見てほしい：[https://bitcoincore.org/en/2016/01/26/segwit-benefits/](https://bitcoincore.org/en/2016/01/26/segwit-benefits/)
 
@@ -14,7 +14,7 @@
 
 ![](../assets/segwit.png)
 
-署名はP2PKHのと同じ情報をもつが、scriptSigにではなく、witnessエリアに配置される。しかし、`scriptPubKey` は
+署名はP2PKHでの支払いと同じ情報をもつが、scriptSigにではなく、witnessエリアに配置される。しかし、`scriptPubKey` は
 
 ```
 OP_DUP OP_HASH160 0067c8970e65107ffbb436a49edd8cb8eb6b567f OP_EQUALVERIFY OP_CHECKSIG
@@ -26,12 +26,12 @@ OP_DUP OP_HASH160 0067c8970e65107ffbb436a49edd8cb8eb6b567f OP_EQUALVERIFY OP_CHE
 0 0067c8970e65107ffbb436a49edd8cb8eb6b567f
 ```
 
-アップグレードしていないノードにとっては、これはスタックに対しての2つのプッシュとしてしか見えない。これはどういうことかというと、どんな`scriptSig` でもそれらのビットコインを使えてしまうということだ。だから署名がなくても古いノードはどのトランザクションを有効とみなしてしまう。新しいノードは最初のプッシュを**witness バージョン**と解釈し、2番目のプッシュを**witness プログラム**とみなす。
+アップグレードしていないノードにとっては、これはスタックに対しての2つのプッシュとしてしか見えない。これはどういうことかというと、どんな`scriptSig` でもそれらのビットコインを使えてしまうということだ。だから署名がなくても古いノードはどのトランザクションを有効とみなしてしまう。新しいノードは最初のプッシュを **witness バージョン** と解釈し、2番目のプッシュを **witness プログラム** とみなす。
 
 しかし新しいノードはトランザクションを検証するために署名を必要とする。
 
 **NBitcoinでは、P2WPKHのアウトプットを消費することは普通のP2PKHを使用する方法と同じである。  
-公開鍵から P2WHPKHで使う **`ScriptPubKey`** を取得するために、**`PubKey.Hash`** でなく**`PubKey.WitHash`**を使う。**
+公開鍵から P2WHPKHで使う** `ScriptPubKey` **を取得するために、** `PubKey.Hash` **でなく** `PubKey.WitHash` **を使う。**
 
 ```cs
 var key = new Key();
@@ -44,7 +44,7 @@ Console.WriteLine(key.PubKey.WitHash.ScriptPubKey);
 0 0067c8970e65107ffbb436a49edd8cb8eb6b567f
 ```
 
-このようなビットコインを使用するための署名は「Using the `TransactionBuilder` part」で説明するが、P2PKHのアウトプットに署名するコードと何も変わらない。
+このようなビットコインを使用するための署名は「`TransactionBuilder`を使ってみる」で説明するが、P2PKHのアウトプットに署名するコードと何も変わらない。
 
 `witness`はP2PKHの`scriptSig`と同様で、`scriptSig`は空になる。
 
