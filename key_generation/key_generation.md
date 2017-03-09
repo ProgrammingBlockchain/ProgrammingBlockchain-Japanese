@@ -30,12 +30,12 @@ For a computer, being random is hard. But the biggest issue is that it is imposs
 <!---
 If malware modifies your PRNG (and so, can predict the numbers you will generate), you won’t see it until it is too late.
 --->
-もし、マルウェアがあなたのPRNGを改ざんした場合（なので、あなたが生成する数値を予測できる）、手遅れになって初めて改ざんされたことに気づくことになる。
+もし、マルウェアがあなたのPRNGを改ざんした場合（そうすると、あなたが生成する数値を予測できる）、手遅れになって初めて改ざんされたことに気づくことになる。
 
 <!---
 It means that a cross platform and naïve implementation of PRNG (like using the computer’s clock combined with CPU speed) is dangerous. But you won’t see it until it is too late.
 --->
-これは、クロスプラットフォーム、もしくは、ネイティブ実装のPRNG（コンピュータのクロックとCPUのスピードの組み合わせを利用）は危険であることを意味する。しかし、手遅れになるまで、それを知る由はない。  
+これは、クロスプラットフォームもしくはネイティブ実装のPRNG（コンピュータのクロックとCPUのスピードの組み合わせを利用）は危険であることを意味する。しかし、手遅れになるまで、それを知る由はない。  
 
 <!---
 For performance reasons, most PRNG works the same way: a random number, called **Seed**, is chosen, then a predictable formula generates the next numbers each time you ask for it.
@@ -45,14 +45,14 @@ For performance reasons, most PRNG works the same way: a random number, called *
 <!---
 The amount of randomness of the seed is defined by a measure we call **Entropy**, but the amount of **Entropy** also depends on the observer.
 --->
-シードのランダムさの度合は、**エントロピー** と呼ばれる計測値で定義されるが、エントロピー度は、観測者にも依存する。  
+シードのランダムさの度合は、**エントロピー** と呼ばれる計測値で定義されるが、エントロピー度は、監視している人にも依存する。  
 
 <!---
 Let’s say you generate a seed from your clock time.  
 And let’s imagine that your clock has 1ms of resolution. (Reality is more ~15ms.)
 --->
 例えば、あなたが自分のクロック時間をもとにシード値を生成したとしよう。  
-そして、クロックが１ミリ秒の精度を持ったとしよう。（現実には１５ミリ秒以上。）  
+そして、クロックが1ミリ秒の精度を持ったとしよう。（現実には15ミリ秒以上。）  
 
 <!---
 If your attacker knows that you generated the key last week, then your seed has  
@@ -69,7 +69,7 @@ For such attacker, the entropy is LOG(604800000;2) = 29.17 bits.
 <!---
 And enumerating such number on my home computer took less than 2 seconds. We call such enumeration “brute forcing”.
 --->
-その程度の回数だと順番に処理するとして、私の自宅のコンピュータで処理させても２秒以下しかかからない。このように順番に全可能性を当たってみる処理のことを”総当たり式”と呼ぶ。  
+その程度の回数だと順番に処理するとして、私の自宅のコンピュータで処理させても2秒以下しかかからない。このように順番に全可能性を当たってみる処理のことを”総当たり式”と呼ぶ。  
 
 <!---
 However let’s say, you use the clock time + the process id for generating the seed.  
@@ -89,7 +89,7 @@ Now, let’s add the time when I turned on my computer, assuming the attacker kn
 Now the attacker needs to enumerate 604800000 \* 1024 \* 86400000 = 5,35088E+19 possibilities.  
 However, keep in mind that if the attacker infiltrate my computer, he can get this last piece of info, and bring down the number of possibilities, reducing entropy.
 --->
-これで、攻撃者は、604800000 \* 1024 \* 86400000 = 5,35088E+19　通りの可能性に当たる必要がある。  
+これで、攻撃者は、604800000 \* 1024 \* 86400000 = 5,35088E+19通りの可能性に当たる必要がある。  
 しかし、覚えておいてほしいのは、もし攻撃者が私のコンピューターに侵入可能であれば、この追加の情報を取得できるので、可能性の数を減らし、エントロピーを下げることができる。  
 
 <!---
@@ -100,12 +100,12 @@ Entropy is measured by **LOG(possibilities;2)** and so LOG(5,35088E+19; 2) = 65 
 <!---
 Is it enough? Probably. Assuming your attacker does not know more information about the realm of possibilities.
 --->
-これは十分だろうか。攻撃者が可能性を左右する情報をこれ以上もってないと仮定するならば、多分そうだろう。  
+これは十分だろうか。攻撃者が可能性を左右する情報をこれ以上持っていないと仮定するならば、多分そうだろう。  
 
 <!---
 But since the hash of a public key is 20 bytes = 160 bits, it is smaller than the total universe of the addresses. You might do better.
 --->
-しかし、公開鍵のハッシュ値は、20バイト = 160ビット ということは、すべてのアドレスの数よりまだ小さい。もう少し頑張れるかもしれない。  
+しかし、公開鍵のハッシュ値が20バイト = 160ビット ということは、すべてのアドレスの数よりまだ小さい。もう少し頑張れるかもしれない。  
 
 <!---
 > **Note:** Adding entropy is linearly harder, cracking entropy is exponentially harder
@@ -120,7 +120,7 @@ An interesting way of generating entropy quickly is by asking human intervention
 <!---
 If you don’t completely trust the platform PRNG (which is [not so paranoic](http://android-developers.blogspot.fr/2013/08/some-securerandom-thoughts.html)), you can add entropy to the PRNG output that NBitcoin is using.  
 --->
-もし、あなたがプラットフォームのPRNGを完全に信頼できない（それはそれほど[おかしな事ではない](http://android-developers.blogspot.fr/2013/08/some-securerandom-thoughts.html)）なら、NBitcoinが使用する、PRNGからの出力にたいしてエントロピーを足すことができる。
+もし、あなたがプラットフォームのPRNGを完全に信頼できない（それはそれほど[おかしな事ではない](http://android-developers.blogspot.fr/2013/08/some-securerandom-thoughts.html)）なら、NBitcoinが使用するPRNGからの出力に対して、エントロピーを足すことができる。
 
 ```cs
 RandomUtils.AddEntropy("hello");
@@ -146,7 +146,7 @@ Then when you generate a new number:
 <!---
 However, what is most important is not the number of possibilities. It is the time that an attacker would need to successfully break your key. That’s where KDF enters the game.
 --->
-しかし、もっとも重要なことは、可能性の数の多さではなく、攻撃者が、あなたの鍵を破ることに成功するのに、どれくらいの時間が必要かということである。そこで、KDFの登場である。
+しかし、最も重要なことは、可能性の数の多さではなく、攻撃者があなたの鍵を破ることに成功するのに、どれくらいの時間が必要かということである。そこでKDFの登場である。
 
 <!---
 KDF, or **Key Derivation Function** is a way to have a stronger key, even if your entropy is low.
@@ -157,8 +157,8 @@ KDF もしくは **鍵導出関数(Key Derivation Function)** が、たとえエ
 Imagine that you want to generate a seed, and the attacker knows that there are 10.000.000 possibilities.  
 Such a seed would be normally cracked pretty easily.
 --->
-シード値を生成してみたいと想像してみよう、そして攻撃者が１千万個の可能性があることをしっていたとする。  
-そのようなシードは通常、クラックして破るのは非常に簡単だ。  
+シード値を生成してみたいと想像してみよう。そして攻撃者が1千万個の可能性があることを知っていたとする。  
+そのようなシードであれば通常、クラックして破るのは非常に簡単だ。  
 <!---
 But what if you could make the enumeration slower?  
 A KDF is a hash function that waste computing resources on purpose.  
@@ -176,7 +176,7 @@ RandomUtils.AddEntropy(derived);
 <!---
 Even if your attacker knows that your source of entropy is 5 letters, he will need to run Scrypt to check a possibility, which take 5 seconds on my computer.
 --->
-もし仮に、攻撃者があなたのエントロピーの元が５つの文字だと知っていたとしても、Scryptを実行して合っているか可能性を確認しないといけない。私のコンピューターでは５秒かかる。  
+もし仮に、攻撃者があなたのエントロピーの元が５つの文字だと知っていたとしても、Scryptを実行して合っているか可能性を確認しないといけない。私のコンピューターでは5秒かかる。  
 
 <!--
 The bottom line is: There is nothing paranoid into distrusting a PRNG, and you can mitigate an attack by both adding entropy and also using a KDF.  
@@ -186,18 +186,18 @@ The bottom line is: There is nothing paranoid into distrusting a PRNG, and you c
 Keep in mind that an attacker can decrease entropy by gathering information about you or your system.  
 If you use the timestamp as entropy source, then he can decrease the entropy by knowing you generated the key last week, and that you only use your computer between 9am and 6pm.
 -->
-覚えておいてほしいのは、攻撃者は、あなた、もしくは、あなたのシステムの情報を集めることでエントロピーを減らすことができるということだ。  
-もし、タイムスタンプを元にエントロピーを作るとして、あなたが先週キーを生成し、しかも午前９時から午後６時までしかコンピューターを使用しないということを攻撃者が知ってしまうとエントロピーを減らすことになる。  
+覚えておいてほしいのは攻撃者は、あなたもしくはあなたのシステムの情報を集めることで、エントロピーを減らすことができるということだ。  
+もし、タイムスタンプを元にエントロピーを作るとして、あなたが先週キーを生成し、しかも午前９時から午後６時までしかコンピューターを使用しないということを攻撃者が知ってしまうと、エントロピーを減らすことになる。  
 
 <!--
 In the previous part I talked quickly about a special KDF called **Scrypt.** As I said, the goal of a KDF is to make brute force costly.  
 -->
-前に、特別なKDFである**Scrypt**について話した。そこで言った通り、KDFの目的は 総当たり攻撃をコストがかかるものにすることだ。  
+前段で、特別なKDFである**Scrypt**について話した。そこで言ったとおり、KDFの目的は 総当たり攻撃をコストがかかるものにすることだ。  
 
 <!--
 So it should be no surprise for you that a standard already exists for encrypting your private key with a password using a KDF. This is
 -->
-なので、秘密鍵をKDFを使ってパスワードで暗号化する標準の方法がすでにあるとしても、別に驚くことではないだろう。それが、[BIP38](http://www.codeproject.com/Articles/775226/NBitcoin-Cryptography-Part)だ。  
+なので、KDFを使ってパスワードで、秘密鍵を暗号化する標準の方法がすでにあるとしても、別に驚くことではないだろう。それが、[BIP38](http://www.codeproject.com/Articles/775226/NBitcoin-Cryptography-Part)だ。  
 
 ![](../assets/EncryptedKey.png)  
 
@@ -216,7 +216,7 @@ Console.ReadLine();
 Such encryption is used in two different cases:  
 -->
 
-このような暗号化は、２つのケースで使用される。:  
+このような暗号化は、2つのケースで使用される。:  
 
 <!--
 *   You don not trust your storage provider (they can get hacked)  
@@ -228,7 +228,7 @@ Such encryption is used in two different cases:
 <!--
 If you own your storage, then encrypting at the database level might be enough.  
 -->
-もし、自分の保存先を持っているならデータベースが提供する暗号化で十分だろう。  
+もし、自分のストレージを持っているならデータベースが提供する暗号化で十分だろう。  
 
 <!--
 Be careful if your server takes care of decrypting the key, an attacker might attempt to DDOS your server by forcing it to decrypt lots of keys.
@@ -238,7 +238,7 @@ Be careful if your server takes care of decrypting the key, an attacker might at
 <!--攻撃者が
 Delegate decryption to the ultimate user when you can.  
 -->
-可能であるならば、復号化は最終ユーザーに移譲すべきである。  
+可能であるならば、復号化は最終利用者に移譲すべきである。  
 
 <!--
 ## Like the good ol’ days {#like-the-good-ol-days}
@@ -250,7 +250,7 @@ First, why generating several keys?
 The main reason is privacy. Since you can see the balance of all addresses, it is better to use a new address for each transaction.  
 -->
 まず最初に、なぜ複数の鍵を生成しなければならないのだろうか。  
-一番の理由はプライバシーである。すべてのアドレスの残高は、だれでも見ることができるのだから、取引ごとに新しいアドレスを使うほうが良い。  
+一番の理由はプライバシーである。すべてのアドレスの残高を、だれでも見ることができるのだから、取引ごとに新しいアドレスを使う方が良い。  
 
 <!--
 However, in practice, you can also generate keys for each contact which makes this a simple way to identify your payer without leaking too much privacy.  
@@ -267,7 +267,7 @@ var privateKey = new Key()
 <!--
 However, you have two problems with that:  
 -->
-しかし、これには、２つの問題がある:
+しかし、これには、2つの問題がある:
 
 <!--
 *   All backups of your wallet that you have will become outdated when you generate a new key.  
@@ -279,38 +279,38 @@ However, you have two problems with that:
 <!--
 If you are developing a web wallet and generate key on behalf of your users, and one user get hacked, she will immediately start suspecting you.  
 -->
-もし、ウェブウォレットを開発していて、ユーザーのために、キーを生成している場合、あるユーザーの鍵が破られたとすると、即座にその人は、あなたを疑い始めるだろう。
+もし、ウェブウォレットを開発していて、ユーザーのためにキーを生成している場合、あるユーザーの鍵が破られたとすると、即座にその人はあなたを疑い始めるだろう。
 
 <!--
 ## BIP38 (Part 2) {#bip38-part-2}
 -->
-## BIP38 (パート２) {#bip38-part-2}
+## BIP38 (パート2) {#bip38-part-2}
 <!--
 We already saw BIP38 for encrypting a key, however this BIP is in reality two ideas in one document.  
 -->
-我々はBIP38をすでに見ているが、実は、このBIPは、２つのアイデアを１つにしたものだ。  
+我々はBIP38をすでに見ているが、実は、このBIPは、2つのアイディアを1つにしたものだ。  
 
 <!--
 The second part of the BIP, shows how you can delegate Key and Address creation to an untrusted peer. It will fix one of our concerns.  
 -->
-２つめについての部分では、どうやって鍵とアドレスの生成を信頼できない相手に委譲することができるかを書いている。ので、２つの懸念点のうちの１つを解決する。  
+2つ目については、どうやって鍵とアドレスの生成を、信頼できない相手に委譲することができるかを書いている。なので、2つの懸念点のうちの1つを解決する。  
 
 <!--
 **The idea is to generate a PassphraseCode to the key generator. With this PassphraseCode, he will be able to generate encrypted keys on your behalf, without knowing your password, nor any private key. **
 -->
-**そのアイデアとは、鍵生成をする人へ渡すパスフレーズコードを作るというものだ。このパスフレーズコードで、その相手は、あなたのために、暗号化された鍵を作ることができ、しかも、あなたのパスワードも秘密鍵も知ることはない。**
+**そのアイディアとは、鍵生成をする人へ渡すパスフレーズコードを作るというものだ。このパスフレーズコードで、その相手はあなたのために、暗号化された鍵を作ることができ、しかも、あなたのパスワードも秘密鍵も知ることはない。**
 
 この **パスフレーズコード** は WIFフォーマットにして鍵生成する人に渡すことができる。
 
 <!--
 > **Tip**: In NBitcoin, all types prefixed by “Bitcoin” are Base58 (WIF) data.  
 -->
-> **ティップス**: NBitcoinでは、Bitcoinが頭についている型は全て Base58 （WIF）フォーマットのデータである。
+> **注釈**: NBitcoinでは、Bitcoinが頭についている型は全て Base58 （WIF）フォーマットのデータである。
 
 <!--
 So, as a user that wants to delegate key creation, first you will create the **PassphraseCode**.
 -->
-なので、鍵の生成を委譲したいユーザーとして、最初に、 **パスフレーズコード** を作ることになる。  
+なので、鍵の生成を委譲したいユーザーとして最初に、 **パスフレーズコード** を作ることになる。  
 
 ![](../assets/PassphraseCode.png)  
 
@@ -320,12 +320,12 @@ var passphraseCode = new BitcoinPassphraseCode("my secret", Network.Main, null);
 <!--
 **You then give this passphraseCode to a third party key generator.**
 -->
-**そしてこのパスフレーズコードを外部の鍵生成してくれる人に渡す。**
+**そしてこのパスフレーズコードを鍵を生成するサードパーティに渡す。**
 
 <!--
 The third party will then generate new encrypted keys for you.
 -->
-その鍵生成者は、暗号化された鍵をあなたに作ってくれる。  
+そのサードパーティは、暗号化された鍵をあなたに作ってくれる。  
 
 ![](../assets/PassphraseCodeToEncryptedKeys.png)  
 
@@ -335,35 +335,35 @@ EncryptedKeyResult encryptedKeyResult = passphraseCode.GenerateEncryptedSecret()
 <!--
 This **EncryptedKeyResult** has lots of information:  
 -->
-この **暗号化された鍵**　は、たくさんの情報を持っている。  
+この **暗号化された鍵** は、たくさんの情報を持っている。  
 
 ![](../assets/EncryptedKeyResult.png)  
 
 <!--
 First: the **generated bitcoin address**,  
 -->
-まずは、生成されたビットコインアドレス  
+まずは、生成されたビットコインアドレス。  
 ```cs
 var generatedAddress = encryptedKeyResult.GeneratedAddress; // 14KZsAVLwafhttaykXxCZt95HqadPXuz73
 ```  
 <!--
 then the **EncryptedKey** itself, (as we have seen in the previous, **Key Encryption** lesson),  
 -->
-それから、暗号化された鍵 自身、（前にやった **鍵の暗号化** のレッスンでみたように）
+それから、暗号化された鍵自体（前段で述べた **鍵の暗号化** のレッスンでみたように）。
 ```cs
 var encryptedKey = encryptedKeyResult.EncryptedKey; // 6PnWtBokjVKMjuSQit1h1Ph6rLMSFz2n4u3bjPJH1JMcp1WHqVSfr5ebNS
 ```  
 <!--
 and last but not the least, the **ConfirmationCode**, so that the third party can prove that the generated key and address correspond  to your password.
 -->
-そして、最後だけれども、重要である **確認コード**。これにより、その第三者は、生成された鍵とアドレスが あなたのパスワードに対応していることを証明することができる。
+そして、最後だけれども重要である **確認コード**。これにより、その第三者は、生成された鍵とアドレスが あなたのパスワードに対応していることを証明することができる。
 ```cs
 var confirmationCode = encryptedKeyResult.ConfirmationCode; // cfrm38VUcrdt2zf1dCgf4e8gPNJJxnhJSdxYg6STRAEs7QuAuLJmT5W7uNqj88hzh9bBnU9GFkN
 ```  
 <!--
 As the owner, once you receive this information, you need to check that the key generator did not cheat by using **ConfirmationCode.Check**, then get your private key with your password:
 -->
-あなたは所有者として、この情報を手に入れたらすぐ、**ConfirmationCode.Check** を使って、鍵作成者が、インチキをしていないか確認する必要がある。そして、パスワードをつかって秘密鍵を取得する。
+あなたは所有者として、この情報を手に入れたらすぐ、**ConfirmationCode.Check** を使って、鍵作成者がインチキをしていないか確認する必要がある。そして、パスワードを使って秘密鍵を取得する。
 
 ```cs
 Console.WriteLine(confirmationCode.Check("my secret", generatedAddress)); // True
@@ -380,7 +380,7 @@ So, we have just seen how the third party can generate encrypted key on your beh
 <!--
 However, one problem remains:
 -->
-しかし、まだ１つ問題が残っている:  
+しかし、まだ1つ問題が残っている:  
 
 <!--
 *   All backups of your wallet that you have will become outdated when you generate a new key.
@@ -390,7 +390,7 @@ However, one problem remains:
 <!--
 BIP 32, or Hierarchical Deterministic Wallets (HD wallets) proposes another solution, and is more widely supported.
 -->
-BIP 32、もしくは 階層的決定性ウォレット(HDウォレット)は、別の解決方法を提案している。そして、それは広くサポートされた方法だ。
+BIP 32、もしくは 階層的決定性ウォレット(HDウォレット)は、別の解決方法を提案しており、その方がより広くサポートされた方法だ。
 
 <!--
 ## HD Wallet (BIP 32) {#hd-wallet-bip-32}
@@ -399,7 +399,7 @@ BIP 32、もしくは 階層的決定性ウォレット(HDウォレット)は、
 <!--
 Let’s keep in mind the problems that we want to resolve:
 -->
-それでは、我々が解決したい問題を心にとめておこう:
+それでは、我々が解決したい問題を再度心にとめておこう:
 
 <!--
 *   Prevent outdated backups
@@ -411,14 +411,14 @@ Let’s keep in mind the problems that we want to resolve:
 <!--
 A “Deterministic” wallet would fix our backup problem. With such wallet, you would have to save only the seed. From this seed, you can generate the same series of private keys over and over.  
 -->
-決定性ウォレットは、バックアップの問題を解決するだろう。そのようなウォレットでは、シード値だけは保存しなければならない。そして、このシードから、一連の秘密鍵を何度も生成することができる。  
+決定性ウォレットは、バックアップの問題を解決するだろう。そのようなウォレットでは、シード値だけは保存しなければならない。そしてこのシードから、一連の秘密鍵を何度も生成することができる。  
 
 <!--
 This is what the “Deterministic” stands for.  
 As you can see, from the master key, I can generate new keys:  
 -->
 これが、"決定性"の意味するところである。  
-以下のように、マスターキーから、新しい鍵をどんどん生成できる。
+以下のように、マスターキーから新しい鍵をどんどん生成できる。
 
 ```cs
 ExtKey masterKey = new ExtKey();
@@ -447,7 +447,7 @@ You only need to save the **masterKey**, since you can generate the same suite o
 <!--
 As you can see, these keys are **ExtKey** and not **Key** as you are used to. However, this should not stop you since you have the real private key inside:  
 -->
-見ればわかるように、これらの鍵は、 **ExtKey** であり、使い慣れた **Key** ではない。しかし、内部に本物の秘密鍵をもっているので、使うのを躊躇する必要はない。  
+見ればわかるように、これらの鍵は、 **ExtKey** であり、使い慣れた **Key** ではない。しかし、内部に本物の秘密鍵を内包しているので、使うのを躊躇する必要はない。  
 
 ![](../assets/ExtKey.png)  
 <!--
@@ -472,12 +472,12 @@ The **base58** type equivalent of **ExtKey** is called **BitcoinExtKey**.
 <!--
 But how can we solve our second problem: delegating address creation to a peer that can potentially be hacked (like a payment server)?
 -->
-しかし、どうやって２つ目の問題を解決するのだろう: 潜在的にハッキングされる可能性のある相手（支払サーバー）にアドレスの作成を委譲するには？
+しかし、どうやって2つ目の問題を解決するのだろう: 潜在的にハッキングされる可能性のある相手（支払いサーバー）にアドレスの作成を委譲するには？
 
 <!--
 The trick is that you can “neuter” your master key, then you have a public (without private key) version of the master key. From this neutered version, a third party can generate public keys without knowing the private key.
 -->
-トリックは、マスターキーの無性化ができるということである。そして、秘密鍵をもたない公開可能なバージョンのマスターキーを持つことができる。無性化されたマスターキーから、第三者機関は、秘密鍵なしに公開鍵を作成できるのだ。  
+トリックは、マスターキーの無性化ができるということである。そして、秘密鍵を持たない公開可能なバージョンのマスターキーを持つことができる。無性化されたマスターキーから、第三者機関は、秘密鍵なしに公開鍵を作成できるのだ。  
 
 ```cs
 ExtPubKey masterPubKey = masterKey.Neuter();
@@ -498,7 +498,7 @@ PubKey 4 : xpub67uQd5a6WCY6JddPfiPKdrR49KYEuXUwwJJsL5rWGDDQkpPctdkrwMhXgQ2zWopsS
 <!--
 So imagine that your payment server generates pubkey1, you can get the corresponding private key with your private master key.
 -->
-では、支払サーバーが公開鍵1を生成したと想定してみよう。すると対応した秘密鍵を秘密のマスターキーを使って得ることができる。  
+では、支払いサーバーが公開鍵1を生成したと想定してみよう。すると対応した秘密鍵を、秘密のマスターキーを使って得ることができる。  
 ```cs
 masterKey = new ExtKey();
 masterPubKey = masterKey.Neuter();
@@ -521,7 +521,7 @@ Expected address : 1Jy8nALZNqpf4rFN9TWG2qXapZUBvquFfX
 <!--
 **ExtPubKey** is similar to **ExtKey** except that it holds a **PubKey** and not a **Key**.
 -->
-**ExtPubKey** は **ExtKey** に似ている。が、違いは、 **PubKey** （公開鍵）を保持しいるが **Key** （秘密鍵）は保持していない。  
+**ExtPubKey** は **ExtKey** に似ている。が、両者の違いは、 **PubKey** （公開鍵）を保持しているが **Key** （秘密鍵）は保持していない。  
 
 
 
@@ -530,22 +530,22 @@ Expected address : 1Jy8nALZNqpf4rFN9TWG2qXapZUBvquFfX
 <!--
 Now we have seen how Deterministic keys solve our problems, let’s speak about what the “hierarchical” is for.
 -->
-ここまで、決定性鍵が、どうやって問題を解決してくれるのかを見てきた。では、次は、 **階層的** が何を意味するかについて議論してみよう。  
+ここまで、決定性鍵がどうやって問題を解決してくれるのかを見てきた。では、次は、 **階層的** が何を意味するかについて議論してみよう。  
 
 <!--
 In the previous exercise, we have seen that by combining master key + index we could generate another key. We call this process **Derivation**, master key is the **parent key**, and the generated key is called **child key**.
 -->
-前の演習では、マスターキーとインデックス番号の組み合わせにより 鍵を生成するのを見てきた。このプロセスを **派生** と呼び、マスターキーは **親の鍵** で、生成される鍵は、**子供の鍵** である。  
+前段の演習では、マスターキーとインデックス番号の組み合わせにより 鍵を生成するのを見てきた。このプロセスを **派生** と呼び、マスターキーは **親の鍵** で、生成される鍵は、**子供の鍵** である。  
 
 <!--
 However, you can also derivate children from the child key. This is what the “hierarchical” stands for.
 -->
-しかし、子供の鍵から派生した さらに子供の鍵を複数作ることができる。これが **階層的** の意味である。  
+しかし、子供の鍵から派生した、さらに子供の鍵を複数作ることができる。これが **階層的** の意味である。  
 
 <!--
 This is why conceptually more generally you can say: Parent Key + KeyPath => Child Key  
 -->
-なので、概念的かつ一般的に、 こうやって言うことができる: 親の鍵 ＋ 鍵の階層パス → 子供の鍵  
+なので、概念的かつ一般的にこのように言うことができる: 親の鍵 ＋ 鍵の階層パス → 子供の鍵  
 
 ![](../assets/Derive1.png)  
 
@@ -554,7 +554,7 @@ This is why conceptually more generally you can say: Parent Key + KeyPath => Chi
 <!--
 In this diagram, you can derivate Child(1,1) from parent in two different way:  
 -->
-この図に書かれているように、親から ２つのやり方で子供(1,1)を派生させることができる。
+この図に書かれているように、親から2つのやり方で子供(1,1)を派生させることができる。
 ```cs
 ExtKey parent = new ExtKey();
 ExtKey child11 = parent.Derive(1).Derive(1);
@@ -581,7 +581,7 @@ It works the same for **ExtPubKey**.
 <!--
 Why do you need hierarchical keys? Because it might be a nice way to classify the type of your keys for multiple accounts. More on [BIP44](https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki).
 -->
-なぜ 階層的な鍵が必要になるのだろう？ なぜなら、自分の複数の口座のための鍵を目的に別に分類するのは、良い方法だと思われるからだ。  詳しくは、[BIP44](https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki)。
+なぜ 階層的な鍵が必要になるのだろう？なぜなら、自分の複数の口座のための鍵を目的に別に分類するのは、良い方法だと思われるからだ。詳しくは、[BIP44](https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki)。
 
 <!--
 It also permits segmenting account rights across an organization.
@@ -596,14 +596,14 @@ Imagine you are CEO of a company. You want control over all wallets, but you don
 <!--
 So your first idea would be to generate one hierarchy for each department.  
 -->
-すると最初に思いつくアイデアは、１つの部署に１つの階層を生成することだろう。  
+すると最初に思いつくアイディアは、1つの部署に1つの階層を生成することだろう。  
 
 ![](../assets/CeoMarketingAccounting.png)   
 
 <!--
 However, in such case, **Accounting** and **Marketing** would be able to recover the CEO’s private key.
 -->
-しかし、そのような場合、**経理部** と **マーケティング部**  はCEOの秘密鍵を 逆生成できるかもしれない。  
+しかし、この場合、**経理部** と **マーケティング部**  はCEOの秘密鍵を逆生成できるかもしれない。  
 
 <!--
 We define such child keys as **non-hardened**.  
@@ -631,12 +631,12 @@ CEO recovered: xprv9s21ZrQH143K2XcJU89thgkBehaMqvcj4A6JFxwPs6ZzGYHYT8dTchd87TC4N
 <!--
 In other words, a **non-hardened key** can “climb” the hierarchy.**Non-hardened keys** should only be used for categorizing accounts that belongs to a **single control**.
 -->
-別の言い方でいうと、 **非強化鍵** は　階層を "登る" ことができる。**非強化鍵** は単一管理されるタイプの口座にだけ使用されるべきでる。  
+別の言い方でいうと、 **非強化鍵** は階層を"登る"ことができる。**非強化鍵** は単一管理されるタイプの口座にだけ使用されるべきでる。  
 
 <!--
 So in our case, the CEO should create a **hardened key**, so the accounting department will not be able to climb.
 -->
-なので、我々のケースでは、CEOは 強化鍵を作成しなければならない。そうすれば、経理部は、階層を登って秘密鍵を見つけることはできない。  
+なので、我々のケースでは、CEOは **強化鍵** を作成しなければならない。そうすれば、経理部は、階層を登って秘密鍵を見つけることはできない。  
 
 ```cs
 ExtKey ceoKey = new ExtKey();
@@ -660,12 +660,12 @@ var hardened = new KeyPath("1/2/3'");
 <!--
 So let’s imagine that the Accounting Department generates 1 parent key for each customer, and a child for each of the customer’s payments.
 -->
-では、経理部は、顧客ごとに１つの親鍵を生成したと想定してみよう。そして、顧客からの支払いごとにその子供鍵を使う。  
+では経理部は、顧客ごとに1つの親鍵を生成したと想定してみよう。そして、顧客からの支払いごとにその子供鍵を使う。  
 
 <!--
 As the CEO, you want to spend the money on one of these addresses. Here is how you would proceed.  
 -->
-CEOであるあなたは、そのうちの１つのアドレスから支払をしたいとした場合、こうやって行う。  
+CEOであるあなたは、そのうちの1つのアドレスから支払いたい場合、こうやって行う。  
 
 ```cs
 ceoKey = new ExtKey();
@@ -684,7 +684,7 @@ ExtKey paymentKey = ceoKey.Derive(path);
 <!--
 As you have seen, generating HD keys is easy. However, what if we want an easy way to transmit such key by telephone or hand writing?
 -->
-これまで見たように、HD鍵を作成することは簡単である。しかし、もし、そんな鍵を電話や手書きで人に伝える簡単な方法があればどうだろうか？  
+これまで見たように、HD鍵を作成することは簡単である。しかしもし、そんな鍵を電話や手書きで人に伝える簡単な方法があればどうだろうか？  
 
 <!--
 Cold wallets like Trezor, generate the HD Keys from a sentence that can easily be written down. They call such sentence “the seed” or “mnemonic”. And it can eventually be protected by a password or a PIN.  
@@ -711,7 +711,7 @@ Console.WriteLine(mnemo);
 Now, if you have the mnemonic and the password, you can recover the **hdRoot** key.  
 -->
 
-ここで、もし、ネモニックとパスワードを持っていたら、 **階層ルート** の鍵を見つけることができる。  
+ここでもし、ネモニックとパスワードを持っていたら、 **階層ルート** の鍵を見つけることができる。  
 
 ```cs
 mnemo = new Mnemonic("minute put grant neglect anxiety case globe win famous correct turn link",
@@ -731,7 +731,7 @@ Currently supported **wordlist** are, English, Japanese, Spanish, Chinese (simpl
 <!--
 This name is unfortunate since there is nothing dark about it, and it attracts unwanted attention and concerns. Dark Wallet is a practical solution that fix our two initial problems:
 -->
-この名前がついたのは、不運である。なぜなら、まったくもってこのウォレットは、ダークではないが、不要な注目や懸念を生んでしまっている。ダークウォレットは、我々の最初の２つの問題に対する実践的な解決策である。  
+この名前がついたのは不運である。なぜなら、まったくもってこのウォレットはダークではないのに、不要な注目や懸念を生んでしまっている。ダークウォレットは、我々の最初の2つの問題に対する実践的な解決策である。  
 
 <!--
 *   Prevent outdated backups
@@ -743,27 +743,27 @@ This name is unfortunate since there is nothing dark about it, and it attracts u
 <!--
 But it has a bonus killer feature.
 -->
-しかし、このウオレットは、ボーナス的なすごい機能をもつのだ。  
+しかし、このウォレットは、ボーナス的なすごい機能をもつのだ。  
 
 <!--
 You have to share only one address with the world (called **StealthAddress**), without leaking any privacy.
 -->
-あなたは、唯一（ **ステルスアドレス** と呼ばれる）アドレスだけを、ほかの人たちにシェアするだけでよいのだ。よって、プライバシーを失うことがない。  
+あなたは、唯一の（ **ステルスアドレス** と呼ばれる）アドレスだけを、ほかの人たちにシェアするだけでよいのだ。よって、プライバシーを失うことがない。  
 
 <!--
 Let’s remind us that if you share one **BitcoinAddress** with everybody, then all can see your balance by consulting the blockchain… That’s not the case with a **StealthAddress**.
 -->
-ここで思い出してほしいのは、１つの **ビットコインアドレス** をみんなと共有すると、すべての人たちは、ブロックチェーンをみれば、あなたの持っているビットコインの残高を知ることができる。しかし、**ステルスアドレス** を使えば、それには当たらない。  
+ここで思い出してほしいのは、1つの **ビットコインアドレス** をみんなと共有すると、すべての人たちは、ブロックチェーンをみれば、あなたの持っているビットコインの残高を知ることができるということだ。しかし、**ステルスアドレス** を使えば、それには当たらない。  
 
 <!--
 This is a real shame it was labeled as **dark** since it solves partially the important problem of privacy leaking caused by the pseudo-anonymity of Bitcoin. A better name would have been: **One Address**.
 -->
-このウォレットがダークと命名されたのは、本多王に残念なことである。なぜかというと、それは 部分的にでもビットコインの疑似匿名性が原因として起きるプライバシー問題を解決するからである。よりよい名前は、**ワン・アドレス** だったかもしれない。  
+このウォレットがダークと命名されたのは、本当に残念なことである。なぜかというと、それは部分的にでもビットコインの疑似匿名性が原因として起きる、プライバシー問題を解決するからである。より良い名前があるとしたら、**ワン・アドレス** だったかもしれない。  
 
 <!--
 In Dark Wallet terminology, here are the different actors:
 -->
-ダークウォレットの用語を使うと、以下のように 参加者を表現する:
+ダークウォレットの用語を使うと、以下のように参加者を表現する:
 
 <!--
 *   The **Payer** knows the **StealthAddress** of the **Receiver**
@@ -771,13 +771,13 @@ In Dark Wallet terminology, here are the different actors:
 *   **Scanner** knows the **Scan Key**, a secret that allows him to detect the transactions those belong to the **Receiver**.
 -->
 *   **支払者** は、 **受領者** の **ステルスアドレス** を知っている。
-*   **受領者** は、 **スペンド鍵** を知っていて、その秘密のコードで、それにより彼が受け取るコインを消費することができる。
+*   **受領者** は、 **スペンド鍵** を知っていて、その秘密のコードで彼が受け取るコインを消費することができる。
 *   **スキャナー** は、**スキャン鍵** を知っていて、 その秘密のコードで、 その **受領者** に属する取引を特定することができる。
 
 <!--
 The rest is operational details.Underneath, this **StealthAddress** is composed of one or several **Spend PubKey** (for multi sig), and one **Scan PubKey**.  
 -->
-以降は、操作の詳細になる。 内部的には、このステルスアドレスは、１つもしくは複数(複数署名の場合)の **スペンド公開鍵** と１つの **スキャン公開鍵** で構成されている。
+以降は、操作の詳細になる。内部的には、このステルスアドレスは、1つもしくは複数(複数署名の場合)の **スペンド公開鍵** と1つの **スキャン公開鍵** で構成されている。
 
 ![](../assets/StealthAddress.png)  
 
@@ -796,7 +796,7 @@ BitcoinStealthAddress stealthAddress
 <!--
 The **payer**, will take your **StealthAddress**, generate a temporary key called **Ephem Key** and will generate a **Stealth Pub Key**, from which the Bitcoin address to which the payment will be done is generated.  
 -->
-**支払者** は、あなたの **ステルスアドレス** を使って、一時的に使用する **エフェム鍵** を作成し、そこから **ステルス公開鍵** を生成する。それから、支払が行われるビットコインアドレスが作成される。  
+**支払者** は、あなたの **ステルスアドレス** を使って、一時的に使用する **エフェム鍵** を作成し、そこから **ステルス公開鍵** を生成する。それから、支払いが行われるビットコインアドレスが作成される。  
 
 ![](../assets/EphemKey.png)
 
@@ -821,7 +821,7 @@ Console.WriteLine(transaction);
 <!--
 The creation of the **EphemKey** being an implementation detail, you can omit it, NBitcoin will generate one automatically:  
 -->
-**エフェム鍵** の生成の実装については、詳細すぎるので、無視してよいだろう。NBitcoinが自動的に生成してくれる:  
+**エフェム鍵** の生成の実装については詳細すぎるので、無視して良いだろう。NBitcoinが自動的に生成してくれる:  
 
 ```cs
 Transaction transaction = new Transaction();
@@ -864,7 +864,7 @@ The **Scanner** knowing the **StealthAddress** and the **Scan Key** can recover 
 <!--
 Then the scanner checks if one of the output of the transaction correspond to such address. If it is, then **Scanner** notifies the **Receiver** about the transaction.
 -->
-それから **スキャナー** は、トランザクションのアウトプットの１つがそのアドレスに対するものかをチェックし、もし、そうであるなら **スキャナー** は、 **受領者** にたいしてトランザクションについて通知する。  
+それから **スキャナー** は、トランザクションのアウトプットの1つがそのアドレスに対するものかをチェックし、もしそうであるなら **スキャナー** は、 **受領者** に対してトランザクションについて通知する。  
 
 <!--
 The **Receiver** can then get the private key of the address with his **Spend Key**.  
@@ -876,17 +876,17 @@ The **Receiver** can then get the private key of the address with his **Spend Ke
 <!--
 The code explaining how, as a Scanner, to scan a transaction and how, as a Receiver, to uncover the private key, will be explained later in the **TransactionBuilder** (Other types of ownership) part.
 -->
-スキャナーとして、どうやってトランザクションをスキャンするか。レシーバーとして、どうやって秘密鍵を見つけるか、についてのコードは、あとの **トランザクションビルダー** の説明する。  
+スキャナーとして、どうやってトランザクションをスキャンするか、そして受領者としてどうやって秘密鍵を見つけるかについてのコードは、あとの **トランザクションビルダー** の章で説明する。  
 
 <!--
 It should be noted that a **StealthAddress** can have multiple **spend pubkeys**, in which case, the address represent a multi sig.
 -->
-ここで知ってほしいのは、**ステルスアドレス** は、複数の **スペンド公開鍵** を持つことができることだ。それを使うばあい、そのアドレスは、マルチシグ用（複数人による署名）のアドレスということになる。  
+ここで知ってほしいのは、**ステルスアドレス** は、複数の **スペンド公開鍵** を持つことができることだ。それを使う場合、そのアドレスはマルチシグ用（複数人による署名）のアドレスということになる。  
 
 <!--
 One limit of Dark Wallet is the use of **OP_RETURN**, so we can’t easily embed arbitrary data in the transaction as we have done for in Bitcoin Transfer. (Current bitcoin rules allows only one OP_RETURN of 40 bytes, soon 80, per transaction)  
 -->
-ダークウォレットの唯一の制限事項は、**OP_RETURN** を使用するということである。すなわち、トランザクションに任意のデータを埋め込むことが簡単にできない。(現在のビットコインのルールでは。OP_RETURNには４０バイトしか許されていない、もうすぐ１トランザクションに対して８０バイトになる予定だ。)
+ダークウォレットの唯一の制限事項は、**OP_RETURN** を使用するということである。すなわち、トランザクションに任意のデータを埋め込むことが簡単にはできない。(現在のビットコインのルールでは、OP_RETURNには40バイトしか許されていない。もうすぐ1トランザクションに対して80バイトになる予定だ。)
 
 <!--
 > ([Stackoverflow](http://bitcoin.stackexchange.com/a/29648/26859)) As I understand it, the "stealth address" is intended to address a very specific problem. If you wish to solicit payments from the public, say by posting a donation address on your website, then everyone can see on the block chain that all those payments went to you, and perhaps try to track how you spend them.  
@@ -899,12 +899,12 @@ So the only difference with stealth addresses is essentially to move the chore o
 >
 It doesn't provide "100% anonymity". The fundamental anonymity weakness of Bitcoin remains - that everyone can follow the chain of payments, and if you know something about one transaction or the parties to it, you can deduce something about where those coins came from or where they went.
 -->
-> ([Stackoverflow](http://bitcoin.stackexchange.com/a/29648/26859)) 私が理解するに、"ステルスアドレス"とは、ある特定の問題に対応するために作られた。一般の人々からお金を集めたいと思ったら、例えば寄付のためのアドレスを自分のウエブサイトに載せるとか、そうすると、ブロックチェーン上ですべての支払いの情報が見られてしまう。もしかしたら、あなたがそのアドレスから何に支払ったかを追跡されるだろう。
+> ([Stackoverflow](http://bitcoin.stackexchange.com/a/29648/26859)) 私が理解するに、"ステルスアドレス"とは、ある特定の問題に対応するために作られた。一般の人々からお金を集めたいと思ったら、例えば寄付のためのアドレスを自分のウェブサイトに載せるとかいうようにだが、そうすると、ブロックチェーン上ですべての支払いの情報が見られてしまう。もしかしたら、あなたがそのアドレスから何に支払ったかを追跡されるだろう。
 >
-ステルスアドレスを使うケースでは、支払者にユニークなアドレスを生成するように依頼する。そうすることで、そのトランザクションにくっついた追加情報を使うだけで、対応した秘密鍵を推測することができる。そして、あなたは、１つのステルスアドレスをウェブサイトに公開したにもかかわらず、ブロックチェイン上では、すべて違ったアドレスに支払が行われることになり、それぞれアドレスの関連性を見つけることは不可能だ。（もちろん支払者は、支払先アドレスをしっているので。そこからどこにお金を送ったかは見ることができるが、ほかの支払者には、それはみることができない。）
+ステルスアドレスを使うケースでは、支払者にユニークなアドレスを生成するように依頼する。そうすることで、そのトランザクションに内包された追加情報を使うだけで、対応した秘密鍵を推測することができる。そしてあなたは、1つのステルスアドレスをウェブサイトに公開したにもかかわらず、ブロックチェーン上では、すべて違ったアドレスに支払いが行われることになり、それぞれアドレスの関連性を見つけることは不可能だ。（もちろん支払者は、支払先アドレスを知っているので、そこからどこにお金を送ったかは見ることができるが、ほかの支払者には、それを見ることができない。）
 >
-しかし、ほかの方法でもどうような効果を得ることはできる:それぞれの支払者にたいして、固有の別々のアドレスを渡せばよい。１つの公開アドレスをウェブサイト載せる代わりに、例えば、押されるごとの新しいアドレスを生成し、秘密鍵を保存するようなボタンを置いておくとか、事前に用意しておいた公開アドレスのリストから次々とアドレスを選んで使うようなボタンを配置する（もちろん秘密鍵は、安全な場所に保存しておく）。ステルスアドレスを使用するときと同様に、 支払はすべて個別のアドレスへ行われ、アドレス間の相関は全くないし、１りの支払者が、別の支払情報を見ることもできない。
+しかし、ほかの方法でも同様の効果を得ることはできる:それぞれの支払者に対して、固有の別々のアドレスを渡せばよい。1つの公開アドレスをウェブサイトに載せる代わりに、例えば押されるごとに新しいアドレスを生成し、秘密鍵を保存するようなボタンを置いておくとか、事前に用意しておいた公開アドレスのリストから次々とアドレスを選んで使うようなボタンを配置するとか（もちろん秘密鍵は、安全な場所に保存しておく）。ステルスアドレスを使用するときと同様に、支払いはすべて個別のアドレスへ行われ、アドレス間の相関は全くないし、一人の支払者が、別の支払情報を見ることもできない。
 >
-なので、ステルスアドレスを使用することとの唯一の違いは、サーバーが面倒なアドレス作成の処理をしなくてよいということである。実は、ある意味でステルスアドレスを使用するのは悪いことかもしれない。なぜなら、ステルスアドレスを使用する人が少ないため、もしあなたがステルスアドレスを使用してると知られてしまうと、ステルスアドレスのトランザクションは、あなたのものであると分かってしまうからだ。
+なので、ステルスアドレスを使用することとの唯一の違いは、サーバーが面倒なアドレス作成の処理をしなくて良いということである。実は、ある意味でステルスアドレスを使用するのは悪いことかもしれない。なぜなら、ステルスアドレスを使用する人が少ないため、もしあなたがステルスアドレスを使用していると知られてしまうと、ステルスアドレスのトランザクションは、あなたのものであると分かってしまうからだ。
 >
-この方法は"１００％の匿名性"を提供しない。ビットコインの基本的な匿名性に対する弱さは、残ってしまう。すなわち、だれでも、支払のいチェーン、つながりを見ることができるということだ。なので、もし、あなたが、あるトランザクションそのもの、もしくは、そのトランザクションの関係者だと知るならば、そのビットコインがどこからきて、どこへいったのを見ることができるのだ。
+この方法は"100%の匿名性"を提供しない。ビットコインの基本的な匿名性に対する弱さは、残ってしまう。すなわち、だれでも支払いのつながりを見ることができるということだ。なので、もしあなたが、あるトランザクションそのもの、もしくは、そのトランザクションの関係者だと知るならば、そのビットコインがどこからきて、どこへいったのを見ることができるのだ。
