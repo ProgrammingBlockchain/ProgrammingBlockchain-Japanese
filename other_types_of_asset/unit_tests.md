@@ -1,11 +1,11 @@
 ## 単体テスト {#unit-tests}
 
-前の章では、**カラードコイン**資産をコードするのに苦労していたように見えたかもしれない。  
-なぜかというと**カラードコイン**から**トランザクション**を生成する方法を見せたかっただけだからだ。
+前の章では、**カラードコイン** 資産をコードするのに苦労していたように見えたかもしれない。  
+なぜかというと **カラードコイン** から **トランザクション** を生成する方法を見せたかっただけだからだ。
 
 現場では、カラードコインのトランザクションや資金を取得するためには、サードパーティーのAPIに頼ろうとするだろう。しかしそれは良いアイディアではひょっとするとないかもしれない。なぜならば、APIの提供者に対しての信頼に基づく、プログラムの依存関係ができてしまうからだ。
 
-**NBitcoin**によって、ウェブサービスに頼っても良いし、カラードコインの**トランザクション**をプログラム自身に取得させても良くなる。これによって、コードの単体テストに柔軟性を持つことができるようになった。
+**NBitcoin** によって、ウェブサービスに頼っても良いし、カラードコインの **トランザクション** をプログラム自身に取得させても良くなる。これによって、コードの単体テストに柔軟性を持つことができるようになった。
 
 2つの発行者を紹介しよう：シルバーとゴールドだ。そして3人の参加者を紹介しよう：ボブ、アリスとサトシだ。  
 シルバー、ゴールドとサトシにビットコインを送る模擬のトランザクションを作ってみよう。
@@ -31,53 +31,53 @@ var init = new Transaction()
 };
 ```
 
-**Init**はカラードコインの発行も移動も全く含んでいない。しかし、それを確信したいと思っている場面を想像してみよう。どのように進めればよいだろうか。
+**Init** はカラードコインの発行も移動も全く含んでいない。しかし、それを確信したいと思っている場面を想像してみよう。どのように進めればよいだろうか。
 
-**NBitcoin**では、カラードコインの移動や発行の概要が**ColoredTransaction**と呼ばれるクラスに表現されている。
+**NBitcoin** では、カラードコインの移動や発行の概要が **ColoredTransaction** と呼ばれるクラスに表現されている。
 
 ![](../assets/ColoredTransaction.png)
 
-**ColoredTransaction**クラスによって以下がわかる。
+**ColoredTransaction** クラスによって以下がわかる。
 
-* どの**トランザクションインプット**がどのアセットを使うのか
-* どの**トランザクションアウトプット**がどのアセットを表すのか
-* どの**トランザクションアウトプット**がどのアセットを移動するのか
+* どの **トランザクションインプット** がどのアセットを使うのか
+* どの **トランザクションアウトプット** がどのアセットを表すのか
+* どの **トランザクションアウトプット** がどのアセットを移動するのか
 
-しかし今私たちにとって興味をわかせるメソッドは**FetchColors**で、これによってトランザクションインプットに与えたトランザクションから、カラードコインの情報を抜き出すことができる。
+しかし今私たちにとって興味をわかせるメソッドは **FetchColors** で、これによってトランザクションインプットに与えたトランザクションから、カラードコインの情報を抜き出すことができる。
 
-FetchColorsが**IColoredTransactionRepository**に依存していることを見てみよう。
+FetchColorsが **IColoredTransactionRepository** に依存していることを見てみよう。
 
 ![](../assets/IColoredCoinTransactionRepository.png)
 
-**IColoredTransactionRepository**はトランザクションIDから、**カラードコインのトランザクション**を示してくれるストアでしかない。しかしこれは**ITransactionRepository**に依存関係があることがわかるだろう。ITransactionRepositoryはトランザクションIDとそのトランザクションをマッピングしてくれるものだ。
+**IColoredTransactionRepository** はトランザクションIDから、**カラードコインのトランザクション** を示してくれるストアでしかない。しかしこれは **ITransactionRepository** に依存関係があることがわかるだろう。ITransactionRepositoryはトランザクションIDとそのトランザクションをマッピングしてくれるものだ。
 
-**IColoredTransactionRepository**の実行は、カラードコインの操作を担う公開されたAPIである**CoinprismColoredTransactionRepository**の実行と同義だ。  
-しかし、簡単に自分自身でそれらを行うことができる。それがここで示すように、**FetchColors**がどのように動くかでわかる。
+**IColoredTransactionRepository** の実行は、カラードコインの操作を担う公開されたAPIである **CoinprismColoredTransactionRepository** の実行と同義だ。  
+しかし、簡単に自分自身でそれらを行うことができる。それがここで示すように、**FetchColors** がどのように動くかでわかる。
 
-最も単純なケースを見てみよう。**IColoredTransactionRepository**がカラードコインを知っているから、そのケースであれば**FetchColors**はその結果を取ってくるだけだ。
+最も単純なケースを見てみよう。**IColoredTransactionRepository** がカラードコインを知っているから、そのケースであれば **FetchColors** はその結果を取ってくるだけだ。
 
 ![](../assets/FetchColors.png)
 
-2番目のケースでは、**IColoredTransactionRepository**がカラードコインのトランザクションについて何も知らない場合だ。  
-そのときはオープンアセットの仕様に基づいて**FetchColors**を使って、カラードコインを算出する必要がある。
+2番目のケースでは、**IColoredTransactionRepository** がカラードコインのトランザクションについて何も知らない場合だ。  
+そのときはオープンアセットの仕様に基づいて **FetchColors** を使って、カラードコインを算出する必要がある。
 
-しかし、カラードコインを求めるためには、**FetchColors**はカラードコインの親トランザクションを必要とする。  
-だから**ITransactionRepository**上で各トランザクションを取得し、それらに対して**FetchColors**をコールするのだ。  
-一度**FetchColors**が再帰的に親トランザクションのカラードコインを解明すると、カラードコインのトランザクションを算出して、**IColoredTransactionRepository**にその結果を再度引き渡し、結果を得る。
+しかし、カラードコインを求めるためには、**FetchColors** はカラードコインの親トランザクションを必要とする。  
+だから **ITransactionRepository** 上で各トランザクションを取得し、それらに対して **FetchColors** をコールするのだ。  
+一度 **FetchColors** が再帰的に親トランザクションのカラードコインを解明すると、カラードコインのトランザクションを算出して、**IColoredTransactionRepository** にその結果を再度引き渡し、結果を得る。
 
 ![](../assets/FetchColors2.png)
 
 これによって、将来的に発生する、トランザクションのカラードコインを取得するリクエストが素早く解決される。  
-**IColoredTransactionRepository**は読み取り専用だ（**CoinprismColoredTransactionRepository**と同じでPutする操作が無視される）。
+**IColoredTransactionRepository** は読み取り専用だ（**CoinprismColoredTransactionRepository** と同じでPutする操作が無視される）。
 
 さあ、例に戻ろう。  
-ユニットテストを書くときのトリックは、メモリ上の**IColoredTransactionRepository**を使うことだ。
+ユニットテストを書くときのトリックは、メモリ上の **IColoredTransactionRepository** を使うことだ。
 
 ```cs
 var repo = new NoSqlColoredTransactionRepository();
 ```
 
-さあ、**init**トランザクションを格納しよう。
+さあ、**init** トランザクションを格納しよう。
 
 ```cs
 repo.Transactions.Put(init);
@@ -107,7 +107,7 @@ Console.WriteLine(color);
 }
 ```
 
-想定どおり、**init**トランザクションはカラードコインのインプットも発行も移動も破壊も何も持っていない。
+想定どおり、**init** トランザクションはカラードコインのインプットも発行も移動も破壊も何も持っていない。
 
 ということで、SilverとGoldに送られたコインを、発行用のコインとして使ってみよう。
 
@@ -124,7 +124,7 @@ var issuanceCoins =
 
 Goldが最初、次にSilverとなっている。
 
-前の章でやったとおり、**TransactionBuilder**を使ってGoldをSatoshiに送り、リポジトリに結果として生成されるトランザクションを格納し、結果を表示できる。
+前の章でやったとおり、**TransactionBuilder** を使ってGoldをSatoshiに送り、リポジトリに結果として生成されるトランザクションを格納し、結果を表示できる。
 
 ```cs
 {
@@ -141,10 +141,10 @@ Goldが最初、次にSilverとなっている。
 }
 ```
 
-これは最初の**トランザクションアウト**には10goldあるということだ。
+これは最初の **トランザクションアウトプット** には10goldあるということだ。
 
-さて今、**サトシ**が**アリス**に4goldを送りたいということにしてみよう。  
-最初にサトシはトランザクションから**カラードコイン**を取得する。
+さて今、**サトシ** が **アリス** に4goldを送りたいということにしてみよう。  
+最初にサトシはトランザクションから **カラードコイン** を取得する。
 
 ```cs
 var goldCoin = ColoredCoin.Find(sendGoldToSatoshi, color).FirstOrDefault();
@@ -163,11 +163,11 @@ var sendToBobAndAlice =
         .BuildTransaction(true);
 ```
 
-**NotEnoughFundsException**が発生してしまうだろう。  
-なぜかというと、このトランザクションはトランザクションインプット（**goldコイン**）に600satoshiあって、トランザクションアウトプットに1200satoshiある。（1つ目の**トランザクションアウトプット**はアリスにアセットを送るもので、もう1つはサトシにお釣りを送るものだ）
+**NotEnoughFundsException** が発生してしまうだろう。  
+なぜかというと、このトランザクションはトランザクションインプット（**goldコイン**）に600satoshiあって、トランザクションアウトプットに1200satoshiある。（1つ目の **トランザクションアウトプット** はアリスにアセットを送るもので、もう1つはサトシにお釣りを送るものだ）
 
 つまり600satoshi不足しているのだ。  
-サトシに送られている**init**トランザクションにある最後の1BTCに相当する**コイン**をトランザクションに加えることで解決できる。
+サトシに送られている **init** トランザクションにある最後の1BTCに相当する **コイン** をトランザクションに加えることで解決できる。
 
 ```cs
 var satoshiBtc = init.Outputs.AsCoins().Last();
@@ -256,7 +256,6 @@ Colored :
 
 ついに外部的な依存なしで、アセットを発行し移動する単体テストを実行できたわけだ。
 
-もしサードパーティーのサービスに依存したくなければ、**IColoredTransactionRepository**を自前で作ることもできる。
+もしサードパーティーのサービスに依存したくなければ、**IColoredTransactionRepository** を自前で作ることもできる。
 
 より詳しい内容は[NBitcoin tests](https://github.com/MetacoSA/NBitcoin/blob/master/NBitcoin.Tests/transaction_tests.cs)で見ることができるし、コードプロジェクトの中にある私の記事の1つの「[Build Them all](https://www.codeproject.com/articles/835098/nbitcoin-build-them-all)」でも見ることができる。（マルチシグでのカラードコインの発行や交換）
-

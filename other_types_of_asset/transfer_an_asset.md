@@ -1,8 +1,8 @@
 ## 資産の移動 {#transfer-an-asset}
 
-さあ今、僕が**BlockchainProgrammingコイン**を送ったと想定してみよう。  
+さあ今、僕が **BlockchainProgrammingコイン** を送ったと想定してみよう。  
 どのようにして僕にそのコインを送り返せるだろうか。  
-そのためには**カラードコイン**をビルドする必要がある。
+そのためには **カラードコイン** をビルドする必要がある。
 
 Issuing an Assetで見たとおり、「nico」のアドレスで受け取った10アセットを使いたいということにしよう。  
 これが使いたいコインである。
@@ -33,7 +33,7 @@ ColoredCoin colored = coin.ToColoredCoin(assetId, 10);
 
 より簡単にカラードコインを得るために、ウェブサービスやカスタマイズされたコードをどのように使えるかをあとで説明するつもりだ。  
 また、手数料を支払うためにさらにコイン（forFees）を必要とする。  
-アセットの移動は**TransactionBuilder**を使えば本当に簡単である。
+アセットの移動は **TransactionBuilder** を使えば本当に簡単である。
 
 ```cs
 var book = BitcoinAddress.Create("1KF8kUVHK42XzgcmJF4Lxz4wcL5WDL97PB");
