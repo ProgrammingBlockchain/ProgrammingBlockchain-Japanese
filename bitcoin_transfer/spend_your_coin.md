@@ -137,7 +137,7 @@ var hallOfTheMakersAmount = new Money(0.5m, MoneyUnit.BTC);
 */
 var minerFee = new Money(0.0001m, MoneyUnit.BTC);
 // UTXOからいくらトータルでビットコインを 使いたいか。
-var txInAmount = receivedCoins[(int) outPointToSpend.N].TxOut.Amount;
+var txInAmount = receivedCoins[(int) outPointToSpend.N].TxOut.Value;
 Money changeBackAmount = txInAmount - hallOfTheMakersAmount - minerFee;
 ```
 
@@ -292,4 +292,3 @@ using (var node = Node.ConnectToLocal(network)) //Connect to the node
 Youtube: [How to make your first transaction with NBitcoin](https://www.youtube.com/watch?v=X4ZwRWIF49w)  
 CodeProject: [Create a Bitcoin transaction by hand.](http://www.codeproject.com/Articles/1151054/Create-a-Bitcoin-transaction-by-hand)  
 CodeProject: [DotNetWallet - Build your own Bitcoin wallet in C\#](https://www.codeproject.com/script/Articles/ArticleVersion.aspx?waid=214550&aid=1115639)
-
