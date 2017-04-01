@@ -142,6 +142,7 @@ Money changeBackAmount = txInAmount - hallOfTheMakersAmount - minerFee;
 ```
 
 計算した値をトランザクションアウトプットに追加する。
+訳注：changeBackAmount がゼロの場合は changeBackTxOut をトランザクションには追加する必要はない。追加するとエラーとなる。
 
 ```cs
 TxOut hallOfTheMakersTxOut = new TxOut()
