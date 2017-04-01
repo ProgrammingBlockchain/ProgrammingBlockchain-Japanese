@@ -102,7 +102,6 @@ var hallOfTheMakersAddress = BitcoinAddress.Create("mzp4No5cmCXjZUpf112B1XWsvWBf
 もし **1BTC** を伴う **トランザクションインプット** から **0.5BTC** を使いたいとしても、確実にすべてのコインを使い切らなければならない！  
 図解が以下に示すとおり、**トランザクションアウトプット** が **0.5** BTCを成功者の殿堂に、そしてあなたに**0.4999**BTCを戻すように仕分けている。  
 残りの **0.0001BTC** はどうなったのだろう？これはマイナーの手数料となっていて、彼らがこのトランザクションを次のブロックに含めるためのインセンティブとなっているのであった。
-*訳注：おつり（changeBackTxOut）がゼロの場合は changeBackTxOut をトランザクションには追加する必要はない。追加するとエラーとなる。*
 
 ![](../assets/SpendTx.png)
 
@@ -122,6 +121,8 @@ TxOut changeBackTxOut = new TxOut()
 transaction.Outputs.Add(hallOfTheMakersTxOut);
 transaction.Outputs.Add(changeBackTxOut);
 ```
+
+*訳注：おつり（changeBackTxOut）がゼロの場合は changeBackTxOut をトランザクションには追加する必要はない。追加するとエラーとなる。*
 
 ここでコードの微調整をしてみる。  
 以下のリンクから、この章のサンプルコードで使っているビットコインアドレスをブロックエクスプローラーでチェックできる。（TestNetのアドレスを使っているが。）
