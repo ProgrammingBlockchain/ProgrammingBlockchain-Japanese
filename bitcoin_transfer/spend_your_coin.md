@@ -106,12 +106,14 @@ var hallOfTheMakersAddress = BitcoinAddress.Create("mzp4No5cmCXjZUpf112B1XWsvWBf
 ![](../assets/SpendTx.png)
 
 ```cs
+// 成功者の殿堂に送る分
 TxOut hallOfTheMakersTxOut = new TxOut()
 {
     Value = new Money((decimal)0.5, MoneyUnit.BTC),
     ScriptPubKey = hallOfTheMakersAddress.ScriptPubKey
 };
 
+// おつり 自分に戻す
 TxOut changeBackTxOut = new TxOut()
 {
     Value = new Money((decimal)0.4999, MoneyUnit.BTC),
