@@ -124,7 +124,7 @@ transaction.Outputs.Add(hallOfTheMakersTxOut);
 transaction.Outputs.Add(changeBackTxOut);
 ```
 
-*訳注：おつり（changeBackTxOut）がゼロの場合は changeBackTxOut をトランザクションには追加する必要はない。数量がゼロのTxOutはトランザクション実行時にエラーとなる。*
+*訳注：自分に戻す分 (おつり)がゼロの場合は、その TxOut(changeBackTxOut) をトランザクションに追加する必要はない。数量がゼロのTxOutはトランザクション実行時にエラーとなる。*
 
 ここでコードの微調整をしてみる。  
 以下のリンクから、この章のサンプルコードで使っているビットコインアドレスをブロックエクスプローラーでチェックできる。（TestNetのアドレスを使っているが。）
