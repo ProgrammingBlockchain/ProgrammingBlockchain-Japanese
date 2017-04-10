@@ -113,7 +113,7 @@ TxOut hallOfTheMakersTxOut = new TxOut()
     ScriptPubKey = hallOfTheMakersAddress.ScriptPubKey
 };
 
-// おつり 自分に戻す
+// 自分に戻す分 (おつり)
 TxOut changeBackTxOut = new TxOut()
 {
     Value = new Money((decimal)0.4999, MoneyUnit.BTC),
