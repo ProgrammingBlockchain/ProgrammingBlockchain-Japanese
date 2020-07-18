@@ -106,12 +106,14 @@ var hallOfTheMakersAddress = BitcoinAddress.Create("mzp4No5cmCXjZUpf112B1XWsvWBf
 ![](../assets/SpendTx.png)
 
 ```cs
+// 成功者の殿堂に送る分
 TxOut hallOfTheMakersTxOut = new TxOut()
 {
     Value = new Money((decimal)0.5, MoneyUnit.BTC),
     ScriptPubKey = hallOfTheMakersAddress.ScriptPubKey
 };
 
+// 自分に戻す分 (おつり)
 TxOut changeBackTxOut = new TxOut()
 {
     Value = new Money((decimal)0.4999, MoneyUnit.BTC),
@@ -121,6 +123,8 @@ TxOut changeBackTxOut = new TxOut()
 transaction.Outputs.Add(hallOfTheMakersTxOut);
 transaction.Outputs.Add(changeBackTxOut);
 ```
+
+*訳注：自分に戻す分 (おつり)がゼロの場合は、その TxOut (上記では changeBackTxOut) をトランザクションに追加する必要はない。数量がゼロのTxOutはトランザクション実行時にエラーとなる。*
 
 ここでコードの微調整をしてみる。  
 以下のリンクから、この章のサンプルコードで使っているビットコインアドレスをブロックエクスプローラーでチェックできる。（TestNetのアドレスを使っているが。）
