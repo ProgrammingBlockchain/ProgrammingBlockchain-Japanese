@@ -1,4 +1,4 @@
-## 参考文献 {#complementary-reading}
+# 参考文献 {#complementary-reading}
 
 この本の内容を完全に理解するために使える文献を以下に紹介する。
 
@@ -6,6 +6,3 @@
 * [The Bitcoin Developer’s Reference Guide](https://bitcoin.org/en/developer-guide)
 * [Nicolas Dorier’s articles on CodeProject](http://www.codeproject.com/script/Articles/MemberArticles.aspx?amid=6354608)
 * [nopara73's articles on CodeProject](http://www.codeproject.com/script/Articles/MemberArticles.aspx?amid=10170217)
-
-
-
