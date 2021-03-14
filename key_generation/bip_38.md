@@ -1,16 +1,16 @@
-## BIP38 (Part 2) {#bip38-part-2}
+## BIP38 (パート2) {#bip38-part-2}
 
-We already looked at using BIP38 to encrypt a key, however this BIP is in reality two ideas in one document.
+秘密鍵を暗号化するためにBIP38をすでに見てきたが、実はこのBIPは2つのアイディアを1つにしたものだ。
 
-The second part of the BIP, shows how you can delegate Key and Address creation to an untrusted peer. It will fix one of our concerns.
+2つ目については、どうやって鍵とアドレスの生成を、信頼できない相手に委譲することができるかを書いている。なので、2つの懸念点のうちの1つを解決する。
 
-**The idea is to generate a PassphraseCode to the key generator. With this PassphraseCode, they will be able to generate encrypted keys on your behalf, without knowing your password, nor any private key.**
+**そのアイディアとは、鍵生成をする人へ渡すパスフレーズコードを作るというものだ。このパスフレーズコードで、その相手はあなたのために、暗号化された鍵を作ることができ、しかも、あなたのパスワードも秘密鍵も知ることはない。**
 
-This **PassphraseCode** can be given to your key generator in WIF format.
+この **パスフレーズコード** は WIFフォーマットにして鍵生成する人に渡すことができる。
 
-> **Tip**: In NBitcoin, all types prefixed by “Bitcoin” are Base58 (WIF) data.
+> **注釈**: NBitcoinでは、Bitcoinが頭についている型は全て Base58 （WIF）フォーマットのデータである。
 
-So, as a user that wants to delegate key creation, first you will create the **PassphraseCode**.
+なので、鍵の生成を委譲したいユーザーとして最初に、 **パスフレーズコード** を作ることになる。
 
 ![](../assets/PassphraseCode.png)
 
@@ -18,9 +18,9 @@ So, as a user that wants to delegate key creation, first you will create the **P
 var passphraseCode = new BitcoinPassphraseCode("my secret", Network.Main, null);
 ```
 
-**You then give this passphraseCode to a third party key generator.**
+**そしてこのパスフレーズコードを鍵を生成するサードパーティに渡す。**
 
-The third party will then generate new encrypted keys for you.
+そのサードパーティは、暗号化された鍵をあなたに作ってくれる。
 
 ![](../assets/PassphraseCodeToEncryptedKeys.png)
 
@@ -28,24 +28,29 @@ The third party will then generate new encrypted keys for you.
 EncryptedKeyResult encryptedKeyResult = passphraseCode.GenerateEncryptedSecret();
 ```
 
-This **EncryptedKeyResult** has lots of information:
+この **暗号化された鍵** は、たくさんの情報を持っている。
 
 ![](../assets/EncryptedKeyResult.png)
 
-First: the **generated bitcoin address**,
+まずは、生成されたビットコインアドレス。
+
 ```cs
 var generatedAddress = encryptedKeyResult.GeneratedAddress; // 14KZsAVLwafhttaykXxCZt95HqadPXuz73
 ```
-then the **EncryptedKey** itself (as we have seen in the previous, **Key Encryption** lesson),
+
+それから、暗号化された鍵自体（前段で述べた **鍵の暗号化** のレッスンでみたように）。
+
 ```cs
 var encryptedKey = encryptedKeyResult.EncryptedKey; // 6PnWtBokjVKMjuSQit1h1Ph6rLMSFz2n4u3bjPJH1JMcp1WHqVSfr5ebNS
 ```
-and, last but not least, the **ConfirmationCode**, so that the third party can prove that the generated key and address correspond to your password.
+
+そして、最後だけれども重要である **確認コード**。これにより、その第三者は、生成された鍵とアドレスが あなたのパスワードに対応していることを証明することができる。
+
 ```cs
 var confirmationCode = encryptedKeyResult.ConfirmationCode; // cfrm38VUcrdt2zf1dCgf4e8gPNJJxnhJSdxYg6STRAEs7QuAuLJmT5W7uNqj88hzh9bBnU9GFkN
 ```
 
-As the owner, once you receive this information, you need to check that the key generator did not cheat by using **ConfirmationCode.Check()**, then get your private key with your password:
+あなたは所有者として、この情報を手に入れたらすぐ、**ConfirmationCode.Check** を使って、鍵作成者がインチキをしていないか確認する必要がある。そして、パスワードを使って秘密鍵を取得する。
 
 ```cs
 Console.WriteLine(confirmationCode.Check("my secret", generatedAddress)); // True
@@ -54,12 +59,12 @@ Console.WriteLine(bitcoinPrivateKey.GetAddress() == generatedAddress); // True
 Console.WriteLine(bitcoinPrivateKey); // KzzHhrkr39a7upeqHzYNNeJuaf1SVDBpxdFDuMvFKbFhcBytDF1R
 ```
 
-So, we have just seen how the third party can generate encrypted keys on your behalf, without knowing your password and private key.
+我々は、第三者がどうやってあなたのパスワードと秘密鍵を知ることなしに暗号化された鍵を作成することができるかを見てきた。
 
 ![](../assets/ThirdPartyKeyGeneration.png)
 
-However, one problem remains:
+しかし、まだ1つ問題が残っている:
 
-*   All backups of your wallet that you have will become outdated when you generate a new key.
+* 新しい鍵を生成することで、自分の持つウォレットのバックアップがすべて古いものになってしまう。
 
-BIP 32, or Hierarchical Deterministic Wallets (HD wallets) proposes another solution, which is more widely supported.
+BIP 32、もしくは 階層的決定性ウォレット(HDウォレット)は、別の解決方法を提案しており、その方がより広くサポートされた方法だ。
