@@ -2,7 +2,7 @@
 
 ひょっとすると知らないかもしれないが、実は、ビットコインのブロックチェーンの内部には、ビットコインアドレスなどというものはない。内部的に、ビットコインのプロトコルでは、ビットコインを受け取る相手を**ScriptPubKey**で認識することになっている。
 
-![Script Public Key](../assets/ScriptPubKey.png)
+![](../assets/ScriptPubKey.png)
 **ScriptPubKey**は、例えば、このように表現される。
 `OP_DUP OP_HASH160 14836dbe7f38c5ac3d49e8d790af808a4ee9edcf OP_EQUALVERIFY OP_CHECKSIG`
 
@@ -10,7 +10,7 @@
 
 ScriptPubKeyはビットコインアドレスから生成することができる。これはすべてのビットコインのクライアントが、「人間の目に易しい」ビットコインアドレスから、ブロックチェーンが理解できるアドレスへ変換するために行っているステップの1つである。
 
-![Bitcoin Address to Script Public Key](../assets/BitcoinAddressToScriptPubKey.png)
+![](../assets/BitcoinAddressToScriptPubKey.png)
 
 ```cs
 var publicKeyHash = new KeyId("14836dbe7f38c5ac3d49e8d790af808a4ee9edcf");

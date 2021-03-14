@@ -2,7 +2,7 @@
 
 秘密鍵はよく、ビットコインアドレスと同じBase58Check形式の、**ビットコインシークレット**で表現される。これはウォレットにインポートするフォーマット（**Wallet Import Format, WIF**）としても知られている。
 
-![Bitcoin Secret](../assets/BitcoinSecret.png)
+![](../assets/BitcoinSecret.png)
 
 ```cs
 Key privateKey = new Key(); // ランダムな秘密鍵の生成

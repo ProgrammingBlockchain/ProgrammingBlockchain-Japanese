@@ -6,7 +6,7 @@
 
 もしビットコインコアを使っていたら、Transactionsタブをクリックすると、このようにトランザクションを参照できる。
 
-![Transactions that can be seen in Bitcoin Core](../assets/BitcoinCoreTransaction.png)
+![](../assets/BitcoinCoreTransaction.png)
 
 ここで**Transaction ID**に着目してみたい。上図のケースだと以下がTransaction IDである。
 
@@ -23,7 +23,7 @@ QBit NinjaはMicrosoft Azure Storageを基盤としている[NBitcoin.Indexer](h
 
 [http://api.qbit.ninja/transactions/f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94](http://api.qbit.ninja/transactions/f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94)にアクセスしてみると、トランザクションの内容を見ることができる。
 
-![Raw transaction](../assets/RawTx.png)
+![](../assets/RawTx.png)
 
 次のコードを使って16進数表現のトランザクションをパースできる。
 
@@ -34,7 +34,7 @@ Console.Writeline(tx);
 
 出力された情報の多さで怖くなる前に、出力タブを閉じてくれ。QBit NinjaクライアントがAPIに対して問い合わせをして情報をパースしてくれる。**QBitNinja.Client** の NuGet packageをインストールしてみよう。
 
-![QBit Ninja](../assets/QBitNuGet.png)
+![](../assets/QBitNuGet.png)
 
 まずインポートする。
 
@@ -124,7 +124,7 @@ foreach (TxIn input in inputs)
 
 要約すると、あるTxOutとはビットコインの額とその受け取り手の**ScriptPubKey**の組み合わせを示す。
 
-![Transaction Output](../assets/TxOut.png)
+![](../assets/TxOut.png)
 上図のとおり、いま対象のトランザクションにある一番最初のScriptPubKeyから21BTCを支払うトランザクションアウトプットを作ってみよう。
 
 ```cs
@@ -135,7 +135,7 @@ TxOut txOut = transaction.Outputs.CreateNewTxOut(twentyOneBtc, scriptPubKey);
 
 すべての**トランザクションアウトプット**は、それを包含するトランザクションのIDと、そしてトランザクションの中で何番目のアウトプットを用いるかを示すインデックスにより、ブロックチェーン全体の中で一意に識別される。その一意に識別できる情報（つまりトランザクションとトランザクションインデックス）のことを**OutPoint**と呼ぶ。
 
-![Outpoint](../assets/OutPoint.png)
+![](../assets/OutPoint.png)
 
 例えば、いま対象にしているトランザクションの13.19683492 BTCのアウトプットのOutpointは以下である。\(f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94, 0\).
 
@@ -147,7 +147,7 @@ Console.WriteLine(firstOutPoint.N); // 0
 
 さて、インプット（すなわちトランザクションインプット）に目を向けてみよう。
 
-![Transaction input](../assets/TxIn.png)
+![](../assets/TxIn.png)
 
 **トランザクションインプット**は支払いに使おうとしているトランザクションアウトプットの**Outpoint**と**ScriptSig**（ScriptSigは所有権の証明とも言える）によって構成されている。今題材にしているトランザクションでは現に9つのインプットがある。
 

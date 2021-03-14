@@ -1,4 +1,4 @@
-![The logo of Programming The Blockchain in C# Community Edition](assets/ProgrammingBlockchain.png)
+![](assets/ProgrammingBlockchain.png)
 
 [コードサンプルはこちら](https://github.com/ProgrammingBlockchain/ProgrammingBlockchainCodeExamples/)
 
@@ -6,7 +6,7 @@
 
 ## コミュニティ
 
-[![Gitter](https://badges.gitter.im/MetacoSA/NBitcoin.svg)](https://gitter.im/MetacoSA/NBitcoin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[!](https://badges.gitter.im/MetacoSA/NBitcoin.svg)](<https://gitter.im/MetacoSA/NBitcoin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge>)
 
 ## 他の言語版
 
@@ -52,7 +52,7 @@
 
 ぜひ以下のビットコインアドレスに寄付してくださると嬉しいです。寄付してくださると、[こちらのサイト](http://n.bitcoin.ninja/)で寄付が公開されます。
 
-![1KF8kUVHK42XzgcmJF4Lxz4wcL5WDL97PB](assets/BookQr.png)
+![](assets/BookQr.png)
 
 [1KF8kUVHK42XzgcmJF4Lxz4wcL5WDL97PB](https://www.smartbit.com.au/address/1KF8kUVHK42XzgcmJF4Lxz4wcL5WDL97PB)
 

@@ -2,10 +2,10 @@
 
 **ビットコインアドレス**が、支払いを受けるために公開するものであることは知ってのとおりだ。
 
-![Bitcoin Address](../assets/BitcoinAddress.png)
+![](../assets/BitcoinAddress.png)
 
 あなたがこのアドレス宛てにもらったビットコインを使うには、ウォレットで**秘密鍵**を使うということも、おそらく知っているだろう。
-![Private key](../assets/PrivateKey.png)
+![](../assets/PrivateKey.png)
 
 秘密鍵はネットワークには保管されず、インターネットにアクセスすることなく生成することができる。
 
@@ -17,7 +17,7 @@ Key privateKey = new Key(); // ランダムな秘密鍵を生成
 
 秘密鍵から**公開鍵**を作成する。これは一方向性の暗号学的な機能を使っていて、逆に公開鍵から秘密鍵は作れない。
 
-![Public Key is derived from a private key](../assets/PrivKeyPubKey.png)
+![](../assets/PrivKeyPubKey.png)
 
 ```cs
 PubKey publicKey = privateKey.PubKey;
@@ -33,7 +33,7 @@ Console.WriteLine(publicKey); // 0251036303164f6c458e9f7abecb4e55e5ce9ec2b2f1d06
 
 公開鍵とアドレスを使用するネットワークの種類から、ビットコインアドレスを簡単に作ることができる。
 
-![Bitcoin Address](../assets/PubKeyToAddr.png)
+![](../assets/PubKeyToAddr.png)
 
 ```cs
 Console.WriteLine(publicKey.GetAddress(ScriptPubKeyType.Legacy, Network.Main)); // 1PUYsjwfNmX64wS368ZR5FMouTtUmvtmTY
@@ -42,7 +42,7 @@ Console.WriteLine(publicKey.GetAddress(ScriptPubKeyType.Legacy, Network.TestNet)
 
 **正確に言うと、ビットコインアドレスはバージョンを示す先頭1バイト（TestNetかMainNetかで異なる）と公開鍵ハッシュで構成されており、それらが結合された後、Base58Checkにエンコードされる。**
 
-![Bitcoin Address](../assets/PubKeyHashToBitcoinAddress.png)
+![](../assets/PubKeyHashToBitcoinAddress.png)
 
 ```cs
 var publicKeyHash = publicKey.Hash;
