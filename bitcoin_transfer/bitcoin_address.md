@@ -17,7 +17,7 @@ Key privateKey = new Key(); // ランダムな秘密鍵を生成
 
 秘密鍵から**公開鍵**を作成する。これは一方向性の暗号学的な機能を使っていて、逆に公開鍵から秘密鍵は作れない。
 
-![Public Key is derived from a public key](../assets/PrivKeyPubKey.png)
+![Public Key is derived from a private key](../assets/PrivKeyPubKey.png)
 
 ```cs
 PubKey publicKey = privateKey.PubKey;
