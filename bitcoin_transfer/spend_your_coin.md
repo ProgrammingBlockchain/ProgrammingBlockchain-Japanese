@@ -48,7 +48,7 @@ Console.WriteLine(transactionResponse.Block.Confirmations);
 
 これでトランザクションを生成する情報はすべて揃った。トランザクションを生成するうえで、必要な質問はこれだ。「**どこから、どこへ、いくら？**」
 
-## どこから？
+### どこから？
 
 このケースでは、先ほど取得したばばトランザクションの2番目のoutpointを使いたいのだが、どのようにそれを見つけたのかを示す。
 
@@ -161,7 +161,7 @@ var bytes = Encoding.UTF8.GetBytes(message);
 transaction.Outputs.Add(Money.Zero, TxNullDataTemplate.Instance.GenerateScriptPubKey(bytes));
 ```
 
-## トランザクションの内容のまとめ
+### トランザクションの内容のまとめ
 
 署名する前に、ここまでをまとめるため、トランザクション全体を見てほしい。
 3つの**トランザクションアウトプット**があり、2つは**コイン付き**で、1つは**コインなし**（メッセージあり）となっている。そこで、「普通の」**トランザクションアウトプット** の **ScriptPubKey** とメッセージ付きの **トランザクションアウトプット** の **ScriptPubKey** の違いに気づくだろう。
@@ -207,7 +207,7 @@ transaction.Outputs.Add(Money.Zero, TxNullDataTemplate.Instance.GenerateScriptPu
 
 ここで **prev\_out** の **n** の値\(インデックス\)は 0 だ。インデックスは0から始まるから、トランザクションの最初のアウトプットを使いたいということになる。補足として二つ目のアウトプットは　1.0989548 BTC となっているが、これはお釣りである。
 
-## トランザクションに署名する
+### トランザクションに署名する
 
 ここまででトランザクションを作成したので、署名しなければならない。言い換えれば、私たちはトランザクションインプットの中で参照した前トランザクションのアウトプットが自分のものであると証明しなければならないのだ。
 
@@ -235,11 +235,11 @@ transaction.Sign(bitcoinPrivateKey, receivedCoins.ToArray());
 
 [ここで](https://testnet.smartbit.com.au/tx/eeffd48b317e7afa626145dffc5a6e851f320aa8bb090b5cd78a9d2440245067)ブロックエクスプローラーを使って、テストネットのトランザクションを見ることができる。
 
-## トランザクションを伝搬させる
+### トランザクションを伝搬させる
 
 これで君の最初のトランザクションに署名したのだ。おめでとう！トランザクションはもうその役目を果たす準備ができている。残るはマイナーがそのトランザクションを把握できるようにネットワークに伝搬させるだけだ。
 
-### QBitNinjaを使って
+#### QBitNinjaを使って
 
 ```cs
 BroadcastResponse broadcastResponse = client.Broadcast(transaction).Result;
@@ -256,7 +256,7 @@ else
 }
 ```
 
-### ローカルにインストールされているBitcoin Coreを使って
+#### ローカルにインストールされているBitcoin Coreを使って
 
 ```cs
 // using NBitcoin.Protocol を追加する必要があります
@@ -276,7 +276,7 @@ using (var node = Node.ConnectToLocal(network)) //Connect to the node
 
 ビットコインネットワークに直接接続することもできるが、自分の信用できるノードに接続することをおすすめする（そのほうがより早いし、より簡単だ）。
 
-## より多くの演習が必要なら
+### より多くの演習が必要なら
 
 Youtube: [How to make your first transaction with NBitcoin](https://www.youtube.com/watch?v=X4ZwRWIF49w)
 CodeProject: [Create a Bitcoin transaction by hand.](http://www.codeproject.com/Articles/1151054/Create-a-Bitcoin-transaction-by-hand)

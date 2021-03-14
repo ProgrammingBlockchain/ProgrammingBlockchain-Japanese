@@ -41,7 +41,7 @@ H1jiXPzun3rXi0N9v9R5fAWrfEae9WPmlL5DJBj1eTStSvpKdRR8Io6/uT9tGH/3OnzG6ym5yytuWoA9
 これらの情報でNicolas Dorierがこの本の秘密鍵を所有していることの証明ができる。
 **Exercise：** Nicolas先生がうそをついていないことを確かめてみよう！
 
-## 追記
+### 追記
 
 PGPがどのように動いているか知っているだろうか？ビットコインブロックチェーンととてもよく似ていないだろうか？
 たぶんビットコインブロックチェーンはよりユーザーフレンドリーな、PGPの代わりとしての基盤となり得るだろう。

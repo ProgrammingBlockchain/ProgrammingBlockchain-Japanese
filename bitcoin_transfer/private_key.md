@@ -31,7 +31,7 @@ BitcoinPubKeyAddress bitcoinPubicKey = publicKey.GetAddress(Network.Main); // 1P
 //PubKey samePublicKey = bitcoinPubicKey.ItIsNotPossible;// 戻すのは不可能
 ```
 
-## 練習
+### 練習
 
 1. MainNet向けの秘密鍵を生成し、それをメモする。
 2. 秘密鍵からビットコインアドレスを生成する。

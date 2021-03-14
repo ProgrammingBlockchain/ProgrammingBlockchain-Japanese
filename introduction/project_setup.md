@@ -11,14 +11,14 @@
 
 NBitcoinは、この本のメイン筆者であるNicolas Dorierがメンテナンスしている、.NETで作られたオープンソースライブラリである。C\#でビットコインのソフトウェアを開発するのであれば、このライブラリを使うべきだろう。NBitcoinはクロスプラットフォームアプリケーションをサポートする。
 
-## NBitcoinのソースコードをデバッグする方法（オプション）
+### NBitcoinのソースコードをデバッグする方法（オプション）
 
 いろいろと簡単に調べられるように、NBitcoinは、そのソースコード内をデバッグできるようにしてある。この機能が使えるようにするためには、Visual Studioのツール/オプション/デバッグで「ソースサーバーサポートを有効にする」をチェックする必要がある。
 ![Enable source server support](../assets/visualstudio_enablesourceserversupport_jp.png)
 
 これで、もしNBitcoinのコードにステップインをすると、ソースコードがGitHubから自動的に取得され、visual studioのデバッガーに表示される。
 
-## .NET Core で使用する方法
+### .NET Core で使用する方法
 
 **Visual Studio Code**を使用している方もこの手順でプロジェクトをセットアップできます。
 
