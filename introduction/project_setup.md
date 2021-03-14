@@ -5,7 +5,7 @@
 1. 新規プロジェクトを作成する（.NET 4.5.2以上）
 2. ソリューションエクスプローラーの「参照」で右クリックし、「NuGet パッケージの管理」をクリック
 3. 「**NBitcoin**」を検索しインストールする（MacやLinuxの場合は NBitcoin.Mono を使う）
-![nuget](../assets/nuget_jp.png)
+![](../assets/nuget_jp.png)
 
 > **ヒント:** もしMacやLinuxを使っている場合、NBitcoin.Mono ではなく NBitcoin を使用すると、いくつかクラスがないという問題が起きるので気をつけましょう。
 
@@ -14,7 +14,7 @@ NBitcoinは、この本のメイン筆者であるNicolas Dorierがメンテナ�
 ### NBitcoinのソースコードをデバッグする方法（オプション）
 
 いろいろと簡単に調べられるように、NBitcoinは、そのソースコード内をデバッグできるようにしてある。この機能が使えるようにするためには、Visual Studioのツール/オプション/デバッグで「ソースサーバーサポートを有効にする」をチェックする必要がある。
-![Enable source server support](../assets/visualstudio_enablesourceserversupport_jp.png)
+![](../assets/visualstudio_enablesourceserversupport_jp.png)
 
 これで、もしNBitcoinのコードにステップインをすると、ソースコードがGitHubから自動的に取得され、visual studioのデバッガーに表示される。
 

@@ -7,6 +7,6 @@
 ```Key + Password = EncryptedKey```
 ```EncryptedKey + Password = Key```
 
-![How to read diagrams in this book](../assets/encrypted_key.png)
+![](../assets/encrypted_key.png)
 
 コードも理解するために良い方法なのだが、時としてたくさんの言葉を使うよりも図のほうが簡単に表せる。（心配しないでいただきたいのだが、もちろんコードも紹介する。）
