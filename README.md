@@ -1,5 +1,3 @@
-# Programming The Blockchain in C# Community Edition
-
 ![The logo of Programming The Blockchain in C# Community Edition](assets/ProgrammingBlockchain.png)
 
 [コードサンプルはこちら](https://github.com/ProgrammingBlockchain/ProgrammingBlockchainCodeExamples/)
