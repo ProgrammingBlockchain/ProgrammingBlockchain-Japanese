@@ -18,7 +18,7 @@ NBitcoinは、この本のメイン筆者であるNicolas Dorierがメンテナ�
 
 これで、もしNBitcoinのコードにステップインをすると、ソースコードがGitHubから自動的に取得され、visual studioのデバッガーに表示される。
 
-## .NET Core でを使用する方法
+## .NET Core で使用する方法
 
 **Visual Studio Code**を使用している方もこの手順でプロジェクトをセットアップできます。
 
