@@ -1,4 +1,4 @@
-# 所有権の証明による個人の認証 {#proof-of-ownership-as-an-authentication-method}
+## 所有権の証明による個人の認証 {#proof-of-ownership-as-an-authentication-method}
 
 > \[[2016.05.02](https://www.youtube.com/watch?v=dZNtbAFnr-0)\] 私の名前はクレイグ・ライトだ。これからビットコインで最初に作成されたトランザクションに関連付けられた公開鍵を使ってメッセージに署名することをデモンストレーションしよう。
 

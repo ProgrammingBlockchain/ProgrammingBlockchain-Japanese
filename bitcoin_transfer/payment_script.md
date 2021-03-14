@@ -1,4 +1,4 @@
-# ScriptPubKey {#payment-script}
+## ScriptPubKey {#payment-script}
 
 ひょっとすると知らないかもしれないが、実は、ビットコインのブロックチェーンの内部には、ビットコインアドレスなどというものはない。内部的に、ビットコインのプロトコルでは、ビットコインを受け取る相手を**ScriptPubKey**で認識することになっている。
 

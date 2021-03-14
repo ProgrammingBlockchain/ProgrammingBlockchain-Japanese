@@ -1,4 +1,4 @@
-# “ブロックチェーンは、ビットコインを超えたもの” {#the-blockchain-is-more-than-just-bitcoin}
+## “ブロックチェーンは、ビットコインを超えたもの” {#the-blockchain-is-more-than-just-bitcoin}
 
 「ブロックチェーンは、ビットコインを超えたもの。」
 

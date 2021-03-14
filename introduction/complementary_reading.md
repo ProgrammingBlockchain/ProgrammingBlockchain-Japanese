@@ -1,4 +1,4 @@
-# 参考文献 {#complementary-reading}
+## 参考文献 {#complementary-reading}
 
 この本の内容を完全に理解するために使える文献を以下に紹介する。
 

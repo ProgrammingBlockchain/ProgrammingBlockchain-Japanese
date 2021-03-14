@@ -1,4 +1,4 @@
-# 読み始める前に確認しておくこと {#pre-requisites}
+## 読み始める前に確認しておくこと {#pre-requisites}
 
 ## スキル {#skills}
 
