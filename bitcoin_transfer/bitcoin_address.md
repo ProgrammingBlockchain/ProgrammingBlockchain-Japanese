@@ -4,7 +4,7 @@
 
 ![](../assets/BitcoinAddress.png)
 
-あなたがこのアドレス宛てにもらったビットコインを使うには、ウォレットで**秘密鍵**を使うということも、おそらく知っているだろう。  
+あなたがこのアドレス宛てにもらったビットコインを使うには、ウォレットで**秘密鍵**を使うということも、おそらく知っているだろう。
 ![](../assets/PrivateKey.png)
 
 秘密鍵はネットワークには保管されず、インターネットにアクセスすることなく生成することができる。
@@ -36,8 +36,8 @@ Console.WriteLine(publicKey); // 0251036303164f6c458e9f7abecb4e55e5ce9ec2b2f1d06
 ![](../assets/PubKeyToAddr.png)
 
 ```cs
-Console.WriteLine(publicKey.GetAddress(Network.Main)); // 1PUYsjwfNmX64wS368ZR5FMouTtUmvtmTY
-Console.WriteLine(publicKey.GetAddress(Network.TestNet)); // n3zWAo2eBnxLr3ueohXnuAa8mTVBhxmPhq
+Console.WriteLine(publicKey.GetAddress(ScriptPubKeyType.Legacy, Network.Main)); // 1PUYsjwfNmX64wS368ZR5FMouTtUmvtmTY
+Console.WriteLine(publicKey.GetAddress(ScriptPubKeyType.Legacy, Network.TestNet)); // n3zWAo2eBnxLr3ueohXnuAa8mTVBhxmPhq
 ```
 
 **正確に言うと、ビットコインアドレスはバージョンを示す先頭1バイト（TestNetかMainNetかで異なる）と公開鍵ハッシュで構成されており、それらが結合された後、Base58Checkにエンコードされる。**
@@ -53,7 +53,7 @@ var testNetAddress = publicKeyHash.GetAddress(Network.TestNet);
 
 > 注釈：公開鍵ハッシュは、まず公開鍵をSHA256でハッシュ化し、その結果に対してRIPEMD160でさらにハッシュ化してビッグエンディアンで並べている。プログラミング関数なら、「RIPEMD160\(SHA256\(pubkey\)\)」のように表せるだろう。
 
-Base58Checkエンコーディングには誤字を防止するためのチェックサムがあったり、「0（ゼロ）」や「O（オー）」のようにどちらとも見える文字を使わないようにするという気の利いた機能がある。  
+Base58Checkエンコーディングには誤字を防止するためのチェックサムがあったり、「0（ゼロ）」や「O（オー）」のようにどちらとも見える文字を使わないようにするという気の利いた機能がある。
 Base58Checkエンコードされたビットコインアドレスは、ウォレットを使っているユーザーが、間違えて意図していないネットワークにビットコインを確実に送らないようにする。
 
 ```cs
@@ -62,6 +62,3 @@ Console.WriteLine(testNetAddress); // n3zWAo2eBnxLr3ueohXnuAa8mTVBhxmPhq
 ```
 
 > 参考：MainNetでビットコイン プログラミングを練習すると、もし失敗したらそれはきっと忘れられないものになるだろう。
-
-
-

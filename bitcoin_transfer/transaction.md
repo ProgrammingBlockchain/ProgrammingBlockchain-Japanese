@@ -16,9 +16,9 @@
 >
 > 注釈：承認されていないトランザクションを扱うときにTransaction IDを使ってはいけない。Transaction IDは承認される前は改ざんできてしまうからだ。これを「トランザクション展性」という。
 
-Blockchain.infoのようなブロックエクスプローラーでトランザクションを閲覧することができる。 [https://blockchain.info/tx/f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94](https://blockchain.info/tx/f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94)  
-しかし開発者としてはおそらく、より簡単にクエリを実行したりパースしたりすることができるサービスがほしいと思うだろう。  
-C\#の開発者、そしてNBitcoinのユーザーとしては、Nicolas Dorierの[QBit Ninja](http://docs.qbitninja.apiary.io/#)が最適な選択肢だと思う。ブロックチェーンに対してクエリを発行でき、またウォレットを追跡するためのオープンソースのWebサービスAPIである。  
+Blockchain.infoのようなブロックエクスプローラーでトランザクションを閲覧することができる。 [https://blockchain.info/tx/f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94](https://blockchain.info/tx/f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94)
+しかし開発者としてはおそらく、より簡単にクエリを実行したりパースしたりすることができるサービスがほしいと思うだろう。
+C\#の開発者、そしてNBitcoinのユーザーとしては、Nicolas Dorierの[QBit Ninja](http://docs.qbitninja.apiary.io/#)が最適な選択肢だと思う。ブロックチェーンに対してクエリを発行でき、またウォレットを追跡するためのオープンソースのWebサービスAPIである。
 QBit NinjaはMicrosoft Azure Storageを基盤としている[NBitcoin.Indexer](https://github.com/MetacoSA/NBitcoin.Indexer)に依拠している。C\#開発者にはこのAPIのラッパーは開発せず、クライアントライブラリーである[NuGet client package](http://www.nuget.org/packages/QBitninja.Client)を使うことをお勧めする。
 
 [http://api.qbit.ninja/transactions/f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94](http://api.qbit.ninja/transactions/f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94)にアクセスしてみると、トランザクションの内容を見ることができる。
@@ -28,13 +28,20 @@ QBit NinjaはMicrosoft Azure Storageを基盤としている[NBitcoin.Indexer](h
 次のコードを使って16進数表現のトランザクションをパースできる。
 
 ```cs
-Transaction tx = new Transaction("0100000...");
+Transaction tx = Transaction.Parse("0100000...", Network.Main);
 Console.Writeline(tx);
 ```
 
 出力された情報の多さで怖くなる前に、出力タブを閉じてくれ。QBit NinjaクライアントがAPIに対して問い合わせをして情報をパースしてくれる。**QBitNinja.Client** の NuGet packageをインストールしてみよう。
 
 ![](../assets/QBitNuGet.png)
+
+まずインポートする。
+
+'''cs
+using QBitNinja.Client;
+using QBitNinja.Client.Models;
+'''
 
 Transaction IDを使ってトランザクションのクエリを発行してみよう。
 
@@ -60,7 +67,7 @@ Console.WriteLine(transactionResponse.TransactionId); // f13dc48fb035bbf0a6e989a
 Console.WriteLine(transaction.GetHash()); // f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94
 ```
 
-**GetTransactionResponse** はトランザクションの中で消費されようとしているインプットの値や、インプットのScriptPubKeyのようなトランザクションデータに含まれない追加的な情報を含んでいる。
+**GetTransactionResponse** は、トランザクションデータに含まれない追加的な情報として、トランザクションの中で消費されようとしているインプットの値や、インプットのScriptPubKeyを含んでいる。
 
 ここで言及したい重要な部分は **インプット** と **アウトプット** である。1つのScriptPubKeyに13.19683492BTCが送られていることがわかるだろう。
 
@@ -72,14 +79,14 @@ foreach (var coin in receivedCoins)
 
     Console.WriteLine(amount.ToDecimal(MoneyUnit.BTC));
     var paymentScript = coin.TxOut.ScriptPubKey;
-    Console.WriteLine(paymentScript);  // これは ScriptPubKey
+    Console.WriteLine(paymentScript);  // これはScriptPubKey
     var address = paymentScript.GetDestinationAddress(Network.Main);
-    Console.WriteLine(address);
+    Console.WriteLine(address); // 1HfbwN6Lvma9eDsv7mdwp529tgiyfNr7jc
     Console.WriteLine();
 }
 ```
 
-QBitNinjaのGetTransactionResponseクラスを使って、「受け取った」BTCの情報を表示した。  
+QBitNinjaのGetTransactionResponseクラスを使って、「受け取った」BTCの情報を表示した。
 **Exercise :** QBitNinjaのGetTransactionResponseクラスを使って、「使われた」BTCの情報を表示してみよう！
 
 さて今度は、NBitcoinのTransactionクラスを使って、QBitNinjaで表示した「受け取った」BTCの情報と同じものを、どのように表示するか見てみよう。
@@ -112,28 +119,28 @@ foreach (TxIn input in inputs)
 }
 ```
 
-**TxOut**、**Output**と**out**は同義語である。  
+**TxOut**、**Output**と**out**は同義語である。
 **OutPoint** と混同してはいけないが、この点については後ほど触れる。
 
 要約すると、あるTxOutとはビットコインの額とその受け取り手の**ScriptPubKey**の組み合わせを示す。
 
-![](../assets/TxOut.png)  
+![](../assets/TxOut.png)
 上図のとおり、いま対象のトランザクションにある一番最初のScriptPubKeyから21BTCを支払うトランザクションアウトプットを作ってみよう。
 
 ```cs
 Money twentyOneBtc = new Money(21, MoneyUnit.BTC);
-var scriptPubKey = transaction.Outputs.First().ScriptPubKey;
-TxOut txOut = new TxOut(twentyOneBtc, scriptPubKey);
+var scriptPubKey = transaction.Outputs[0].ScriptPubKey;
+TxOut txOut = transaction.Outputs.CreateNewTxOut(twentyOneBtc, scriptPubKey);
 ```
 
-すべての**トランザクションアウトプット**は、それを包含するトランザクションのIDと、そしてトランザクションの中で何番目のアウトプットかを示すインデックスにより、ブロックチェーン全体の中で一意に識別される。その一意に識別できる情報のことを**OutPoint**と呼ぶ。
+すべての**トランザクションアウトプット**は、それを包含するトランザクションのIDと、そしてトランザクションの中で何番目のアウトプットを用いるかを示すインデックスにより、ブロックチェーン全体の中で一意に識別される。その一意に識別できる情報（つまりトランザクションとトランザクションインデックス）のことを**OutPoint**と呼ぶ。
 
 ![](../assets/OutPoint.png)
 
 例えば、いま対象にしているトランザクションの13.19683492 BTCのアウトプットのOutpointは以下である。\(f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94, 0\).
 
 ```cs
-OutPoint firstOutPoint = receivedCoins.First().Outpoint;
+OutPoint firstOutPoint = receivedCoins[0].Outpoint;
 Console.WriteLine(firstOutPoint.Hash); // f13dc48fb035bbf0a6e989a26b3ecb57b84f85e0836e777d6edf60d87a4a2d94
 Console.WriteLine(firstOutPoint.N); // 0
 ```
@@ -151,15 +158,15 @@ Console.WriteLine(transaction.Inputs.Count); // 9
 過去のoutpointのトランザクションIDを使って、そのトランザクションに関連付けられた情報を参照できる。
 
 ```cs
-OutPoint firstPreviousOutPoint = transaction.Inputs.First().PrevOut;
+OutPoint firstPreviousOutPoint = transaction.Inputs[0].PrevOut;
 var firstPreviousTransaction = client.GetTransaction(firstPreviousOutPoint.Hash).Result.Transaction;
-Console.WriteLine(firstPreviousTransaction.IsCoinBase); // コインベーストランザクションではない。
+Console.WriteLine(firstPreviousTransaction.IsCoinBase); // コインベーストランザクションではない
 ```
 
 > 日本語版注：firstPreviousOutPointは、NBitcoinで１つめのインプットの元となった過去のトランザクションのアウトポイントを参照している。2行目ではアウトポイントから得られたトランザクションハッシュ/トランザクションIDを、QBit Ninjaクライアントに渡してトランザクションの情報を取得している。
 
-やろうと思えばこの方法を使って、**コインベーストランザクション**、つまりマイナーによって新しく発掘されたコインのトランザクション（すなわち、それ以前のトランザクションは存在しない）にたどり着くまで、トランザクションIDをさかのぼり続けることができる。  
-**Exercise**：題材にしているトランザクションの1番目のインプットを過去にさかのぼり、コインベーストランザクションを見つけよう！  
+やろうと思えばこの方法を使って、**コインベーストランザクション**、つまりマイナーによって新しく発掘されたコインのトランザクション（すなわち、それ以前のトランザクションは存在しない）にたどり着くまで、トランザクションIDをさかのぼり続けることができる。
+**Exercise**：題材にしているトランザクションの1番目のインプットを過去にさかのぼり、コインベーストランザクションを見つけよう！
 ヒント：私は数分後、30~40トランザクションさかのぼったときに諦めた。
 
 そう、君の推測は正しい。これを行うのは効率的な方法ではないが、良い練習になる。
@@ -168,6 +175,8 @@ Console.WriteLine(firstPreviousTransaction.IsCoinBase); // コインベースト
 
 ```cs
 Money spentAmount = Money.Zero;
+var spentCoins = transactionResponse.SpentCoins;
+
 foreach (var spentCoin in spentCoins)
 {
     spentAmount = (Money)spentCoin.Amount.Add(spentAmount);
@@ -186,6 +195,5 @@ var fee = transaction.GetFee(spentCoins.ToArray());
 Console.WriteLine(fee);
 ```
 
-注意してほしいのだが、**コインベーストランザクション** だけは、そのアウトプットの値がインプットの値より高い。これは事実上コインの創造に相当する。よって定義上、コインベーストランザクションに手数料は存在しない。コインベーストランザクションはすべてのブロックの最初のトランザクションとなっている。  
+注意してほしいのだが、**コインベーストランザクション** だけは、そのアウトプットの値がインプットの値より高い。これは事実上コインの創造に相当する。よって定義上、コインベーストランザクションに手数料は存在しない。コインベーストランザクションはすべてのブロックの最初のトランザクションとなっている。
 コンセンサスルールによって、コインベーストランザクションの中のアウトプットの値の合計は、ブロック内のトランザクション手数料の合計とマイニング報酬の和を超えないようになっている。
-

@@ -15,7 +15,7 @@ bool WifIsBitcoinSecret = mainNetPrivateKey == privateKey.GetWif(Network.Main);
 Console.WriteLine(WifIsBitcoinSecret); // 正
 ```
 
-注目してほしいのだが、**ビットコインシークレット** から **秘密鍵** を導出するのは簡単だ。一方で、ビットコインアドレスから公開鍵を導くことはできない。なぜならば、ビットコインアドレスは公開鍵のハッシュを含んでいるのであって、公開鍵自体を含んではないからだ。  
+注目してほしいのだが、**ビットコインシークレット** から **秘密鍵** を導出するのは簡単だ。一方で、ビットコインアドレスから公開鍵を導くことはできない。なぜならば、ビットコインアドレスは公開鍵のハッシュを含んでいるのであって、公開鍵自体を含んではないからだ。
 次の2つのコードブロックの比較することで、上記の違いを理解してみよう。
 
 ```cs
@@ -31,7 +31,7 @@ BitcoinPubKeyAddress bitcoinPubicKey = publicKey.GetAddress(Network.Main); // 1P
 //PubKey samePublicKey = bitcoinPubicKey.ItIsNotPossible;// 戻すのは不可能
 ```
 
-### 練習 :
+### 練習
 
 1. MainNet向けの秘密鍵を生成し、それをメモする。
 2. 秘密鍵からビットコインアドレスを生成する。
