@@ -15,9 +15,9 @@
 
 インドネシア語: [Read](https://nopara73.gitbooks.io/programmingblockchainindonesian/content/) - [GitHub](https://github.com/ProgrammingBlockchain/ProgrammingBlockchain-Indonesian) - [GitBook](https://www.gitbook.com/book/nopara73/programmingblockchainindonesian)
 
-## フィードバックするためには
+## 手軽にフィードバックするためには
 
-[Github](https://github.com/ProgrammingBlockchain/ProgrammingBlockchain-Japanese)で Issue を作成し、課題を提起してください。もちろんオープンソースですので、自ら修正していただくことは大歓迎です！もしGitBookで読んでいる場合は、インラインでコメントすることも可能です。
+[Github](https://github.com/ProgrammingBlockchain/ProgrammingBlockchain-Japanese)で Issue を作成し、課題を提起してください。もしGitBookで読んでいる場合は、インラインでコメントすることも可能です。
 
 `Programming The  Blockchain in C\#` は英語が原語版であるため、原語版に対して修正があったときは適宜日本語版にも反映します。もし差異が見つかったときは、Issue を作成して適宜修正していただけると嬉しいです。
 
